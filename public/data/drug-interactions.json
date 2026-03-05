@@ -1,0 +1,443 @@
+{
+  "drugs": [
+    { "id": "warfarin", "name": "Warfarin", "brands": ["Coumadin", "Jantoven", "Warf"], "class": "Anticoagulant" },
+    { "id": "aspirin", "name": "Aspirin", "brands": ["Bayer", "Ecotrin", "Disprin"], "class": "NSAID/Antiplatelet" },
+    { "id": "ibuprofen", "name": "Ibuprofen", "brands": ["Advil", "Motrin", "Brufen", "Nurofen"], "class": "NSAID" },
+    { "id": "metformin", "name": "Metformin", "brands": ["Glucophage", "Glycomet", "Fortamet"], "class": "Antidiabetic" },
+    { "id": "lisinopril", "name": "Lisinopril", "brands": ["Zestril", "Prinivil", "Listril"], "class": "ACE Inhibitor" },
+    { "id": "atorvastatin", "name": "Atorvastatin", "brands": ["Lipitor", "Atorva", "Torvast"], "class": "Statin" },
+    { "id": "simvastatin", "name": "Simvastatin", "brands": ["Zocor", "Simcard", "Simvor"], "class": "Statin" },
+    { "id": "omeprazole", "name": "Omeprazole", "brands": ["Prilosec", "Omez", "Losec"], "class": "PPI" },
+    { "id": "metoprolol", "name": "Metoprolol", "brands": ["Lopressor", "Toprol-XL", "Betaloc"], "class": "Beta Blocker" },
+    { "id": "amlodipine", "name": "Amlodipine", "brands": ["Norvasc", "Amlong", "Amlip"], "class": "Calcium Channel Blocker" },
+    { "id": "losartan", "name": "Losartan", "brands": ["Cozaar", "Losar", "Losacar"], "class": "ARB" },
+    { "id": "gabapentin", "name": "Gabapentin", "brands": ["Neurontin", "Gabapin", "Gralise"], "class": "Anticonvulsant" },
+    { "id": "sertraline", "name": "Sertraline", "brands": ["Zoloft", "Serlift", "Lustral"], "class": "SSRI" },
+    { "id": "fluoxetine", "name": "Fluoxetine", "brands": ["Prozac", "Fludac", "Sarafem"], "class": "SSRI" },
+    { "id": "escitalopram", "name": "Escitalopram", "brands": ["Lexapro", "Nexito", "Cipralex"], "class": "SSRI" },
+    { "id": "tramadol", "name": "Tramadol", "brands": ["Ultram", "Contramal", "Tramacet"], "class": "Opioid Analgesic" },
+    { "id": "hydrocodone", "name": "Hydrocodone", "brands": ["Vicodin", "Norco", "Lortab"], "class": "Opioid Analgesic" },
+    { "id": "oxycodone", "name": "Oxycodone", "brands": ["OxyContin", "Percocet", "Roxicodone"], "class": "Opioid Analgesic" },
+    { "id": "alprazolam", "name": "Alprazolam", "brands": ["Xanax", "Alprax", "Niravam"], "class": "Benzodiazepine" },
+    { "id": "lorazepam", "name": "Lorazepam", "brands": ["Ativan", "Loraz", "Temesta"], "class": "Benzodiazepine" },
+    { "id": "diazepam", "name": "Diazepam", "brands": ["Valium", "Calmpose", "Diastat"], "class": "Benzodiazepine" },
+    { "id": "prednisone", "name": "Prednisone", "brands": ["Deltasone", "Rayos", "Omnacortil"], "class": "Corticosteroid" },
+    { "id": "amoxicillin", "name": "Amoxicillin", "brands": ["Amoxil", "Mox", "Trimox"], "class": "Antibiotic" },
+    { "id": "azithromycin", "name": "Azithromycin", "brands": ["Zithromax", "Azithral", "Z-Pack"], "class": "Antibiotic" },
+    { "id": "ciprofloxacin", "name": "Ciprofloxacin", "brands": ["Cipro", "Ciplox", "Cifran"], "class": "Antibiotic" },
+    { "id": "levothyroxine", "name": "Levothyroxine", "brands": ["Synthroid", "Eltroxin", "Levoxyl"], "class": "Thyroid Hormone" },
+    { "id": "insulin", "name": "Insulin", "brands": ["Humalog", "Lantus", "Novolog"], "class": "Antidiabetic" },
+    { "id": "clopidogrel", "name": "Clopidogrel", "brands": ["Plavix", "Clopilet", "Deplatt"], "class": "Antiplatelet" },
+    { "id": "rivaroxaban", "name": "Rivaroxaban", "brands": ["Xarelto"], "class": "Anticoagulant" },
+    { "id": "apixaban", "name": "Apixaban", "brands": ["Eliquis"], "class": "Anticoagulant" },
+    { "id": "sildenafil", "name": "Sildenafil", "brands": ["Viagra", "Revatio", "Manforce"], "class": "PDE5 Inhibitor" },
+    { "id": "tadalafil", "name": "Tadalafil", "brands": ["Cialis", "Megalis", "Adcirca"], "class": "PDE5 Inhibitor" },
+    { "id": "acetaminophen", "name": "Acetaminophen", "brands": ["Tylenol", "Paracetamol", "Crocin", "Panadol"], "class": "Analgesic" },
+    { "id": "naproxen", "name": "Naproxen", "brands": ["Aleve", "Naprosyn", "Naprelan"], "class": "NSAID" },
+    { "id": "furosemide", "name": "Furosemide", "brands": ["Lasix", "Frusenex", "Frusemide"], "class": "Diuretic" },
+    { "id": "spironolactone", "name": "Spironolactone", "brands": ["Aldactone", "Spiromide"], "class": "Diuretic" },
+    { "id": "pantoprazole", "name": "Pantoprazole", "brands": ["Protonix", "Pan", "Pantocid"], "class": "PPI" },
+    { "id": "esomeprazole", "name": "Esomeprazole", "brands": ["Nexium", "Nexpro", "Esoz"], "class": "PPI" },
+    { "id": "duloxetine", "name": "Duloxetine", "brands": ["Cymbalta", "Duzela", "Irenka"], "class": "SNRI" },
+    { "id": "venlafaxine", "name": "Venlafaxine", "brands": ["Effexor", "Venla", "Venlor"], "class": "SNRI" },
+    { "id": "bupropion", "name": "Bupropion", "brands": ["Wellbutrin", "Zyban", "Bupron"], "class": "Antidepressant" },
+    { "id": "quetiapine", "name": "Quetiapine", "brands": ["Seroquel", "Qutan", "Qutipin"], "class": "Antipsychotic" },
+    { "id": "aripiprazole", "name": "Aripiprazole", "brands": ["Abilify", "Arip MT", "Asprito"], "class": "Antipsychotic" },
+    { "id": "lithium", "name": "Lithium", "brands": ["Lithobid", "Licab", "Eskalith"], "class": "Mood Stabilizer" },
+    { "id": "carbamazepine", "name": "Carbamazepine", "brands": ["Tegretol", "Zen Retard", "Carbatol"], "class": "Anticonvulsant" },
+    { "id": "phenytoin", "name": "Phenytoin", "brands": ["Dilantin", "Eptoin", "Phenytek"], "class": "Anticonvulsant" },
+    { "id": "valproic_acid", "name": "Valproic Acid", "brands": ["Depakote", "Valparin", "Epilim"], "class": "Anticonvulsant" },
+    { "id": "methotrexate", "name": "Methotrexate", "brands": ["Trexall", "Folitrax", "Rheumatrex"], "class": "Immunosuppressant" },
+    { "id": "cyclosporine", "name": "Cyclosporine", "brands": ["Sandimmune", "Neoral", "Panimun"], "class": "Immunosuppressant" },
+    { "id": "allopurinol", "name": "Allopurinol", "brands": ["Zyloprim", "Zyloric", "Allopur"], "class": "Antigout" }
+  ],
+  "interactions": [
+    {
+      "drug1": "warfarin",
+      "drug2": "aspirin",
+      "severity": "severe",
+      "effect": "Significantly increased risk of bleeding",
+      "mechanism": "Both drugs affect blood clotting through different mechanisms",
+      "recommendation": "Avoid combination unless specifically prescribed. Monitor for signs of bleeding.",
+      "monitoring": "INR, signs of bleeding"
+    },
+    {
+      "drug1": "warfarin",
+      "drug2": "ibuprofen",
+      "severity": "severe",
+      "effect": "Increased risk of gastrointestinal bleeding and elevated INR",
+      "mechanism": "NSAIDs inhibit platelet function and may displace warfarin from protein binding",
+      "recommendation": "Use acetaminophen for pain instead. If NSAID necessary, use lowest dose for shortest time.",
+      "monitoring": "INR, signs of GI bleeding"
+    },
+    {
+      "drug1": "metformin",
+      "drug2": "alcohol",
+      "severity": "severe",
+      "effect": "Increased risk of lactic acidosis and hypoglycemia",
+      "mechanism": "Alcohol impairs gluconeogenesis and may potentiate metformin's effects",
+      "recommendation": "Limit alcohol consumption. Avoid binge drinking.",
+      "monitoring": "Blood glucose, lactate levels"
+    },
+    {
+      "drug1": "lisinopril",
+      "drug2": "potassium",
+      "severity": "moderate",
+      "effect": "Risk of hyperkalemia (high potassium levels)",
+      "mechanism": "ACE inhibitors reduce potassium excretion",
+      "recommendation": "Avoid potassium supplements unless prescribed. Monitor potassium levels.",
+      "monitoring": "Serum potassium"
+    },
+    {
+      "drug1": "lisinopril",
+      "drug2": "ibuprofen",
+      "severity": "moderate",
+      "effect": "Reduced antihypertensive effect and potential kidney damage",
+      "mechanism": "NSAIDs inhibit prostaglandins that help maintain renal blood flow",
+      "recommendation": "Use acetaminophen for pain. Monitor blood pressure and kidney function.",
+      "monitoring": "Blood pressure, creatinine"
+    },
+    {
+      "drug1": "simvastatin",
+      "drug2": "grapefruit",
+      "severity": "severe",
+      "effect": "Dramatically increased statin levels, risk of muscle damage (rhabdomyolysis)",
+      "mechanism": "Grapefruit inhibits CYP3A4 enzyme that metabolizes simvastatin",
+      "recommendation": "Avoid grapefruit and grapefruit juice entirely while on simvastatin.",
+      "monitoring": "Muscle pain, CPK levels"
+    },
+    {
+      "drug1": "atorvastatin",
+      "drug2": "grapefruit",
+      "severity": "moderate",
+      "effect": "Increased statin levels, higher risk of side effects",
+      "mechanism": "Grapefruit inhibits CYP3A4 enzyme",
+      "recommendation": "Limit grapefruit to small amounts. Report muscle pain immediately.",
+      "monitoring": "Muscle symptoms, liver function"
+    },
+    {
+      "drug1": "sertraline",
+      "drug2": "tramadol",
+      "severity": "severe",
+      "effect": "Risk of serotonin syndrome - potentially life-threatening",
+      "mechanism": "Both drugs increase serotonin levels",
+      "recommendation": "Avoid combination. If necessary, start low and monitor closely.",
+      "monitoring": "Signs of serotonin syndrome: agitation, fever, tremor, rapid heart rate"
+    },
+    {
+      "drug1": "fluoxetine",
+      "drug2": "tramadol",
+      "severity": "severe",
+      "effect": "Risk of serotonin syndrome and seizures",
+      "mechanism": "Both increase serotonin; tramadol lowers seizure threshold",
+      "recommendation": "Use alternative pain medication. Monitor for neurological symptoms.",
+      "monitoring": "Mental status, neuromuscular symptoms"
+    },
+    {
+      "drug1": "alprazolam",
+      "drug2": "oxycodone",
+      "severity": "severe",
+      "effect": "Life-threatening respiratory depression, sedation, coma",
+      "mechanism": "Combined CNS depressant effects",
+      "recommendation": "Avoid combination. FDA black box warning against concurrent use.",
+      "monitoring": "Respiratory rate, sedation level"
+    },
+    {
+      "drug1": "lorazepam",
+      "drug2": "hydrocodone",
+      "severity": "severe",
+      "effect": "Severe respiratory depression, overdose risk",
+      "mechanism": "Synergistic CNS depression",
+      "recommendation": "Avoid if possible. If essential, use lowest doses and monitor closely.",
+      "monitoring": "Respiratory function, consciousness"
+    },
+    {
+      "drug1": "metoprolol",
+      "drug2": "verapamil",
+      "severity": "severe",
+      "effect": "Severe bradycardia, heart block, hypotension",
+      "mechanism": "Both drugs slow heart conduction",
+      "recommendation": "Use with extreme caution. Monitor heart rate and rhythm.",
+      "monitoring": "ECG, heart rate, blood pressure"
+    },
+    {
+      "drug1": "sildenafil",
+      "drug2": "nitrates",
+      "severity": "contraindicated",
+      "effect": "Life-threatening drop in blood pressure",
+      "mechanism": "Both drugs cause vasodilation via nitric oxide pathway",
+      "recommendation": "NEVER combine. Wait 24-48 hours between medications.",
+      "monitoring": "Blood pressure"
+    },
+    {
+      "drug1": "levothyroxine",
+      "drug2": "calcium",
+      "severity": "moderate",
+      "effect": "Reduced levothyroxine absorption",
+      "mechanism": "Calcium binds to levothyroxine in GI tract",
+      "recommendation": "Take levothyroxine 4 hours before or after calcium supplements.",
+      "monitoring": "TSH levels"
+    },
+    {
+      "drug1": "levothyroxine",
+      "drug2": "iron",
+      "severity": "moderate",
+      "effect": "Reduced levothyroxine absorption",
+      "mechanism": "Iron forms insoluble complex with levothyroxine",
+      "recommendation": "Separate doses by at least 4 hours.",
+      "monitoring": "TSH levels"
+    },
+    {
+      "drug1": "ciprofloxacin",
+      "drug2": "antacids",
+      "severity": "moderate",
+      "effect": "Significantly reduced antibiotic absorption",
+      "mechanism": "Metal ions in antacids bind to ciprofloxacin",
+      "recommendation": "Take ciprofloxacin 2 hours before or 6 hours after antacids.",
+      "monitoring": "Treatment efficacy"
+    },
+    {
+      "drug1": "methotrexate",
+      "drug2": "ibuprofen",
+      "severity": "severe",
+      "effect": "Increased methotrexate toxicity",
+      "mechanism": "NSAIDs reduce renal excretion of methotrexate",
+      "recommendation": "Avoid NSAIDs. Use acetaminophen for pain.",
+      "monitoring": "Methotrexate levels, CBC, liver/kidney function"
+    },
+    {
+      "drug1": "lithium",
+      "drug2": "ibuprofen",
+      "severity": "severe",
+      "effect": "Lithium toxicity",
+      "mechanism": "NSAIDs reduce lithium excretion",
+      "recommendation": "If NSAID needed, monitor lithium levels closely. Consider sulindac.",
+      "monitoring": "Lithium levels, signs of toxicity"
+    },
+    {
+      "drug1": "clopidogrel",
+      "drug2": "omeprazole",
+      "severity": "moderate",
+      "effect": "Reduced antiplatelet effect of clopidogrel",
+      "mechanism": "Omeprazole inhibits CYP2C19 needed to activate clopidogrel",
+      "recommendation": "Use pantoprazole or famotidine instead of omeprazole.",
+      "monitoring": "Platelet function if available"
+    },
+    {
+      "drug1": "warfarin",
+      "drug2": "vitamin_k",
+      "severity": "moderate",
+      "effect": "Reduced anticoagulant effect",
+      "mechanism": "Vitamin K is the antidote to warfarin",
+      "recommendation": "Maintain consistent vitamin K intake. Avoid sudden dietary changes.",
+      "monitoring": "INR"
+    },
+    {
+      "drug1": "ssri",
+      "drug2": "nsaid",
+      "severity": "moderate",
+      "effect": "Increased risk of GI bleeding",
+      "mechanism": "Both affect platelet function and GI mucosa",
+      "recommendation": "Consider gastroprotection with PPI if combination necessary.",
+      "monitoring": "Signs of GI bleeding"
+    },
+    {
+      "drug1": "digoxin",
+      "drug2": "amiodarone",
+      "severity": "severe",
+      "effect": "Digoxin toxicity",
+      "mechanism": "Amiodarone inhibits digoxin clearance",
+      "recommendation": "Reduce digoxin dose by 50% when starting amiodarone.",
+      "monitoring": "Digoxin levels, heart rhythm"
+    },
+    {
+      "drug1": "carbamazepine",
+      "drug2": "oral_contraceptives",
+      "severity": "severe",
+      "effect": "Contraceptive failure",
+      "mechanism": "Carbamazepine induces metabolism of contraceptive hormones",
+      "recommendation": "Use higher dose pills or alternative contraception method.",
+      "monitoring": "Contraceptive efficacy"
+    },
+    {
+      "drug1": "phenytoin",
+      "drug2": "oral_contraceptives",
+      "severity": "severe",
+      "effect": "Contraceptive failure",
+      "mechanism": "Phenytoin induces hepatic enzymes",
+      "recommendation": "Use IUD or other non-hormonal contraception.",
+      "monitoring": "Contraceptive efficacy"
+    },
+    {
+      "drug1": "ace_inhibitor",
+      "drug2": "arb",
+      "severity": "severe",
+      "effect": "Hyperkalemia, kidney injury, hypotension",
+      "mechanism": "Dual RAAS blockade",
+      "recommendation": "Avoid combination. Choose one agent.",
+      "monitoring": "Potassium, creatinine, blood pressure"
+    },
+    {
+      "drug1": "maoi",
+      "drug2": "ssri",
+      "severity": "contraindicated",
+      "effect": "Fatal serotonin syndrome",
+      "mechanism": "Massive serotonin accumulation",
+      "recommendation": "NEVER combine. Allow 2-5 week washout between switching.",
+      "monitoring": "N/A - avoid combination"
+    },
+    {
+      "drug1": "maoi",
+      "drug2": "tyramine",
+      "severity": "severe",
+      "effect": "Hypertensive crisis",
+      "mechanism": "MAOIs prevent tyramine breakdown",
+      "recommendation": "Avoid aged cheeses, cured meats, fermented foods, draft beer.",
+      "monitoring": "Blood pressure"
+    }
+  ],
+  "food_interactions": [
+    {
+      "drug": "warfarin",
+      "food": "Vitamin K rich foods",
+      "examples": ["Spinach", "Kale", "Broccoli", "Brussels sprouts"],
+      "effect": "Reduced anticoagulant effect",
+      "recommendation": "Maintain consistent intake - don't suddenly increase or decrease"
+    },
+    {
+      "drug": "statins",
+      "food": "Grapefruit",
+      "examples": ["Grapefruit juice", "Pomelo", "Seville oranges"],
+      "effect": "Increased drug levels, risk of muscle damage",
+      "recommendation": "Avoid completely with simvastatin/lovastatin. Limit with others"
+    },
+    {
+      "drug": "tetracyclines",
+      "food": "Dairy products",
+      "examples": ["Milk", "Cheese", "Yogurt", "Calcium supplements"],
+      "effect": "Reduced antibiotic absorption",
+      "recommendation": "Take 2 hours before or after dairy"
+    },
+    {
+      "drug": "maois",
+      "food": "Tyramine-rich foods",
+      "examples": ["Aged cheese", "Cured meats", "Soy sauce", "Draft beer", "Sauerkraut"],
+      "effect": "Dangerous blood pressure spike",
+      "recommendation": "Avoid completely while on MAOIs"
+    },
+    {
+      "drug": "levothyroxine",
+      "food": "Soy products",
+      "examples": ["Tofu", "Soy milk", "Edamame"],
+      "effect": "Reduced thyroid hormone absorption",
+      "recommendation": "Take levothyroxine 4 hours before soy"
+    },
+    {
+      "drug": "metronidazole",
+      "food": "Alcohol",
+      "examples": ["Wine", "Beer", "Spirits", "Alcohol-containing medications"],
+      "effect": "Severe nausea, vomiting, flushing (disulfiram reaction)",
+      "recommendation": "Avoid alcohol during and 3 days after treatment"
+    },
+    {
+      "drug": "blood_thinners",
+      "food": "Alcohol",
+      "examples": ["All alcoholic beverages"],
+      "effect": "Increased bleeding risk",
+      "recommendation": "Limit to 1-2 drinks occasionally"
+    },
+    {
+      "drug": "potassium_sparing_diuretics",
+      "food": "High potassium foods",
+      "examples": ["Bananas", "Oranges", "Potatoes", "Salt substitutes"],
+      "effect": "Dangerously high potassium levels",
+      "recommendation": "Moderate intake. Regular potassium monitoring"
+    },
+    {
+      "drug": "calcium_channel_blockers",
+      "food": "Grapefruit",
+      "examples": ["Grapefruit", "Grapefruit juice"],
+      "effect": "Enhanced drug effects, low blood pressure",
+      "recommendation": "Avoid or separate by several hours"
+    },
+    {
+      "drug": "fluoroquinolones",
+      "food": "Dairy and antacids",
+      "examples": ["Milk", "Calcium supplements", "Iron supplements"],
+      "effect": "Reduced antibiotic absorption",
+      "recommendation": "Take antibiotic 2 hours before or 6 hours after"
+    }
+  ],
+  "alcohol_interactions": [
+    {
+      "drugClass": "Benzodiazepines",
+      "examples": ["Alprazolam", "Lorazepam", "Diazepam"],
+      "severity": "severe",
+      "effect": "Severe sedation, respiratory depression, death",
+      "recommendation": "Avoid alcohol completely"
+    },
+    {
+      "drugClass": "Opioids",
+      "examples": ["Oxycodone", "Hydrocodone", "Morphine", "Tramadol"],
+      "severity": "severe",
+      "effect": "Life-threatening respiratory depression",
+      "recommendation": "Avoid alcohol completely"
+    },
+    {
+      "drugClass": "Antidepressants",
+      "examples": ["Sertraline", "Fluoxetine", "Duloxetine"],
+      "severity": "moderate",
+      "effect": "Increased sedation, worsened depression",
+      "recommendation": "Limit alcohol. Avoid initially"
+    },
+    {
+      "drugClass": "Blood Pressure Medications",
+      "examples": ["Lisinopril", "Metoprolol", "Amlodipine"],
+      "severity": "moderate",
+      "effect": "Dizziness, fainting from low blood pressure",
+      "recommendation": "Limit alcohol. Rise slowly from sitting"
+    },
+    {
+      "drugClass": "Diabetes Medications",
+      "examples": ["Metformin", "Glimepiride", "Insulin"],
+      "severity": "severe",
+      "effect": "Severe hypoglycemia, lactic acidosis",
+      "recommendation": "Limit alcohol. Never drink on empty stomach"
+    },
+    {
+      "drugClass": "Antihistamines",
+      "examples": ["Diphenhydramine", "Cetirizine", "Loratadine"],
+      "severity": "moderate",
+      "effect": "Extreme drowsiness, impaired coordination",
+      "recommendation": "Avoid alcohol, especially with sedating antihistamines"
+    },
+    {
+      "drugClass": "Acetaminophen",
+      "examples": ["Tylenol", "Paracetamol"],
+      "severity": "severe",
+      "effect": "Liver damage, especially with chronic use",
+      "recommendation": "Limit to 2g/day if drinking. Avoid in alcoholism"
+    },
+    {
+      "drugClass": "NSAIDs",
+      "examples": ["Ibuprofen", "Naproxen", "Aspirin"],
+      "severity": "moderate",
+      "effect": "Increased GI bleeding risk",
+      "recommendation": "Limit alcohol. Watch for stomach pain/black stool"
+    },
+    {
+      "drugClass": "Antibiotics (Metronidazole)",
+      "examples": ["Flagyl", "Metrogyl"],
+      "severity": "severe",
+      "effect": "Severe vomiting, headache, rapid heartbeat",
+      "recommendation": "No alcohol during + 3 days after treatment"
+    },
+    {
+      "drugClass": "Sleep Medications",
+      "examples": ["Zolpidem", "Eszopiclone", "Trazodone"],
+      "severity": "severe",
+      "effect": "Excessive sedation, memory blackouts, dangerous behaviors",
+      "recommendation": "Avoid alcohol completely"
+    }
+  ]
+}

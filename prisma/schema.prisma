@@ -1,0 +1,2718 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Language {
+  code             String             @id @db.VarChar(5)
+  name             String             @db.VarChar(100)
+  nativeName       String?            @map("native_name") @db.VarChar(100)
+  isActive         Boolean            @default(true) @map("is_active")
+  localizedContent LocalizedContent[]
+  sitemapEntries   SitemapEntry[]
+  translations     TranslationQueue[] @relation("TranslationLang")
+  uiTranslations   UiTranslation[]
+
+  @@map("languages")
+}
+
+model MedicalCondition {
+  id                 Int                    @id @default(autoincrement())
+  slug               String                 @unique @db.VarChar(255)
+  scientificName     String                 @map("scientific_name") @db.VarChar(500)
+  commonName         String                 @map("common_name") @db.VarChar(500)
+  description        String?
+  symptoms           Json                   @default("[]")
+  treatments         Json                   @default("[]")
+  faqs               Json                   @default("[]")
+  specialistType     String                 @map("specialist_type") @db.VarChar(100)
+  severityLevel      String?                @map("severity_level") @db.VarChar(20)
+  icdCode            String?                @map("icd_code") @db.VarChar(20)
+  bodySystem         String?                @map("body_system") @db.VarChar(100)
+  schemaMarkup       Json?                  @map("schema_markup")
+  isActive           Boolean                @default(true) @map("is_active")
+  createdAt          DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime               @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  conditionReviewers ConditionReviewer[]
+  doctorSpecialties  DoctorSpecialty[]
+  icd10Mappings      Icd10SpecialtyMap[]
+  localizedContent   LocalizedContent[]
+  pinnedConditions   PinnedCondition[]
+  seasonalTriggers   SeasonalTrigger[]
+  sitemapEntries     SitemapEntry[]
+  pageContent        ConditionPageContent[]
+
+  @@index([isActive, commonName])
+  @@index([specialistType])
+  @@index([bodySystem])
+  @@map("medical_conditions")
+}
+
+model Geography {
+  id                      Int                      @id @default(autoincrement())
+  name                    String                   @db.VarChar(255)
+  slug                    String                   @db.VarChar(255)
+  level                   GeoLevel
+  parentId                Int?                     @map("parent_id")
+  latitude                Decimal?                 @db.Decimal(10, 7)
+  longitude               Decimal?                 @db.Decimal(10, 7)
+  supportedLanguages      String[]                 @map("supported_languages") @db.VarChar(5)
+  population              BigInt?
+  timezone                String?                  @db.VarChar(50)
+  isoCode                 String?                  @map("iso_code") @db.VarChar(5)
+  localeConfig            Json                     @default("{}") @map("locale_config")
+  isActive                Boolean                  @default(true) @map("is_active")
+  createdAt               DateTime                 @default(now()) @map("created_at") @db.Timestamptz(6)
+  advertisers             Advertiser[]
+  analysisResults         AnalysisResult[]         @relation("AnalysisGeo")
+  conditionReviewers      ConditionReviewer[]
+  badgeDoctors            DoctorProvider[]         @relation("BadgeCity")
+  doctors                 DoctorProvider[]
+  encounters              Encounter[]              @relation("EncounterGeo")
+  enquiryLogs             EnquiryLog[]             @relation("EnquiryGeo")
+  footerTemplates         FooterTemplate[]         @relation("FooterGeo")
+  geoAnalytics            GeoAnalytics[]
+  parent                  Geography?               @relation("GeoHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children                Geography[]              @relation("GeoHierarchy")
+  keywordGaps             KeywordGap[]             @relation("KeywordGeo")
+  leadLogs                LeadLog[]                @relation("LeadGeo")
+  localizedContent        LocalizedContent[]
+  pinnedConditions        PinnedCondition[]
+  providerAnalytics       ProviderAnalytics[]      @relation("AnalyticsGeo")
+  seasonalTriggers        SeasonalTrigger[]
+  sitemapEntries          SitemapEntry[]
+  smartMatchNotifications SmartMatchNotification[] @relation("NotifGeo")
+  waitingTimeReports      WaitingTimeReport[]      @relation("WaitTimeGeo")
+  diagnosticProviders     DiagnosticProvider[]
+  hospitals               Hospital[]
+  tpaPresence             TpaGeographyPresence[]
+
+  @@unique([slug, level, parentId])
+  @@index([parentId])
+  @@index([slug, isActive])
+  @@index([level, isActive])
+  @@map("geographies")
+}
+
+model DoctorProvider {
+  id                      Int                      @id @default(autoincrement())
+  slug                    String                   @unique @db.VarChar(255)
+  name                    String                   @db.VarChar(500)
+  email                   String?                  @unique @db.VarChar(200)
+  licenseNumber           String?                  @map("license_number") @db.VarChar(100)
+  licensingBody           String?                  @map("licensing_body") @db.VarChar(200)
+  bio                     String?
+  qualifications          String[]
+  experienceYears         Int?                     @map("experience_years")
+  contactInfo             Json                     @default("{}") @map("contact_info")
+  profileImage            String?                  @map("profile_image") @db.VarChar(500)
+  // Media gallery
+  coverImage              String?                  @map("cover_image") @db.VarChar(500)
+  images                  String[]                 @default([])
+  videoUrl                String?                  @map("video_url") @db.VarChar(500)
+  videoThumbnail          String?                  @map("video_thumbnail") @db.VarChar(500)
+  geographyId             Int?                     @map("geography_id")
+  isVerified              Boolean                  @default(false) @map("is_verified")
+  verificationDate        DateTime?                @map("verification_date") @db.Timestamptz(6)
+  subscriptionTier        SubscriptionTier         @default(free) @map("subscription_tier")
+  rating                  Decimal?                 @db.Decimal(2, 1)
+  reviewCount             Int                      @default(0) @map("review_count")
+  consultationFee         Decimal?                 @map("consultation_fee") @db.Decimal(10, 2)
+  feeCurrency             String                   @default("INR") @map("fee_currency") @db.VarChar(3)
+  availableOnline         Boolean                  @default(false) @map("available_online")
+  schemaMarkup            Json?                    @map("schema_markup")
+  createdAt               DateTime                 @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime                 @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  badgeScore              Decimal?                 @map("badge_score") @db.Decimal(5, 2)
+  badgeRank               Int?                     @map("badge_rank")
+  badgeLabel              String?                  @map("badge_label") @db.VarChar(50)
+  badgeCityId             Int?                     @map("badge_city_id")
+  badgeUpdated            DateTime?                @map("badge_updated") @db.Timestamptz(6)
+  conditionReviewers      ConditionReviewer[]
+  specialties             DoctorSpecialty[]
+  badgeCity               Geography?               @relation("BadgeCity", fields: [badgeCityId], references: [id])
+  geography               Geography?               @relation(fields: [geographyId], references: [id])
+  encounters              Encounter[]
+  leadCredits             LeadCredit[]
+  leadLogs                LeadLog[]
+  licenseVerifications    LicenseVerification[]
+  reviewedContent         LocalizedContent[]       @relation("ContentReviewer")
+  onboardingSteps         OnboardingStep[]
+  providerAnalytics       ProviderAnalytics[]
+  providerSubscription    ProviderSubscription?
+  smartMatchNotifications SmartMatchNotification[]
+  teleconsultations       Teleconsultation[]
+  waitingTimeReports      WaitingTimeReport[]
+  hospitalDoctors         HospitalDoctor[]
+  reviewedPageContent     ConditionPageContent[]   @relation("PageContentReviewer")
+  paymentNotifications    PaymentNotification[]
+
+  @@index([geographyId, isVerified])
+  @@index([subscriptionTier])
+  @@index([rating(sort: Desc)])
+  @@index([geographyId, subscriptionTier, isVerified])
+  @@index([isVerified, subscriptionTier])
+  @@index([createdAt(sort: Desc)])
+  @@index([badgeScore(sort: Desc)])
+  @@map("doctors_providers")
+}
+
+model DoctorSpecialty {
+  id          Int              @id @default(autoincrement())
+  doctorId    Int              @map("doctor_id")
+  conditionId Int              @map("condition_id")
+  isPrimary   Boolean          @default(false) @map("is_primary")
+  createdAt   DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  condition   MedicalCondition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
+  doctor      DoctorProvider   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@unique([doctorId, conditionId])
+  @@index([conditionId])
+  @@map("doctor_specialties")
+}
+
+model LocalizedContent {
+  id               Int                @id @default(autoincrement())
+  conditionId      Int                @map("condition_id")
+  languageCode     String             @map("language_code") @db.VarChar(5)
+  geographyId      Int?               @map("geography_id")
+  title            String             @db.VarChar(500)
+  description      String
+  localizedAdvice  String?            @map("localized_advice")
+  localFactors     Json               @default("{}") @map("local_factors")
+  consultationTips String?            @map("consultation_tips")
+  metaTitle        String?            @map("meta_title") @db.VarChar(160)
+  metaDescription  String?            @map("meta_description") @db.VarChar(300)
+  status           ContentStatus      @default(ai_draft)
+  reviewedBy       Int?               @map("reviewed_by")
+  reviewedAt       DateTime?          @map("reviewed_at") @db.Timestamptz(6)
+  aiModelUsed      String?            @map("ai_model_used") @db.VarChar(100)
+  wordCount        Int?               @map("word_count")
+  createdAt        DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime           @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  condition        MedicalCondition   @relation(fields: [conditionId], references: [id], onDelete: Cascade)
+  geography        Geography?         @relation(fields: [geographyId], references: [id])
+  language         Language           @relation(fields: [languageCode], references: [code])
+  reviewer         DoctorProvider?    @relation("ContentReviewer", fields: [reviewedBy], references: [id])
+  translationQueue TranslationQueue[]
+
+  @@unique([conditionId, languageCode, geographyId])
+  @@index([status])
+  @@index([languageCode, status])
+  @@index([conditionId, languageCode, status])
+  @@index([geographyId, languageCode])
+  @@map("localized_content")
+}
+
+model ConditionReviewer {
+  id          Int              @id @default(autoincrement())
+  conditionId Int              @map("condition_id")
+  doctorId    Int              @map("doctor_id")
+  geographyId Int?             @map("geography_id")
+  isPrimary   Boolean          @default(true) @map("is_primary")
+  reviewDate  DateTime         @default(now()) @map("review_date") @db.Timestamptz(6)
+  reviewNotes String?          @map("review_notes")
+  condition   MedicalCondition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
+  doctor      DoctorProvider   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  geography   Geography?       @relation(fields: [geographyId], references: [id])
+
+  @@unique([conditionId, doctorId, geographyId])
+  @@index([conditionId])
+  @@index([doctorId])
+  @@index([geographyId])
+  @@map("condition_reviewers")
+}
+
+model AiAnalysisCache {
+  id             Int       @id @default(autoincrement())
+  inputHash      String    @unique @map("input_hash") @db.VarChar(64)
+  conditionSlug  String?   @map("condition_slug") @db.VarChar(255)
+  extractedData  Json      @map("extracted_data")
+  summaryText    String?   @map("summary_text")
+  specialistType String?   @map("specialist_type") @db.VarChar(100)
+  severityLevel  String?   @map("severity_level") @db.VarChar(20)
+  matchedDoctors Int[]     @map("matched_doctors")
+  modelUsed      String?   @map("model_used") @db.VarChar(100)
+  tokenCount     Int?      @map("token_count")
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt      DateTime? @map("expires_at") @db.Timestamptz(6)
+
+  @@map("ai_analysis_cache")
+}
+
+model PageCache {
+  id           Int      @id @default(autoincrement())
+  cacheKey     String   @unique @map("cache_key") @db.VarChar(500)
+  htmlFragment String   @map("html_fragment")
+  etag         String?  @db.VarChar(64)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt    DateTime @map("expires_at") @db.Timestamptz(6)
+
+  @@map("page_cache")
+}
+
+model UiTranslation {
+  id           Int      @id @default(autoincrement())
+  languageCode String   @map("language_code") @db.VarChar(5)
+  namespace    String   @default("common") @db.VarChar(100)
+  key          String   @db.VarChar(255)
+  value        String
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  language     Language @relation(fields: [languageCode], references: [code])
+
+  @@unique([languageCode, namespace, key])
+  @@map("ui_translations")
+}
+
+model SitemapEntry {
+  id           Int               @id @default(autoincrement())
+  urlPath      String            @unique @map("url_path") @db.VarChar(500)
+  sitemapIndex Int               @default(0) @map("sitemap_index")
+  changefreq   String            @default("weekly") @db.VarChar(20)
+  priority     Decimal           @default(0.7) @db.Decimal(2, 1)
+  lastModified DateTime          @default(now()) @map("last_modified") @db.Timestamptz(6)
+  languageCode String?           @map("language_code") @db.VarChar(5)
+  conditionId  Int?              @map("condition_id")
+  geographyId  Int?              @map("geography_id")
+  condition    MedicalCondition? @relation(fields: [conditionId], references: [id])
+  geography    Geography?        @relation(fields: [geographyId], references: [id])
+  language     Language?         @relation(fields: [languageCode], references: [code])
+
+  @@map("sitemap_entries")
+}
+
+model PinnedCondition {
+  id           Int              @id @default(autoincrement())
+  geographyId  Int              @map("geography_id")
+  conditionId  Int              @map("condition_id")
+  displayOrder Int              @default(0) @map("display_order")
+  pinnedBy     String?          @map("pinned_by") @db.VarChar(255)
+  reason       String?
+  isActive     Boolean          @default(true) @map("is_active")
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  condition    MedicalCondition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
+  geography    Geography        @relation(fields: [geographyId], references: [id], onDelete: Cascade)
+
+  @@unique([geographyId, conditionId])
+  @@map("pinned_conditions")
+}
+
+model GeoAnalytics {
+  id             Int        @id @default(autoincrement())
+  countryCode    String     @map("country_code") @db.VarChar(5)
+  citySlug       String?    @map("city_slug") @db.VarChar(255)
+  geographyId    Int?       @map("geography_id")
+  visitDate      DateTime   @map("visit_date") @db.Date
+  visitCount     Int        @default(1) @map("visit_count")
+  uniqueVisitors Int        @default(1) @map("unique_visitors")
+  topConditions  String[]   @map("top_conditions") @db.VarChar(255)
+  createdAt      DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  geography      Geography? @relation(fields: [geographyId], references: [id])
+
+  @@unique([countryCode, citySlug, visitDate])
+  @@map("geo_analytics")
+}
+
+model ReportUpload {
+  id              String           @id @default(uuid()) @db.Uuid
+  sessionHash     String           @map("session_hash") @db.VarChar(64)
+  filePath        String           @map("file_path") @db.VarChar(500)
+  fileType        ReportType       @default(other) @map("file_type")
+  fileSizeBytes   Int?             @map("file_size_bytes")
+  mimeType        String?          @map("mime_type") @db.VarChar(100)
+  ocrText         String?          @map("ocr_text")
+  isSanitized     Boolean          @default(false) @map("is_sanitized")
+  encryptionIv    String?          @map("encryption_iv") @db.VarChar(64)
+  expiresAt       DateTime         @map("expires_at") @db.Timestamptz(6)
+  createdAt       DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  analysisResults AnalysisResult[]
+
+  @@map("report_uploads")
+}
+
+model AnalysisResult {
+  id                String           @id @default(uuid()) @db.Uuid
+  uploadId          String?          @map("upload_id") @db.Uuid
+  sessionHash       String           @map("session_hash") @db.VarChar(64)
+  primaryIndicators Json             @default("[]") @map("primary_indicators")
+  specialtyRequired String?          @map("specialty_required") @db.VarChar(100)
+  conditionSlug     String?          @map("condition_slug") @db.VarChar(255)
+  urgencyLevel      UrgencyLevel     @default(routine) @map("urgency_level")
+  plainEnglish      String?          @map("plain_english")
+  questionsToAsk    Json             @default("[]") @map("questions_to_ask")
+  lifestyleFactors  Json             @default("[]") @map("lifestyle_factors")
+  fullDossier       Json             @default("{}") @map("full_dossier")
+  confidenceScore   Decimal          @default(0) @map("confidence_score") @db.Decimal(4, 2)
+  needsReview       Boolean          @default(false) @map("needs_review")
+  reviewedBy        String?          @map("reviewed_by") @db.VarChar(255)
+  reviewedAt        DateTime?        @map("reviewed_at") @db.Timestamptz(6)
+  reviewNotes       String?          @map("review_notes")
+  matchedDoctorIds  Int[]            @default([]) @map("matched_doctor_ids")
+  matchGeographyId  Int?             @map("match_geography_id")
+  modelUsed         String?          @map("model_used") @db.VarChar(100)
+  tokenCount        Int?             @map("token_count")
+  processingTimeMs  Int?             @map("processing_time_ms")
+  createdAt         DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  matchGeography    Geography?       @relation("AnalysisGeo", fields: [matchGeographyId], references: [id])
+  upload            ReportUpload?    @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+  encounters        Encounter[]
+  healthTimelines   HealthTimeline[]
+  leadLogs          LeadLog[]
+  vaultFiles        VaultFile[]
+
+  @@index([sessionHash])
+  @@index([conditionSlug])
+  @@index([createdAt(sort: Desc)])
+  @@index([uploadId, createdAt(sort: Desc)])
+  @@map("analysis_results")
+}
+
+model HealthTimeline {
+  id             String         @id @default(uuid()) @db.Uuid
+  sessionHash    String         @map("session_hash") @db.VarChar(64)
+  analysisId     String         @map("analysis_id") @db.Uuid
+  indicatorName  String         @map("indicator_name") @db.VarChar(255)
+  indicatorValue Decimal?       @map("indicator_value") @db.Decimal(10, 2)
+  indicatorUnit  String?        @map("indicator_unit") @db.VarChar(50)
+  recordedDate   DateTime       @default(now()) @map("recorded_date") @db.Date
+  trendDirection String?        @map("trend_direction") @db.VarChar(20)
+  trendPercent   Decimal?       @map("trend_percent") @db.Decimal(5, 2)
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  analysis       AnalysisResult @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  @@index([sessionHash, indicatorName])
+  @@index([recordedDate(sort: Desc)])
+  @@map("health_timelines")
+}
+
+model WaitingTimeReport {
+  id          Int            @id @default(autoincrement())
+  doctorId    Int            @map("doctor_id")
+  geographyId Int?           @map("geography_id")
+  waitMinutes Int            @map("wait_minutes")
+  visitDate   DateTime       @default(now()) @map("visit_date") @db.Date
+  visitType   String         @default("in-person") @map("visit_type") @db.VarChar(50)
+  sessionHash String?        @map("session_hash") @db.VarChar(64)
+  isVerified  Boolean        @default(false) @map("is_verified")
+  createdAt   DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  doctor      DoctorProvider @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  geography   Geography?     @relation("WaitTimeGeo", fields: [geographyId], references: [id])
+
+  @@index([doctorId])
+  @@index([visitDate(sort: Desc)])
+  @@map("waiting_time_reports")
+}
+
+model PromptLabEntry {
+  id             String   @id @default(uuid()) @db.Uuid
+  promptName     String   @map("prompt_name") @db.VarChar(255)
+  promptType     String   @map("prompt_type") @db.VarChar(100)
+  systemPrompt   String   @map("system_prompt")
+  sampleInput    String?  @map("sample_input")
+  expectedOutput Json?    @map("expected_output")
+  actualOutput   Json?    @map("actual_output")
+  modelUsed      String?  @map("model_used") @db.VarChar(100)
+  tokenCount     Int?     @map("token_count")
+  latencyMs      Int?     @map("latency_ms")
+  score          Decimal? @db.Decimal(4, 2)
+  isActive       Boolean  @default(false) @map("is_active")
+  createdBy      String?  @map("created_by") @db.VarChar(255)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("prompt_lab_entries")
+}
+
+model TranslationQueue {
+  id                 Int              @id @default(autoincrement())
+  localizedContentId Int              @map("localized_content_id")
+  sourceLanguage     String           @default("en") @map("source_language") @db.VarChar(5)
+  targetLanguage     String           @map("target_language") @db.VarChar(5)
+  masterText         String           @map("master_text")
+  translatedText     String           @map("translated_text")
+  correctedText      String?          @map("corrected_text")
+  status             QueueStatus      @default(pending)
+  reviewedBy         String?          @map("reviewed_by") @db.VarChar(255)
+  reviewedAt         DateTime?        @map("reviewed_at") @db.Timestamptz(6)
+  aiModelUsed        String?          @map("ai_model_used") @db.VarChar(100)
+  qualityScore       Decimal?         @map("quality_score") @db.Decimal(4, 2)
+  createdAt          DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  localizedContent   LocalizedContent @relation(fields: [localizedContentId], references: [id], onDelete: Cascade)
+  targetLang         Language         @relation("TranslationLang", fields: [targetLanguage], references: [code])
+
+  @@index([status])
+  @@index([targetLanguage, status])
+  @@map("translation_queue")
+}
+
+model SeasonalTrigger {
+  id               Int              @id @default(autoincrement())
+  geographyId      Int              @map("geography_id")
+  conditionId      Int              @map("condition_id")
+  triggerType      String           @map("trigger_type") @db.VarChar(50)
+  triggerThreshold Json             @default("{}") @map("trigger_threshold")
+  highlightMessage String?          @map("highlight_message")
+  specialistType   String?          @map("specialist_type") @db.VarChar(100)
+  isActive         Boolean          @default(true) @map("is_active")
+  seasonStart      String?          @map("season_start") @db.VarChar(5)
+  seasonEnd        String?          @map("season_end") @db.VarChar(5)
+  createdAt        DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  condition        MedicalCondition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
+  geography        Geography        @relation(fields: [geographyId], references: [id], onDelete: Cascade)
+
+  @@unique([geographyId, conditionId, triggerType])
+  @@map("seasonal_triggers")
+}
+
+model SubscriptionPlan {
+  id                    Int                    @id @default(autoincrement())
+  planName              String                 @map("plan_name") @db.VarChar(100)
+  planSlug              String                 @unique @map("plan_slug") @db.VarChar(50)
+  tier                  SubscriptionTier
+  maxConditions         Int                    @default(2) @map("max_conditions")
+  maxLeadCredits        Int                    @default(0) @map("max_lead_credits")
+  hasAiBio              Boolean                @default(false) @map("has_ai_bio")
+  hasLeadScoring        Boolean                @default(false) @map("has_lead_scoring")
+  hasTelelink           Boolean                @default(false) @map("has_telelink")
+  hasPriorityListing    Boolean                @default(false) @map("has_priority_listing")
+  hasAnalytics          Boolean                @default(false) @map("has_analytics")
+  basePriceUsd          Decimal                @default(0) @map("base_price_usd") @db.Decimal(10, 2)
+  billingInterval       String                 @default("monthly") @map("billing_interval") @db.VarChar(20)
+  stripePriceId         String?                @map("stripe_price_id") @db.VarChar(255)
+  stripePriceIdTest     String?                @map("stripe_price_id_test") @db.VarChar(255)
+  isActive              Boolean                @default(true) @map("is_active")
+  createdAt             DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt             DateTime               @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  providerSubscriptions ProviderSubscription[]
+  regionalPricing       RegionalPricing[]
+
+  @@map("subscription_plans")
+}
+
+model RegionalPricing {
+  id            Int              @id @default(autoincrement())
+  planId        Int              @map("plan_id")
+  countryCode   String           @map("country_code") @db.VarChar(5)
+  currency      String           @db.VarChar(3)
+  price         Decimal          @db.Decimal(10, 2)
+  stripePriceId String?          @map("stripe_price_id") @db.VarChar(255)
+  isActive      Boolean          @default(true) @map("is_active")
+  plan          SubscriptionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@unique([planId, countryCode])
+  @@map("regional_pricing")
+}
+
+model ProviderSubscription {
+  id                   String             @id @default(uuid()) @db.Uuid
+  doctorId             Int                @unique @map("doctor_id")
+  planId               Int                @map("plan_id")
+  status               SubscriptionStatus @default(trial)
+  stripeCustomerId     String?            @map("stripe_customer_id") @db.VarChar(255)
+  stripeSubscriptionId String?            @map("stripe_subscription_id") @db.VarChar(255)
+  currentPeriodStart   DateTime?          @map("current_period_start") @db.Timestamptz(6)
+  currentPeriodEnd     DateTime?          @map("current_period_end") @db.Timestamptz(6)
+  trialEndsAt          DateTime?          @map("trial_ends_at") @db.Timestamptz(6)
+  cancelledAt          DateTime?          @map("cancelled_at") @db.Timestamptz(6)
+  conditionsUsed       Int                @default(0) @map("conditions_used")
+  leadCreditsUsed      Int                @default(0) @map("lead_credits_used")
+  leadCreditsTotal     Int                @default(0) @map("lead_credits_total")
+  countryCode          String?            @map("country_code") @db.VarChar(5)
+  currency             String             @default("USD") @db.VarChar(3)
+  amountPaid           Decimal            @default(0) @map("amount_paid") @db.Decimal(10, 2)
+  taxAmount            Decimal            @default(0) @map("tax_amount") @db.Decimal(10, 2)
+  taxType              String?            @map("tax_type") @db.VarChar(20)
+  createdAt            DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime           @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  doctor               DoctorProvider     @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  plan                 SubscriptionPlan   @relation(fields: [planId], references: [id])
+
+  @@map("provider_subscriptions")
+}
+
+model OnboardingStep {
+  id                 String               @id @default(uuid()) @db.Uuid
+  doctorId           Int                  @map("doctor_id")
+  status             OnboardingStatusEnum @default(pending)
+  stepProfile        Boolean              @default(false) @map("step_profile")
+  stepLicense        Boolean              @default(false) @map("step_license")
+  stepBio            Boolean              @default(false) @map("step_bio")
+  stepConditions     Boolean              @default(false) @map("step_conditions")
+  stepSubscription   Boolean              @default(false) @map("step_subscription")
+  currentStep        Int                  @default(1) @map("current_step")
+  rawBioInput        String?              @map("raw_bio_input")
+  aiEnhancedBio      String?              @map("ai_enhanced_bio")
+  selectedConditions Int[]                @default([]) @map("selected_conditions")
+  startedAt          DateTime             @default(now()) @map("started_at") @db.Timestamptz(6)
+  completedAt        DateTime?            @map("completed_at") @db.Timestamptz(6)
+  updatedAt          DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  doctor             DoctorProvider       @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@index([doctorId])
+  @@index([status])
+  @@map("onboarding_steps")
+}
+
+model LicenseVerification {
+  id                String                 @id @default(uuid()) @db.Uuid
+  doctorId          Int                    @map("doctor_id")
+  registryType      String                 @map("registry_type") @db.VarChar(50)
+  licenseNumber     String                 @map("license_number") @db.VarChar(100)
+  countryCode       String                 @map("country_code") @db.VarChar(5)
+  status            VerificationStatusEnum @default(pending)
+  apiResponse       Json                   @default("{}") @map("api_response")
+  verifiedName      String?                @map("verified_name") @db.VarChar(500)
+  verifiedSpecialty String?                @map("verified_specialty") @db.VarChar(200)
+  verifiedStatus    String?                @map("verified_status") @db.VarChar(100)
+  matchConfidence   Decimal?               @map("match_confidence") @db.Decimal(4, 2)
+  reviewedBy        String?                @map("reviewed_by") @db.VarChar(255)
+  reviewedAt        DateTime?              @map("reviewed_at") @db.Timestamptz(6)
+  reviewNotes       String?                @map("review_notes")
+  rejectionReason   String?                @map("rejection_reason")
+  verifiedAt        DateTime?              @map("verified_at") @db.Timestamptz(6)
+  expiresAt         DateTime?              @map("expires_at") @db.Timestamptz(6)
+  createdAt         DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
+  doctor            DoctorProvider         @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@index([doctorId])
+  @@index([status])
+  @@index([countryCode, status])
+  @@map("license_verifications")
+}
+
+model LeadLog {
+  id                String             @id @default(uuid()) @db.Uuid
+  doctorId          Int                @map("doctor_id")
+  analysisId        String?            @map("analysis_id") @db.Uuid
+  sessionHash       String?            @map("session_hash") @db.VarChar(64)
+  conditionSlug     String?            @map("condition_slug") @db.VarChar(255)
+  specialtyMatched  String?            @map("specialty_matched") @db.VarChar(100)
+  geographyId       Int?               @map("geography_id")
+  intentLevel       LeadIntent         @default(medium) @map("intent_level")
+  intentScore       Decimal            @default(0.5) @map("intent_score") @db.Decimal(4, 2)
+  scoringFactors    Json               @default("{}") @map("scoring_factors")
+  isViewed          Boolean            @default(false) @map("is_viewed")
+  viewedAt          DateTime?          @map("viewed_at") @db.Timestamptz(6)
+  isContacted       Boolean            @default(false) @map("is_contacted")
+  contactedAt       DateTime?          @map("contacted_at") @db.Timestamptz(6)
+  contactRevealed   Boolean            @default(false) @map("contact_revealed")
+  creditsSpent      Int                @default(0) @map("credits_spent")
+  outcome           String?            @db.VarChar(50)
+  outcomeNotes      String?            @map("outcome_notes")
+  createdAt         DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  leadCredits       LeadCredit[]
+  analysis          AnalysisResult?    @relation(fields: [analysisId], references: [id])
+  doctor            DoctorProvider     @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  geography         Geography?         @relation("LeadGeo", fields: [geographyId], references: [id])
+  teleconsultations Teleconsultation[]
+
+  @@index([doctorId, createdAt(sort: Desc)])
+  @@index([sessionHash])
+  @@index([intentLevel])
+  @@index([doctorId, intentLevel])
+  @@index([analysisId])
+  @@index([createdAt(sort: Desc)])
+  @@index([doctorId, isViewed])
+  @@index([conditionSlug])
+  @@index([geographyId])
+  @@map("lead_logs")
+}
+
+model LeadCredit {
+  id              Int            @id @default(autoincrement())
+  doctorId        Int            @map("doctor_id")
+  transactionType String         @map("transaction_type") @db.VarChar(20)
+  amount          Int
+  balanceAfter    Int            @default(0) @map("balance_after")
+  leadLogId       String?        @map("lead_log_id") @db.Uuid
+  description     String?        @db.VarChar(255)
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  doctor          DoctorProvider @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  leadLog         LeadLog?       @relation(fields: [leadLogId], references: [id])
+
+  @@index([doctorId, createdAt(sort: Desc)])
+  @@map("lead_credits")
+}
+
+model ProviderAnalytics {
+  id                Int            @id @default(autoincrement())
+  doctorId          Int            @map("doctor_id")
+  date              DateTime       @default(now()) @db.Date
+  profileViews      Int            @default(0) @map("profile_views")
+  searchAppearances Int            @default(0) @map("search_appearances")
+  conditionSlug     String?        @map("condition_slug") @db.VarChar(255)
+  geographyId       Int?           @map("geography_id")
+  leadCount         Int            @default(0) @map("lead_count")
+  contactReveals    Int            @default(0) @map("contact_reveals")
+  teleconsultCount  Int            @default(0) @map("teleconsult_count")
+  createdAt         DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  doctor            DoctorProvider @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  geography         Geography?     @relation("AnalyticsGeo", fields: [geographyId], references: [id])
+
+  @@unique([doctorId, date, conditionSlug])
+  @@index([doctorId, date(sort: Desc)])
+  @@index([geographyId, date(sort: Desc)])
+  @@index([conditionSlug, date(sort: Desc)])
+  @@map("provider_analytics")
+}
+
+model Teleconsultation {
+  id              String            @id @default(uuid()) @db.Uuid
+  doctorId        Int               @map("doctor_id")
+  leadLogId       String?           @map("lead_log_id") @db.Uuid
+  sessionHash     String?           @map("session_hash") @db.VarChar(64)
+  scheduledAt     DateTime          @map("scheduled_at") @db.Timestamptz(6)
+  durationMinutes Int               @default(15) @map("duration_minutes")
+  status          TeleconsultStatus @default(scheduled)
+  videoProvider   String            @default("daily") @map("video_provider") @db.VarChar(50)
+  roomUrl         String?           @map("room_url") @db.VarChar(500)
+  roomToken       String?           @map("room_token")
+  consultationFee Decimal           @default(0) @map("consultation_fee") @db.Decimal(10, 2)
+  platformFee     Decimal           @default(0) @map("platform_fee") @db.Decimal(10, 2)
+  currency        String            @default("USD") @db.VarChar(3)
+  isPaid          Boolean           @default(false) @map("is_paid")
+  stripePaymentId String?           @map("stripe_payment_id") @db.VarChar(255)
+  startedAt       DateTime?         @map("started_at") @db.Timestamptz(6)
+  endedAt         DateTime?         @map("ended_at") @db.Timestamptz(6)
+  doctorNotes     String?           @map("doctor_notes")
+  createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  doctor          DoctorProvider    @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  leadLog         LeadLog?          @relation(fields: [leadLogId], references: [id])
+
+  @@index([doctorId, scheduledAt])
+  @@index([status, scheduledAt])
+  @@index([sessionHash])
+  @@map("teleconsultations")
+}
+
+model IndexingLog {
+  id            String    @id @default(uuid()) @db.Uuid
+  url           String    @db.VarChar(2000)
+  indexApi      String    @map("index_api") @db.VarChar(50)
+  action        String    @default("URL_UPDATED") @db.VarChar(50)
+  status        String    @default("submitted") @db.VarChar(50)
+  responseCode  Int?      @map("response_code")
+  responseBody  Json      @default("{}") @map("response_body")
+  submittedAt   DateTime  @default(now()) @map("submitted_at") @db.Timestamptz(6)
+  indexedAt     DateTime? @map("indexed_at") @db.Timestamptz(6)
+  lastCheckedAt DateTime? @map("last_checked_at") @db.Timestamptz(6)
+  errorMessage  String?   @map("error_message")
+  retryCount    Int       @default(0) @map("retry_count")
+  countryCode   String?   @map("country_code") @db.VarChar(5)
+  pageType      String?   @map("page_type") @db.VarChar(50)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("indexing_logs")
+}
+
+model KeywordGap {
+  id               Int        @id @default(autoincrement())
+  keyword          String     @db.VarChar(500)
+  searchVolume     Int?       @map("search_volume")
+  difficultyScore  Decimal?   @map("difficulty_score") @db.Decimal(4, 2)
+  currentRank      Int?       @map("current_rank")
+  competitor       String?    @db.VarChar(255)
+  competitorRank   Int?       @map("competitor_rank")
+  countryCode      String     @map("country_code") @db.VarChar(5)
+  geographyId      Int?       @map("geography_id")
+  conditionSlug    String?    @map("condition_slug") @db.VarChar(255)
+  opportunityScore Decimal?   @map("opportunity_score") @db.Decimal(5, 2)
+  status           String     @default("new") @db.VarChar(50)
+  suggestedAction  String?    @map("suggested_action")
+  createdAt        DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  geography        Geography? @relation("KeywordGeo", fields: [geographyId], references: [id])
+
+  @@map("keyword_gaps")
+}
+
+model ContentFreshness {
+  id             Int       @id @default(autoincrement())
+  url            String    @unique @db.VarChar(2000)
+  pageType       String    @map("page_type") @db.VarChar(50)
+  contentHash    String?   @map("content_hash") @db.VarChar(64)
+  lastModified   DateTime  @default(now()) @map("last_modified") @db.Timestamptz(6)
+  lastCrawled    DateTime? @map("last_crawled") @db.Timestamptz(6)
+  freshnessScore Decimal   @default(1.00) @map("freshness_score") @db.Decimal(4, 2)
+  needsRefresh   Boolean   @default(false) @map("needs_refresh")
+  refreshReason  String?   @map("refresh_reason")
+  countryCode    String?   @map("country_code") @db.VarChar(5)
+  conditionSlug  String?   @map("condition_slug") @db.VarChar(255)
+  geographySlug  String?   @map("geography_slug") @db.VarChar(255)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("content_freshness")
+}
+
+model SitemapLog {
+  id            Int      @id @default(autoincrement())
+  sitemapName   String   @map("sitemap_name") @db.VarChar(255)
+  urlCount      Int      @default(0) @map("url_count")
+  fileSizeBytes Int?     @map("file_size_bytes")
+  generatedAt   DateTime @default(now()) @map("generated_at") @db.Timestamptz(6)
+  generationMs  Int?     @map("generation_ms")
+  countryCode   String?  @map("country_code") @db.VarChar(5)
+  isIndex       Boolean  @default(false) @map("is_index")
+
+  @@map("sitemap_logs")
+}
+
+model HealthVault {
+  id                String      @id @default(uuid()) @db.Uuid
+  sessionHash       String      @unique @map("session_hash") @db.VarChar(64)
+  countryCode       String?     @map("country_code") @db.VarChar(5)
+  driveFolderId     String?     @map("drive_folder_id") @db.VarChar(255)
+  driveFolderPath   String?     @map("drive_folder_path") @db.VarChar(500)
+  storageUsedBytes  BigInt      @default(0) @map("storage_used_bytes")
+  maxStorageBytes   BigInt      @default(524288000) @map("max_storage_bytes")
+  encryptionKeyHash String?     @map("encryption_key_hash") @db.VarChar(128)
+  isActive          Boolean     @default(true) @map("is_active")
+  lastAccessed      DateTime    @default(now()) @map("last_accessed") @db.Timestamptz(6)
+  createdAt         DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  encounters        Encounter[]
+  files             VaultFile[]
+
+  @@map("health_vaults")
+}
+
+model VaultFile {
+  id                String          @id @default(uuid()) @db.Uuid
+  vaultId           String          @map("vault_id") @db.Uuid
+  fileName          String          @map("file_name") @db.VarChar(500)
+  fileType          ReportType      @default(other) @map("file_type")
+  mimeType          String?         @map("mime_type") @db.VarChar(100)
+  fileSizeBytes     Int?            @map("file_size_bytes")
+  driveFileId       String?         @map("drive_file_id") @db.VarChar(255)
+  driveWebLink      String?         @map("drive_web_link") @db.VarChar(1000)
+  thumbnailUrl      String?         @map("thumbnail_url") @db.VarChar(1000)
+  analysisId        String?         @map("analysis_id") @db.Uuid
+  aiSummary         String?         @map("ai_summary")
+  ocrText           String?         @map("ocr_text")
+  isProcessed       Boolean         @default(false) @map("is_processed")
+  sharedWithDoctors Int[]           @default([]) @map("shared_with_doctors")
+  accessExpiresAt   DateTime?       @map("access_expires_at") @db.Timestamptz(6)
+  isArchived        Boolean         @default(false) @map("is_archived")
+  uploadDate        DateTime        @default(now()) @map("upload_date") @db.Timestamptz(6)
+  createdAt         DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  analysis          AnalysisResult? @relation(fields: [analysisId], references: [id])
+  vault             HealthVault     @relation(fields: [vaultId], references: [id], onDelete: Cascade)
+
+  @@map("vault_files")
+}
+
+model Encounter {
+  id              String          @id @default(uuid()) @db.Uuid
+  sessionHash     String          @map("session_hash") @db.VarChar(64)
+  doctorId        Int             @map("doctor_id")
+  vaultId         String?         @map("vault_id") @db.Uuid
+  analysisId      String?         @map("analysis_id") @db.Uuid
+  leadLogId       String?         @map("lead_log_id") @db.Uuid
+  conditionSlug   String?         @map("condition_slug") @db.VarChar(255)
+  geographyId     Int?            @map("geography_id")
+  enquiryType     String          @default("opinion") @db.VarChar(50)
+  urgency         UrgencyLevel    @default(routine)
+  patientLanguage String          @default("en") @map("patient_language") @db.VarChar(5)
+  doctorLanguage  String          @default("en") @map("doctor_language") @db.VarChar(5)
+  status          EncounterStatus @default(pending)
+  caseDossier     Json            @default("{}") @map("case_dossier")
+  doctorNotes     String?         @map("doctor_notes")
+  doctorOpinion   String?         @map("doctor_opinion")
+  aiSecondOpinion String?         @map("ai_second_opinion")
+  respondedAt     DateTime?       @map("responded_at") @db.Timestamptz(6)
+  completedAt     DateTime?       @map("completed_at") @db.Timestamptz(6)
+  expiresAt       DateTime?       @map("expires_at") @db.Timestamptz(6)
+  responseTimeMs  Int?            @map("response_time_ms")
+  createdAt       DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  chatMessages    ChatMessage[]
+  analysis        AnalysisResult? @relation(fields: [analysisId], references: [id])
+  doctor          DoctorProvider  @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  geography       Geography?      @relation("EncounterGeo", fields: [geographyId], references: [id])
+  vault           HealthVault?    @relation(fields: [vaultId], references: [id])
+  enquiryLogs     EnquiryLog[]
+
+  @@index([doctorId, status])
+  @@index([sessionHash])
+  @@index([status, createdAt(sort: Desc)])
+  @@index([conditionSlug])
+  @@map("encounters")
+}
+
+model ChatMessage {
+  id               String      @id @default(uuid()) @db.Uuid
+  encounterId      String      @map("encounter_id") @db.Uuid
+  senderType       String      @map("sender_type") @db.VarChar(20)
+  senderId         String?     @map("sender_id") @db.VarChar(100)
+  content          String
+  contentType      MessageType @default(text) @map("content_type")
+  fileUrl          String?     @map("file_url") @db.VarChar(1000)
+  originalLanguage String?     @map("original_language") @db.VarChar(5)
+  translatedText   String?     @map("translated_text")
+  translatedTo     String?     @map("translated_to") @db.VarChar(5)
+  translationModel String?     @map("translation_model") @db.VarChar(100)
+  isRead           Boolean     @default(false) @map("is_read")
+  readAt           DateTime?   @map("read_at") @db.Timestamptz(6)
+  isDeleted        Boolean     @default(false) @map("is_deleted")
+  createdAt        DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  encounter        Encounter   @relation(fields: [encounterId], references: [id], onDelete: Cascade)
+
+  @@index([encounterId, createdAt])
+  @@map("chat_messages")
+}
+
+model SmartMatchNotification {
+  id               Int              @id @default(autoincrement())
+  sessionHash      String           @map("session_hash") @db.VarChar(64)
+  doctorId         Int              @map("doctor_id")
+  conditionSlug    String?          @map("condition_slug") @db.VarChar(255)
+  geographyId      Int?             @map("geography_id")
+  notificationType NotificationType @default(smart_match) @map("notification_type")
+  title            String?          @db.VarChar(500)
+  message          String?
+  isSent           Boolean          @default(false) @map("is_sent")
+  isRead           Boolean          @default(false) @map("is_read")
+  sentAt           DateTime?        @map("sent_at") @db.Timestamptz(6)
+  readAt           DateTime?        @map("read_at") @db.Timestamptz(6)
+  createdAt        DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  doctor           DoctorProvider   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  geography        Geography?       @relation("NotifGeo", fields: [geographyId], references: [id])
+
+  @@index([doctorId, isRead])
+  @@index([sessionHash])
+  @@index([createdAt(sort: Desc)])
+  @@map("smart_match_notifications")
+}
+
+model EnquiryLog {
+  id                Int               @id @default(autoincrement())
+  encounterId       String?           @map("encounter_id") @db.Uuid
+  geographyId       Int?              @map("geography_id")
+  conditionSlug     String?           @map("condition_slug") @db.VarChar(255)
+  doctorTier        SubscriptionTier? @map("doctor_tier")
+  responseTimeMs    Int?              @map("response_time_ms")
+  aiConfidenceScore Decimal?          @map("ai_confidence_score") @db.Decimal(4, 2)
+  outcome           String?           @db.VarChar(50)
+  revenueGenerated  Decimal           @default(0) @map("revenue_generated") @db.Decimal(10, 2)
+  createdAt         DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  encounter         Encounter?        @relation(fields: [encounterId], references: [id])
+  geography         Geography?        @relation("EnquiryGeo", fields: [geographyId], references: [id])
+
+  @@index([geographyId])
+  @@index([createdAt(sort: Desc)])
+  @@index([conditionSlug])
+  @@map("enquiry_logs")
+}
+
+model TranslationCache {
+  id             Int       @id @default(autoincrement())
+  sourceTextHash String    @map("source_text_hash") @db.VarChar(64)
+  sourceLanguage String    @default("en") @map("source_language") @db.VarChar(5)
+  targetLanguage String    @map("target_language") @db.VarChar(5)
+  sourceText     String    @map("source_text")
+  translatedText String    @map("translated_text")
+  translationApi String    @map("translation_api") @db.VarChar(50)
+  modelUsed      String?   @map("model_used") @db.VarChar(100)
+  qualityScore   Decimal?  @map("quality_score") @db.Decimal(4, 2)
+  isAudited      Boolean   @default(false) @map("is_audited")
+  auditedBy      String?   @map("audited_by") @db.VarChar(255)
+  auditedAt      DateTime? @map("audited_at") @db.Timestamptz(6)
+  tokenCost      Int       @default(0) @map("token_cost")
+  costUsd        Decimal   @default(0) @map("cost_usd") @db.Decimal(8, 6)
+  category       String    @default("medical") @db.VarChar(50)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@unique([sourceTextHash, targetLanguage])
+  @@map("translation_cache")
+}
+
+model MediaAsset {
+  id            String   @id @default(uuid()) @db.Uuid
+  conditionSlug String?  @map("condition_slug") @db.VarChar(255)
+  entityType    String   @default("condition") @map("entity_type") @db.VarChar(50)
+  entityId      Int?     @map("entity_id")
+  assetType     String   @default("render") @map("asset_type") @db.VarChar(50)
+  promptUsed    String?  @map("prompt_used")
+  generationApi String?  @map("generation_api") @db.VarChar(100)
+  sourceUrl     String?  @map("source_url") @db.VarChar(1000)
+  cdnUrl        String?  @map("cdn_url") @db.VarChar(1000)
+  thumbnailUrl  String?  @map("thumbnail_url") @db.VarChar(1000)
+  width         Int?
+  height        Int?
+  fileSizeBytes Int?     @map("file_size_bytes")
+  altText       String?  @map("alt_text") @db.VarChar(500)
+  stylePreset   String   @default("clinical-blue") @map("style_preset") @db.VarChar(50)
+  isActive      Boolean  @default(true) @map("is_active")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("media_assets")
+}
+
+model FooterTemplate {
+  id           Int        @id @default(autoincrement())
+  ruleName     String     @map("rule_name") @db.VarChar(255)
+  matchType    String     @map("match_type") @db.VarChar(50)
+  matchValue   String?    @map("match_value") @db.VarChar(255)
+  geographyId  Int?       @map("geography_id")
+  templateData Json       @default("{}") @map("template_data")
+  priority     Int        @default(0)
+  isActive     Boolean    @default(true) @map("is_active")
+  createdAt    DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  geography    Geography? @relation("FooterGeo", fields: [geographyId], references: [id])
+
+  @@map("footer_templates")
+}
+
+model SeoOverride {
+  id              Int       @id @default(autoincrement())
+  urlPattern      String    @unique @map("url_pattern") @db.VarChar(2000)
+  metaTitle       String?   @map("meta_title") @db.VarChar(500)
+  metaDescription String?   @map("meta_description") @db.VarChar(500)
+  h1Override      String?   @map("h1_override") @db.VarChar(500)
+  jsonLdExtra     Json?     @map("json_ld_extra")
+  canonicalUrl    String?   @map("canonical_url") @db.VarChar(2000)
+  noIndex         Boolean   @default(false) @map("no_index")
+  noFollow        Boolean   @default(false) @map("no_follow")
+  ogImage         String?   @map("og_image") @db.VarChar(1000)
+  priorityScore   Decimal   @default(0.5) @map("priority_score") @db.Decimal(3, 1)
+  autoGenerated   Boolean   @default(false) @map("auto_generated")
+  lastChecked     DateTime? @map("last_checked") @db.Timestamptz(6)
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("seo_overrides")
+}
+
+model KeywordSearchLog {
+  id              Int      @id @default(autoincrement())
+  query           String   @db.VarChar(500)
+  normalizedQuery String?  @map("normalized_query") @db.VarChar(500)
+  sessionHash     String?  @map("session_hash") @db.VarChar(64)
+  countryCode     String?  @map("country_code") @db.VarChar(5)
+  citySlug        String?  @map("city_slug") @db.VarChar(255)
+  resultsCount    Int      @default(0) @map("results_count")
+  clickedResult   String?  @map("clicked_result") @db.VarChar(500)
+  hasDoctors      Boolean  @default(true) @map("has_doctors")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("keyword_search_logs")
+}
+
+model Icd10SpecialtyMap {
+  icdCode       String            @id @map("icd_code") @db.VarChar(20)
+  conditionName String            @map("condition_name") @db.VarChar(500)
+  specialty     String?           @db.VarChar(100)
+  bodySystem    String?           @map("body_system") @db.VarChar(100)
+  severityLevel String            @default("moderate") @map("severity_level") @db.VarChar(20)
+  treatments    String[]
+  mappedBy      String            @default("llm") @map("mapped_by") @db.VarChar(50)
+  conditionId   Int?              @map("condition_id")
+  createdAt     DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  condition     MedicalCondition? @relation(fields: [conditionId], references: [id])
+
+  @@map("icd10_specialty_map")
+}
+
+model ConditionContent {
+  id                  Int       @id @default(autoincrement())
+  conditionSlug       String    @map("condition_slug") @db.VarChar(255)
+  countryCode         String    @map("country_code") @db.VarChar(5)
+  citySlug            String    @default("") @map("city_slug") @db.VarChar(255)
+  language            String    @default("en") @db.VarChar(5)
+  h1Title             String?   @map("h1_title") @db.VarChar(500)
+  aiOpinion           String?   @map("ai_opinion")
+  localInsights       Json?     @map("local_insights")
+  treatmentGuide      String?   @map("treatment_guide")
+  recoveryTips        String?   @map("recovery_tips")
+  qualityScore        Decimal?  @map("quality_score") @db.Decimal(3, 2)
+  createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  faqSchema           Json?     @map("faq_schema")
+  lastGenerated       DateTime? @map("last_generated") @db.Timestamptz(6)
+  llmSummary          String?   @map("llm_summary")
+  metaSummary         String?   @map("meta_summary") @db.VarChar(500)
+  needsRefresh        Boolean   @default(false) @map("needs_refresh")
+  // Enhanced SEO Fields
+  riskFactors         Json?     @map("risk_factors")
+  prevention          Json?     @map("prevention")
+  whenToSeeDoctor     String?   @map("when_to_see_doctor")
+  causes              Json?     @map("causes")
+  diagnosis           String?   @map("diagnosis")
+  prognosis           String?   @map("prognosis")
+  complications       Json?     @map("complications")
+  relatedConditions   Json?     @map("related_conditions")
+  seoKeywords         Json?     @map("seo_keywords")
+  bestDoctorSection   String?   @map("best_doctor_section")
+  treatmentInLocation String?   @map("treatment_in_location")
+  hospitalRecommend   Json?     @map("hospital_recommend")
+
+  @@unique([conditionSlug, countryCode, citySlug, language])
+  @@map("condition_content")
+}
+
+model TreatmentCost {
+  id            Int       @id @default(autoincrement())
+  conditionSlug String    @map("condition_slug") @db.VarChar(255)
+  countryCode   String    @map("country_code") @db.VarChar(5)
+  citySlug      String?   @map("city_slug") @db.VarChar(255)
+  treatmentName String    @map("treatment_name") @db.VarChar(255)
+  minCost       Decimal   @map("min_cost") @db.Decimal(12, 2)
+  maxCost       Decimal   @map("max_cost") @db.Decimal(12, 2)
+  avgCost       Decimal   @map("avg_cost") @db.Decimal(12, 2)
+  currency      String    @default("INR") @db.VarChar(3)
+  source        String?   @db.VarChar(100)
+  validFrom     DateTime? @map("valid_from") @db.Timestamptz(6)
+  validUntil    DateTime? @map("valid_until") @db.Timestamptz(6)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  confidence    Decimal?  @db.Decimal(3, 2)
+  dataSource    String?   @map("data_source") @db.VarChar(50)
+
+  @@unique([conditionSlug, countryCode, citySlug, treatmentName])
+  @@map("treatment_costs")
+}
+
+model KeywordIntent {
+  id             Int      @id @default(autoincrement())
+  conditionSlug  String   @map("condition_slug") @db.VarChar(255)
+  citySlug       String?  @map("city_slug") @db.VarChar(255)
+  countryCode    String   @default("US") @map("country_code") @db.VarChar(5)
+  primaryKeyword String   @map("primary_keyword") @db.VarChar(500)
+  intentType     String   @default("informational") @map("intent_type") @db.VarChar(50)
+  isValidated    Boolean  @default(false) @map("is_validated")
+  gscImpressions Int?     @map("gsc_impressions")
+  gscClicks      Int?     @map("gsc_clicks")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@unique([conditionSlug, citySlug, countryCode])
+  @@map("keyword_intents")
+}
+
+model ContentBatch {
+  id         String   @id @default(cuid())
+  batchName  String   @map("batch_name") @db.VarChar(255)
+  status     String   @default("pending") @db.VarChar(50)
+  totalItems Int      @default(0) @map("total_items")
+  processed  Int      @default(0)
+  failed     Int      @default(0)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("content_batches")
+}
+
+model Advertiser {
+  id               Int             @id @default(autoincrement())
+  companyName      String          @map("company_name") @db.VarChar(200)
+  companyType      String          @map("company_type") @db.VarChar(50)
+  slug             String          @unique @db.VarChar(200)
+  email            String          @unique @db.VarChar(200)
+  phone            String?         @db.VarChar(30)
+  website          String?         @db.VarChar(500)
+  logo             String?         @db.VarChar(500)
+  address          String?
+  geographyId      Int?            @map("geography_id")
+  billingEmail     String?         @map("billing_email") @db.VarChar(200)
+  billingAddress   String?         @map("billing_address")
+  taxId            String?         @map("tax_id") @db.VarChar(50)
+  currency         String          @default("USD") @db.VarChar(3)
+  stripeCustomerId String?         @unique @map("stripe_customer_id") @db.VarChar(100)
+  isVerified       Boolean         @default(false) @map("is_verified")
+  isActive         Boolean         @default(true) @map("is_active")
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+  campaigns        AdCampaign[]
+  creatives        AdCreative[]
+  enquiries        AdEnquiry[]
+  transactions     AdTransaction[]
+  geography        Geography?      @relation(fields: [geographyId], references: [id])
+
+  @@index([companyType, isActive])
+  @@index([geographyId])
+  @@map("advertisers")
+}
+
+model AdCampaign {
+  id                Int                 @id @default(autoincrement())
+  advertiserId      Int                 @map("advertiser_id")
+  name              String              @db.VarChar(200)
+  description       String?
+  objective         String              @db.VarChar(50)
+  billingModel      BillingModel        @default(cpm) @map("billing_model")
+  dailyBudget       Decimal?            @map("daily_budget") @db.Decimal(10, 2)
+  totalBudget       Decimal             @map("total_budget") @db.Decimal(10, 2)
+  spentAmount       Decimal             @default(0) @map("spent_amount") @db.Decimal(10, 2)
+  bidAmount         Decimal?            @map("bid_amount") @db.Decimal(10, 4)
+  currency          String              @default("USD") @db.VarChar(3)
+  startDate         DateTime            @map("start_date")
+  endDate           DateTime?           @map("end_date")
+  targetCountries   String[]            @map("target_countries")
+  targetCities      String[]            @map("target_cities")
+  targetConditions  String[]            @map("target_conditions")
+  targetSpecialties String[]            @map("target_specialties")
+  targetLanguages   String[]            @map("target_languages")
+  status            AdStatus            @default(draft)
+  reviewNotes       String?             @map("review_notes")
+  reviewedAt        DateTime?           @map("reviewed_at")
+  reviewedBy        String?             @map("reviewed_by") @db.VarChar(100)
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
+  advertiser        Advertiser          @relation(fields: [advertiserId], references: [id], onDelete: Cascade)
+  clicks            AdClick[]
+  conversions       AdConversion[]
+  dailyMetrics      AdDailyMetrics[]
+  impressions       AdImpression[]
+  adPlacements      AdPlacementConfig[]
+
+  @@index([advertiserId, status])
+  @@index([status, startDate, endDate])
+  @@map("ad_campaigns")
+}
+
+model AdCreative {
+  id             Int                 @id @default(autoincrement())
+  advertiserId   Int                 @map("advertiser_id")
+  name           String              @db.VarChar(200)
+  adType         AdType              @map("ad_type")
+  headline       String?             @db.VarChar(100)
+  description    String?             @db.VarChar(300)
+  ctaText        String?             @map("cta_text") @db.VarChar(30)
+  destinationUrl String              @map("destination_url") @db.VarChar(500)
+  imageUrl       String?             @map("image_url") @db.VarChar(500)
+  imageAlt       String?             @map("image_alt") @db.VarChar(200)
+  logoUrl        String?             @map("logo_url") @db.VarChar(500)
+  width          Int?
+  height         Int?
+  languageCode   String              @default("en") @map("language_code") @db.VarChar(5)
+  isActive       Boolean             @default(true) @map("is_active")
+  createdAt      DateTime            @default(now()) @map("created_at")
+  updatedAt      DateTime            @updatedAt @map("updated_at")
+  advertiser     Advertiser          @relation(fields: [advertiserId], references: [id], onDelete: Cascade)
+  placements     AdPlacementConfig[]
+
+  @@index([advertiserId, adType, isActive])
+  @@map("ad_creatives")
+}
+
+model AdPlacementConfig {
+  id         Int         @id @default(autoincrement())
+  campaignId Int         @map("campaign_id")
+  creativeId Int         @map("creative_id")
+  placement  AdPlacement
+  priority   Int         @default(100)
+  createdAt  DateTime    @default(now()) @map("created_at")
+  campaign   AdCampaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  creative   AdCreative  @relation(fields: [creativeId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, creativeId, placement])
+  @@index([placement, priority])
+  @@map("ad_placement_configs")
+}
+
+model AdImpression {
+  id            String      @id @default(uuid()) @db.Uuid
+  campaignId    Int         @map("campaign_id")
+  sessionHash   String      @map("session_hash") @db.VarChar(64)
+  placement     AdPlacement
+  pageUrl       String      @map("page_url") @db.VarChar(500)
+  countryCode   String?     @map("country_code") @db.VarChar(2)
+  citySlug      String?     @map("city_slug") @db.VarChar(100)
+  conditionSlug String?     @map("condition_slug") @db.VarChar(200)
+  languageCode  String?     @map("language_code") @db.VarChar(5)
+  createdAt     DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  campaign      AdCampaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId, createdAt])
+  @@index([sessionHash])
+  @@index([placement, createdAt])
+  @@map("ad_impressions")
+}
+
+model AdClick {
+  id             String      @id @default(uuid()) @db.Uuid
+  campaignId     Int         @map("campaign_id")
+  impressionId   String?     @map("impression_id") @db.Uuid
+  sessionHash    String      @map("session_hash") @db.VarChar(64)
+  placement      AdPlacement
+  pageUrl        String      @map("page_url") @db.VarChar(500)
+  destinationUrl String      @map("destination_url") @db.VarChar(500)
+  countryCode    String?     @map("country_code") @db.VarChar(2)
+  citySlug       String?     @map("city_slug") @db.VarChar(100)
+  createdAt      DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  campaign       AdCampaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId, createdAt])
+  @@index([sessionHash])
+  @@map("ad_clicks")
+}
+
+model AdConversion {
+  id              String     @id @default(uuid()) @db.Uuid
+  campaignId      Int        @map("campaign_id")
+  clickId         String?    @map("click_id") @db.Uuid
+  conversionType  String     @map("conversion_type") @db.VarChar(50)
+  conversionValue Decimal?   @map("conversion_value") @db.Decimal(10, 2)
+  sessionHash     String     @map("session_hash") @db.VarChar(64)
+  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  campaign        AdCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId, createdAt])
+  @@map("ad_conversions")
+}
+
+model AdDailyMetrics {
+  id                 Int        @id @default(autoincrement())
+  campaignId         Int        @map("campaign_id")
+  date               DateTime   @db.Date
+  impressions        Int        @default(0)
+  clicks             Int        @default(0)
+  conversions        Int        @default(0)
+  spend              Decimal    @default(0) @db.Decimal(10, 2)
+  ctr                Decimal?   @db.Decimal(5, 4)
+  cpc                Decimal?   @db.Decimal(10, 4)
+  cpm                Decimal?   @db.Decimal(10, 4)
+  placementBreakdown Json?      @map("placement_breakdown")
+  createdAt          DateTime   @default(now()) @map("created_at")
+  updatedAt          DateTime   @updatedAt @map("updated_at")
+  campaign           AdCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, date])
+  @@index([campaignId, date])
+  @@map("ad_daily_metrics")
+}
+
+model AdEnquiry {
+  id               Int         @id @default(autoincrement())
+  advertiserId     Int?        @map("advertiser_id")
+  companyName      String      @map("company_name") @db.VarChar(200)
+  companyType      String      @map("company_type") @db.VarChar(50)
+  contactName      String      @map("contact_name") @db.VarChar(100)
+  email            String      @db.VarChar(200)
+  phone            String?     @db.VarChar(30)
+  website          String?     @db.VarChar(500)
+  adBudget         String?     @map("ad_budget") @db.VarChar(50)
+  targetRegions    String[]    @map("target_regions")
+  targetConditions String[]    @map("target_conditions")
+  message          String?
+  source           String      @default("website") @db.VarChar(50)
+  utmSource        String?     @map("utm_source") @db.VarChar(100)
+  utmMedium        String?     @map("utm_medium") @db.VarChar(100)
+  utmCampaign      String?     @map("utm_campaign") @db.VarChar(100)
+  status           String      @default("new") @db.VarChar(30)
+  assignedTo       String?     @map("assigned_to") @db.VarChar(100)
+  notes            String?
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+  contactedAt      DateTime?   @map("contacted_at")
+  advertiser       Advertiser? @relation(fields: [advertiserId], references: [id])
+
+  @@index([status, createdAt])
+  @@map("ad_enquiries")
+}
+
+model AdTransaction {
+  id              Int        @id @default(autoincrement())
+  advertiserId    Int        @map("advertiser_id")
+  type            String     @db.VarChar(30)
+  amount          Decimal    @db.Decimal(10, 2)
+  currency        String     @default("USD") @db.VarChar(3)
+  balanceAfter    Decimal    @map("balance_after") @db.Decimal(10, 2)
+  campaignId      Int?       @map("campaign_id")
+  stripePaymentId String?    @map("stripe_payment_id") @db.VarChar(100)
+  invoiceNumber   String?    @map("invoice_number") @db.VarChar(50)
+  description     String?    @db.VarChar(500)
+  createdAt       DateTime   @default(now()) @map("created_at")
+  advertiser      Advertiser @relation(fields: [advertiserId], references: [id], onDelete: Cascade)
+
+  @@index([advertiserId, createdAt])
+  @@map("ad_transactions")
+}
+
+model AdPlacementPricing {
+  id              Int         @id @default(autoincrement())
+  placement       AdPlacement
+  countryCode     String?     @map("country_code") @db.VarChar(2)
+  minCpm          Decimal     @map("min_cpm") @db.Decimal(10, 4)
+  suggestedCpm    Decimal     @map("suggested_cpm") @db.Decimal(10, 4)
+  minCpc          Decimal     @map("min_cpc") @db.Decimal(10, 4)
+  suggestedCpc    Decimal     @map("suggested_cpc") @db.Decimal(10, 4)
+  flatRateMonthly Decimal?    @map("flat_rate_monthly") @db.Decimal(10, 2)
+  currency        String      @default("USD") @db.VarChar(3)
+  isActive        Boolean     @default(true) @map("is_active")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  @@unique([placement, countryCode])
+  @@map("ad_placement_pricing")
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// DIAGNOSTICS & LAB TESTS SYSTEM
+// ══════════════════════════════════════════════════════════════════════════════
+
+model DiagnosticCategory {
+  id              Int                  @id @default(autoincrement())
+  slug            String               @unique @db.VarChar(100)
+  name            String               @db.VarChar(200)
+  description     String?
+  icon            String?              @db.VarChar(50) // emoji or icon name
+  parentId        Int?                 @map("parent_id")
+  displayOrder    Int                  @default(0) @map("display_order")
+  metaTitle       String?              @map("meta_title") @db.VarChar(160)
+  metaDescription String?              @map("meta_description") @db.VarChar(300)
+  isActive        Boolean              @default(true) @map("is_active")
+  createdAt       DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  parent          DiagnosticCategory?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children        DiagnosticCategory[] @relation("CategoryHierarchy")
+  tests           DiagnosticTest[]
+
+  @@index([parentId])
+  @@index([isActive, displayOrder])
+  @@map("diagnostic_categories")
+}
+
+model DiagnosticTest {
+  id                      Int                     @id @default(autoincrement())
+  slug                    String                  @unique @db.VarChar(255)
+  name                    String                  @db.VarChar(300)
+  shortName               String?                 @map("short_name") @db.VarChar(100)
+  aliases                 String[]                @default([]) // alternate names for search
+  categoryId              Int                     @map("category_id")
+  testType                DiagnosticTestType      @default(lab_test) @map("test_type")
+  description             String?
+  sampleType              String?                 @map("sample_type") @db.VarChar(100) // blood, urine, tissue, etc.
+  fastingRequired         Boolean                 @default(false) @map("fasting_required")
+  fastingHours            Int?                    @map("fasting_hours")
+  preparationInstructions String?                 @map("preparation_instructions")
+  reportTimeHours         Int?                    @map("report_time_hours") // typical turnaround
+  normalRanges            Json                    @default("{}") @map("normal_ranges") // age/gender specific ranges
+  relatedConditions       String[]                @default([]) @map("related_conditions") // condition slugs
+  relatedTests            Int[]                   @default([]) @map("related_tests") // test IDs often ordered together
+  keywords                String[]                @default([]) // SEO keywords
+  bodySystem              String?                 @map("body_system") @db.VarChar(100)
+  specialistType          String?                 @map("specialist_type") @db.VarChar(100)
+  homeCollectionPossible  Boolean                 @default(true) @map("home_collection_possible")
+  metaTitle               String?                 @map("meta_title") @db.VarChar(160)
+  metaDescription         String?                 @map("meta_description") @db.VarChar(300)
+  schemaMarkup            Json?                   @map("schema_markup")
+  avgPriceInr             Decimal?                @map("avg_price_inr") @db.Decimal(10, 2)
+  avgPriceUsd             Decimal?                @map("avg_price_usd") @db.Decimal(10, 2)
+  isActive                Boolean                 @default(true) @map("is_active")
+  isFeatured              Boolean                 @default(false) @map("is_featured")
+  searchVolume            Int?                    @map("search_volume") // monthly search volume
+  createdAt               DateTime                @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime                @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  category                DiagnosticCategory      @relation(fields: [categoryId], references: [id])
+  prices                  DiagnosticTestPrice[]
+  packageTests            DiagnosticPackageTest[]
+  bookings                DiagnosticBooking[]
+  localizedContent        DiagnosticTestContent[]
+
+  @@index([categoryId, isActive])
+  @@index([testType, isActive])
+  @@index([isFeatured, isActive])
+  @@index([bodySystem])
+  @@map("diagnostic_tests")
+}
+
+model DiagnosticTestContent {
+  id              Int            @id @default(autoincrement())
+  testId          Int            @map("test_id")
+  languageCode    String         @map("language_code") @db.VarChar(5)
+  geographyId     Int?           @map("geography_id")
+  title           String         @db.VarChar(300)
+  description     String?
+  preparation     String? // localized preparation instructions
+  interpretation  String? // how to read results
+  whenToGetTested String?        @map("when_to_get_tested")
+  metaTitle       String?        @map("meta_title") @db.VarChar(160)
+  metaDescription String?        @map("meta_description") @db.VarChar(300)
+  status          ContentStatus  @default(ai_draft)
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  test            DiagnosticTest @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  @@unique([testId, languageCode, geographyId])
+  @@index([languageCode, status])
+  @@map("diagnostic_test_content")
+}
+
+model DiagnosticProvider {
+  id                      Int                    @id @default(autoincrement())
+  slug                    String                 @unique @db.VarChar(255)
+  name                    String                 @db.VarChar(300)
+  providerType            DiagnosticProviderType @default(lab) @map("provider_type")
+  description             String?
+  logo                    String?                @db.VarChar(500)
+  coverImage              String?                @map("cover_image") @db.VarChar(500)
+  geographyId             Int?                   @map("geography_id")
+  address                 String?                @db.VarChar(500)
+  phone                   String?                @db.VarChar(20)
+  email                   String?                @db.VarChar(200)
+  website                 String?                @db.VarChar(500)
+  operatingHours          Json                   @default("{}") @map("operating_hours")
+  accreditations          String[]               @default([]) // NABL, CAP, JCI, etc.
+  servicesOffered         String[]               @default([]) @map("services_offered")
+  homeCollectionAvailable Boolean                @default(false) @map("home_collection_available")
+  homeCollectionFee       Decimal?               @map("home_collection_fee") @db.Decimal(10, 2)
+  homeCollectionAreas     String[]               @default([]) @map("home_collection_areas") // area slugs
+  onlineReportsAvailable  Boolean                @default(true) @map("online_reports_available")
+  reportDeliveryMethods   String[]               @default([]) @map("report_delivery_methods")
+  partnerDiscount         Decimal?               @map("partner_discount") @db.Decimal(5, 2) // % discount via AIHealz
+  partnerCommission       Decimal?               @map("partner_commission") @db.Decimal(5, 2) // our commission %
+  isPartner               Boolean                @default(false) @map("is_partner") // official partner
+  isVerified              Boolean                @default(false) @map("is_verified")
+  subscriptionTier        SubscriptionTier       @default(free) @map("subscription_tier")
+  rating                  Decimal?               @db.Decimal(2, 1)
+  reviewCount             Int                    @default(0) @map("review_count")
+  totalBookings           Int                    @default(0) @map("total_bookings")
+  latitude                Decimal?               @db.Decimal(10, 7)
+  longitude               Decimal?               @db.Decimal(10, 7)
+  googlePlaceId           String?                @unique @map("google_place_id") @db.VarChar(255)
+  images                  String[]               @default([])
+  schemaMarkup            Json?                  @map("schema_markup")
+  isActive                Boolean                @default(true) @map("is_active")
+  createdAt               DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime               @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  geography               Geography?             @relation(fields: [geographyId], references: [id])
+  testPrices              DiagnosticTestPrice[]
+  packages                DiagnosticPackage[]
+  bookings                DiagnosticBooking[]
+  reviews                 DiagnosticReview[]
+
+  @@index([geographyId, isActive])
+  @@index([providerType, isActive])
+  @@index([isPartner, isActive])
+  @@index([rating(sort: Desc)])
+  @@map("diagnostic_providers")
+}
+
+model DiagnosticTestPrice {
+  id              Int                @id @default(autoincrement())
+  testId          Int                @map("test_id")
+  providerId      Int                @map("provider_id")
+  price           Decimal            @db.Decimal(10, 2)
+  currency        String             @default("INR") @db.VarChar(3)
+  mrpPrice        Decimal?           @map("mrp_price") @db.Decimal(10, 2) // original price before discount
+  discountPercent Decimal?           @map("discount_percent") @db.Decimal(5, 2)
+  reportTimeHours Int?               @map("report_time_hours") // provider-specific turnaround
+  homeCollection  Boolean            @default(false) @map("home_collection")
+  isActive        Boolean            @default(true) @map("is_active")
+  lastUpdated     DateTime           @default(now()) @map("last_updated") @db.Timestamptz(6)
+  test            DiagnosticTest     @relation(fields: [testId], references: [id], onDelete: Cascade)
+  provider        DiagnosticProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@unique([testId, providerId])
+  @@index([providerId, isActive])
+  @@index([price])
+  @@map("diagnostic_test_prices")
+}
+
+model DiagnosticPackage {
+  id              Int                     @id @default(autoincrement())
+  slug            String                  @unique @db.VarChar(255)
+  name            String                  @db.VarChar(300)
+  providerId      Int                     @map("provider_id")
+  description     String?
+  packageType     DiagnosticPackageType   @default(health_checkup) @map("package_type")
+  targetAudience  String?                 @map("target_audience") @db.VarChar(100) // men, women, seniors, etc.
+  ageGroupMin     Int?                    @map("age_group_min")
+  ageGroupMax     Int?                    @map("age_group_max")
+  price           Decimal                 @db.Decimal(10, 2)
+  currency        String                  @default("INR") @db.VarChar(3)
+  mrpPrice        Decimal?                @map("mrp_price") @db.Decimal(10, 2)
+  discountPercent Decimal?                @map("discount_percent") @db.Decimal(5, 2)
+  testCount       Int                     @default(0) @map("test_count")
+  reportTimeHours Int?                    @map("report_time_hours")
+  fastingRequired Boolean                 @default(false) @map("fasting_required")
+  homeCollection  Boolean                 @default(false) @map("home_collection")
+  isFeatured      Boolean                 @default(false) @map("is_featured")
+  displayOrder    Int                     @default(0) @map("display_order")
+  isActive        Boolean                 @default(true) @map("is_active")
+  createdAt       DateTime                @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime                @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  provider        DiagnosticProvider      @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  tests           DiagnosticPackageTest[]
+  bookings        DiagnosticBooking[]
+
+  @@index([providerId, isActive])
+  @@index([packageType, isActive])
+  @@index([isFeatured, isActive])
+  @@map("diagnostic_packages")
+}
+
+model DiagnosticPackageTest {
+  id           Int               @id @default(autoincrement())
+  packageId    Int               @map("package_id")
+  testId       Int               @map("test_id")
+  displayOrder Int               @default(0) @map("display_order")
+  package      DiagnosticPackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  test         DiagnosticTest    @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  @@unique([packageId, testId])
+  @@map("diagnostic_package_tests")
+}
+
+model DiagnosticBooking {
+  id                String                  @id @default(uuid()) @db.Uuid
+  providerId        Int                     @map("provider_id")
+  testId            Int?                    @map("test_id") // null if booking a package
+  packageId         Int?                    @map("package_id")
+  sessionHash       String?                 @map("session_hash") @db.VarChar(64)
+  patientName       String                  @map("patient_name") @db.VarChar(200)
+  patientPhone      String                  @map("patient_phone") @db.VarChar(20)
+  patientEmail      String?                 @map("patient_email") @db.VarChar(200)
+  patientAge        Int?                    @map("patient_age")
+  patientGender     String?                 @map("patient_gender") @db.VarChar(20)
+  collectionType    CollectionType          @default(walk_in) @map("collection_type")
+  collectionAddress String?                 @map("collection_address") @db.VarChar(500)
+  collectionSlot    DateTime?               @map("collection_slot") @db.Timestamptz(6)
+  geographyId       Int?                    @map("geography_id")
+  price             Decimal                 @db.Decimal(10, 2)
+  currency          String                  @default("INR") @db.VarChar(3)
+  discountApplied   Decimal?                @map("discount_applied") @db.Decimal(10, 2)
+  finalPrice        Decimal                 @map("final_price") @db.Decimal(10, 2)
+  status            DiagnosticBookingStatus @default(pending)
+  providerConfirmed Boolean                 @default(false) @map("provider_confirmed")
+  paymentStatus     PaymentStatus           @default(pending) @map("payment_status")
+  paymentId         String?                 @map("payment_id") @db.VarChar(100)
+  reportUrl         String?                 @map("report_url") @db.VarChar(500)
+  reportUploadedAt  DateTime?               @map("report_uploaded_at") @db.Timestamptz(6)
+  utmSource         String?                 @map("utm_source") @db.VarChar(100)
+  utmMedium         String?                 @map("utm_medium") @db.VarChar(100)
+  utmCampaign       String?                 @map("utm_campaign") @db.VarChar(100)
+  notes             String?
+  createdAt         DateTime                @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime                @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  provider          DiagnosticProvider      @relation(fields: [providerId], references: [id])
+  test              DiagnosticTest?         @relation(fields: [testId], references: [id])
+  package           DiagnosticPackage?      @relation(fields: [packageId], references: [id])
+
+  @@index([providerId, status])
+  @@index([status, createdAt])
+  @@index([sessionHash])
+  @@index([patientPhone])
+  @@map("diagnostic_bookings")
+}
+
+model DiagnosticReview {
+  id             Int                @id @default(autoincrement())
+  providerId     Int                @map("provider_id")
+  bookingId      String?            @map("booking_id") @db.Uuid
+  reviewerName   String             @map("reviewer_name") @db.VarChar(100)
+  rating         Int // 1-5
+  title          String?            @db.VarChar(200)
+  review         String?
+  pros           String[]           @default([])
+  cons           String[]           @default([])
+  serviceRating  Int?               @map("service_rating") // 1-5
+  reportQuality  Int?               @map("report_quality") // 1-5
+  punctuality    Int? // 1-5
+  homeCollection Int?               @map("home_collection") // 1-5
+  isVerified     Boolean            @default(false) @map("is_verified")
+  isVisible      Boolean            @default(true) @map("is_visible")
+  helpfulCount   Int                @default(0) @map("helpful_count")
+  createdAt      DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  provider       DiagnosticProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId, isVisible])
+  @@index([rating])
+  @@map("diagnostic_reviews")
+}
+
+// New enums for diagnostics
+enum DiagnosticTestType {
+  lab_test // blood, urine tests
+  imaging // X-ray, CT, MRI, Ultrasound
+  pathology // biopsy, histopathology
+  genetic // DNA, genetic screening
+  cardiac // ECG, Echo, stress test
+  pulmonary // PFT, spirometry
+  endoscopy // gastroscopy, colonoscopy
+  other
+}
+
+enum DiagnosticProviderType {
+  lab // pathology lab
+  imaging_center // radiology center
+  hospital // hospital diagnostic dept
+  clinic // clinic with diagnostics
+  home_collection // mobile collection service
+  full_service // all diagnostic services
+}
+
+enum DiagnosticPackageType {
+  health_checkup // full body checkup
+  disease_specific // diabetes panel, cardiac panel
+  organ_specific // liver, kidney, thyroid
+  age_specific // pediatric, geriatric
+  gender_specific // women's health, men's health
+  lifestyle // fitness, wellness
+  preventive // cancer screening
+  corporate // employee health checks
+}
+
+enum CollectionType {
+  walk_in
+  home_collection
+  camp // health camp
+}
+
+enum DiagnosticBookingStatus {
+  pending
+  confirmed
+  sample_collected
+  processing
+  report_ready
+  completed
+  cancelled
+  no_show
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  partial
+  refunded
+  failed
+}
+
+enum GeoLevel {
+  continent
+  country
+  state
+  city
+  locality
+}
+
+enum SubscriptionTier {
+  free
+  premium
+  enterprise
+}
+
+enum ContentStatus {
+  ai_draft
+  under_review
+  verified
+  published
+}
+
+enum UrgencyLevel {
+  routine
+  urgent
+  emergency
+}
+
+enum ReportType {
+  blood_work
+  imaging
+  pathology
+  prescription
+  other
+}
+
+enum QueueStatus {
+  pending
+  approved
+  rejected
+  needs_fix
+}
+
+enum SubscriptionStatus {
+  trial
+  active
+  past_due
+  cancelled
+  expired
+}
+
+enum OnboardingStatusEnum {
+  pending
+  in_progress
+  completed
+  abandoned
+}
+
+enum VerificationStatusEnum {
+  pending
+  verified
+  rejected
+  inconclusive
+  expired
+}
+
+enum LeadIntent {
+  high
+  medium
+  low
+}
+
+enum TeleconsultStatus {
+  scheduled
+  in_progress
+  completed
+  cancelled
+  no_show
+}
+
+enum EncounterStatus {
+  pending
+  accepted
+  in_progress
+  completed
+  declined
+  expired
+}
+
+enum MessageType {
+  text
+  file
+  system
+  ai_summary
+  translation
+}
+
+enum NotificationType {
+  smart_match
+  enquiry
+  chat
+  report_ready
+  badge_earned
+}
+
+enum AdType {
+  display_banner
+  sidebar_sticky
+  inline_content
+  sponsored_listing
+  featured_badge
+}
+
+enum AdPlacement {
+  condition_sidebar
+  condition_inline
+  homepage_hero
+  homepage_featured
+  search_results_top
+  search_results_inline
+  doctor_profile_sidebar
+  treatment_page_sidebar
+  global_header_banner
+  global_footer_banner
+}
+
+enum AdStatus {
+  draft
+  pending_review
+  approved
+  active
+  paused
+  rejected
+  expired
+  completed
+}
+
+enum BillingModel {
+  cpm
+  cpc
+  cpa
+  flat_rate
+}
+
+// ════════════════════════════════════════════════════════════════════════════════
+// HOSPITALS SYSTEM
+// ════════════════════════════════════════════════════════════════════════════════
+
+model Hospital {
+  id              Int          @id @default(autoincrement())
+  slug            String       @unique @db.VarChar(255)
+  name            String       @db.VarChar(500)
+  hospitalType    HospitalType @default(private) @map("hospital_type")
+  establishedYear Int?         @map("established_year")
+  description     String?
+  tagline         String?      @db.VarChar(300)
+  logo            String?      @db.VarChar(500)
+  coverImage      String?      @map("cover_image") @db.VarChar(500)
+  images          String[]     @default([])
+  videoUrl        String?      @map("video_url") @db.VarChar(500)
+
+  // Location
+  geographyId Int?     @map("geography_id")
+  address     String?  @db.VarChar(500)
+  city        String?  @db.VarChar(100)
+  state       String?  @db.VarChar(100)
+  country     String?  @db.VarChar(100)
+  pincode     String?  @db.VarChar(20)
+  latitude    Decimal? @db.Decimal(10, 7)
+  longitude   Decimal? @db.Decimal(10, 7)
+
+  // Contact
+  phone          String? @db.VarChar(50)
+  emergencyPhone String? @map("emergency_phone") @db.VarChar(50)
+  email          String? @db.VarChar(200)
+  website        String? @db.VarChar(500)
+  googlePlaceId  String? @unique @map("google_place_id") @db.VarChar(255)
+
+  // Capacity & Infrastructure
+  bedCount                 Int?    @map("bed_count")
+  icuBeds                  Int?    @map("icu_beds")
+  operationTheaters        Int?    @map("operation_theaters")
+  emergencyBeds            Int?    @map("emergency_beds")
+  ambulanceCount           Int?    @map("ambulance_count")
+  bloodBank                Boolean @default(false) @map("blood_bank")
+  pharmacy24x7             Boolean @default(false) @map("pharmacy_24x7")
+  cafeteria                Boolean @default(false)
+  parking                  Boolean @default(false)
+  wifi                     Boolean @default(false)
+  airportPickup            Boolean @default(false) @map("airport_pickup")
+  translatorServices       Boolean @default(false) @map("translator_services")
+  internationalPatientDesk Boolean @default(false) @map("international_patient_desk")
+
+  // Accreditations & Recognition
+  accreditations String[] @default([]) // NABH, JCI, NABL, ISO, etc.
+  awards         Json     @default("[]") // Array of {year, award, org}
+  rankings       Json     @default("[]") // Array of {year, rank, category, org}
+
+  // Ownership & Management
+  ownershipType      String? @map("ownership_type") @db.VarChar(100) // Trust, Corporate, Government, Public
+  parentOrganization String? @map("parent_organization") @db.VarChar(300)
+  ownerName          String? @map("owner_name") @db.VarChar(300)
+  managingDirector   String? @map("managing_director") @db.VarChar(300)
+  ceo                String? @db.VarChar(300)
+  medicalDirector    String? @map("medical_director") @db.VarChar(300)
+
+  // Notable Info
+  notablePatients Json @default("[]") @map("notable_patients") // Array of {name, type, year, treatedBy, condition}
+  scandals        Json @default("[]") // Array of {year, title, description, outcome}
+  mediaFeatures   Json @default("[]") @map("media_features") // Array of {title, source, url, date}
+
+  // Reviews & Ratings
+  overallRating       Decimal? @map("overall_rating") @db.Decimal(2, 1)
+  domesticRating      Decimal? @map("domestic_rating") @db.Decimal(2, 1)
+  internationalRating Decimal? @map("international_rating") @db.Decimal(2, 1)
+  reviewCount         Int      @default(0) @map("review_count")
+  domesticReviewCount Int      @default(0) @map("domestic_review_count")
+  intlReviewCount     Int      @default(0) @map("intl_review_count")
+
+  // Pros/Cons Summary (AI-generated from reviews)
+  prosForPatients     String[] @default([]) @map("pros_for_patients")
+  consForPatients     String[] @default([]) @map("cons_for_patients")
+  domesticPatientTips String?  @map("domestic_patient_tips")
+  intlPatientTips     String?  @map("intl_patient_tips")
+
+  // SEO
+  metaTitle       String?  @map("meta_title") @db.VarChar(160)
+  metaDescription String?  @map("meta_description") @db.VarChar(300)
+  keywords        String[] @default([])
+  schemaMarkup    Json?    @map("schema_markup")
+
+  // Status
+  isVerified Boolean  @default(false) @map("is_verified")
+  isPartner  Boolean  @default(false) @map("is_partner")
+  isFeatured Boolean  @default(false) @map("is_featured")
+  isActive   Boolean  @default(true) @map("is_active")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  geography     Geography?             @relation(fields: [geographyId], references: [id])
+  specialties   HospitalSpecialty[]
+  doctors       HospitalDoctor[]
+  departments   HospitalDepartment[]
+  reviews       HospitalReview[]
+  insuranceTies HospitalInsuranceTie[]
+  enquiries     HospitalEnquiry[]
+
+  @@index([geographyId, isActive])
+  @@index([hospitalType, isActive])
+  @@index([bedCount])
+  @@index([overallRating(sort: Desc)])
+  @@index([isFeatured, isActive])
+  @@map("hospitals")
+}
+
+model HospitalSpecialty {
+  id            Int      @id @default(autoincrement())
+  hospitalId    Int      @map("hospital_id")
+  specialty     String   @db.VarChar(200)
+  description   String?
+  isCenter      Boolean  @default(false) @map("is_center") // Center of Excellence
+  headDoctorId  Int?     @map("head_doctor_id")
+  bedCount      Int?     @map("bed_count")
+  keyProcedures String[] @default([]) @map("key_procedures")
+  successRate   Decimal? @map("success_rate") @db.Decimal(5, 2)
+  displayOrder  Int      @default(0) @map("display_order")
+  hospital      Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  @@unique([hospitalId, specialty])
+  @@map("hospital_specialties")
+}
+
+model HospitalDepartment {
+  id               Int      @id @default(autoincrement())
+  hospitalId       Int      @map("hospital_id")
+  name             String   @db.VarChar(200)
+  description      String?
+  headDoctorId     Int?     @map("head_doctor_id")
+  floorLocation    String?  @map("floor_location") @db.VarChar(50)
+  contactExtension String?  @map("contact_extension") @db.VarChar(20)
+  operatingHours   Json     @default("{}") @map("operating_hours")
+  isEmergency      Boolean  @default(false) @map("is_emergency")
+  displayOrder     Int      @default(0) @map("display_order")
+  hospital         Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  @@unique([hospitalId, name])
+  @@map("hospital_departments")
+}
+
+model HospitalDoctor {
+  id              Int             @id @default(autoincrement())
+  hospitalId      Int             @map("hospital_id")
+  doctorId        Int?            @map("doctor_id") // Link to DoctorProvider if exists
+  name            String          @db.VarChar(300)
+  slug            String?         @db.VarChar(255)
+  designation     String?         @db.VarChar(200)
+  specialty       String?         @db.VarChar(200)
+  qualifications  String[]        @default([])
+  experienceYears Int?            @map("experience_years")
+  profileImage    String?         @map("profile_image") @db.VarChar(500)
+  bio             String?
+  achievements    String[]        @default([])
+  notableCases    Json            @default("[]") @map("notable_cases") // Array of {patientType, condition, year}
+  isTopDoctor     Boolean         @default(false) @map("is_top_doctor")
+  isHod           Boolean         @default(false) @map("is_hod") // Head of Department
+  department      String?         @db.VarChar(200)
+  consultationFee Decimal?        @map("consultation_fee") @db.Decimal(10, 2)
+  availability    Json            @default("{}") // Weekly schedule
+  isActive        Boolean         @default(true) @map("is_active")
+  hospital        Hospital        @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+  doctor          DoctorProvider? @relation(fields: [doctorId], references: [id])
+
+  @@index([hospitalId, isActive])
+  @@index([specialty])
+  @@index([isTopDoctor])
+  @@map("hospital_doctors")
+}
+
+model HospitalReview {
+  id                Int         @id @default(autoincrement())
+  hospitalId        Int         @map("hospital_id")
+  reviewerName      String      @map("reviewer_name") @db.VarChar(100)
+  reviewerType      PatientType @default(domestic) @map("reviewer_type")
+  reviewerCountry   String?     @map("reviewer_country") @db.VarChar(100)
+  rating            Int // 1-5
+  title             String?     @db.VarChar(200)
+  review            String?
+  treatmentReceived String?     @map("treatment_received") @db.VarChar(300)
+  doctorName        String?     @map("doctor_name") @db.VarChar(200)
+  departmentVisited String?     @map("department_visited") @db.VarChar(200)
+  visitDate         DateTime?   @map("visit_date") @db.Date
+
+  // Sub-ratings
+  doctorRating      Int? @map("doctor_rating")
+  staffRating       Int? @map("staff_rating")
+  cleanlinessRating Int? @map("cleanliness_rating")
+  foodRating        Int? @map("food_rating")
+  facilitiesRating  Int? @map("facilities_rating")
+  valueRating       Int? @map("value_rating")
+  waitTimeRating    Int? @map("wait_time_rating")
+
+  // Detailed feedback
+  pros           String[] @default([])
+  cons           String[] @default([])
+  wouldRecommend Boolean? @map("would_recommend")
+
+  // Moderation
+  isVerified   Boolean  @default(false) @map("is_verified")
+  isVisible    Boolean  @default(true) @map("is_visible")
+  helpfulCount Int      @default(0) @map("helpful_count")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  hospital Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  @@index([hospitalId, isVisible])
+  @@index([reviewerType])
+  @@index([rating])
+  @@map("hospital_reviews")
+}
+
+model HospitalEnquiry {
+  id                String      @id @default(uuid()) @db.Uuid
+  hospitalId        Int         @map("hospital_id")
+  patientName       String      @map("patient_name") @db.VarChar(200)
+  patientPhone      String      @map("patient_phone") @db.VarChar(20)
+  patientEmail      String?     @map("patient_email") @db.VarChar(200)
+  patientCountry    String?     @map("patient_country") @db.VarChar(100)
+  patientType       PatientType @default(domestic) @map("patient_type")
+  enquiryType       String?     @map("enquiry_type") @db.VarChar(100) // treatment, second opinion, cost estimate
+  condition         String?     @db.VarChar(300)
+  specialty         String?     @db.VarChar(200)
+  preferredDoctor   String?     @map("preferred_doctor") @db.VarChar(200)
+  message           String?
+  hasInsurance      Boolean     @default(false) @map("has_insurance")
+  insuranceProvider String?     @map("insurance_provider") @db.VarChar(200)
+  status            LeadStatus  @default(new)
+  sessionHash       String?     @map("session_hash") @db.VarChar(64)
+  utmSource         String?     @map("utm_source") @db.VarChar(100)
+  utmMedium         String?     @map("utm_medium") @db.VarChar(100)
+  utmCampaign       String?     @map("utm_campaign") @db.VarChar(100)
+  createdAt         DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  hospital          Hospital    @relation(fields: [hospitalId], references: [id])
+
+  @@index([hospitalId, status])
+  @@index([patientType])
+  @@index([createdAt(sort: Desc)])
+  @@map("hospital_enquiries")
+}
+
+// ════════════════════════════════════════════════════════════════════════════════
+// INSURANCE & TPA SYSTEM
+// ════════════════════════════════════════════════════════════════════════════════
+
+model InsuranceProvider {
+  id           Int                   @id @default(autoincrement())
+  slug         String                @unique @db.VarChar(255)
+  name         String                @db.VarChar(300)
+  shortName    String?               @map("short_name") @db.VarChar(100)
+  providerType InsuranceProviderType @default(private) @map("provider_type")
+  description  String?
+  logo         String?               @db.VarChar(500)
+
+  // Contact & Location
+  headquartersCountry String? @map("headquarters_country") @db.VarChar(100)
+  headquartersCity    String? @map("headquarters_city") @db.VarChar(100)
+  website             String? @db.VarChar(500)
+  customerCarePhone   String? @map("customer_care_phone") @db.VarChar(50)
+  claimPhone          String? @map("claim_phone") @db.VarChar(50)
+  email               String? @db.VarChar(200)
+
+  // Coverage Areas
+  operatingCountries String[] @default([]) @map("operating_countries")
+  operatingStates    String[] @default([]) @map("operating_states")
+
+  // Regulatory Info
+  licenseNumber        String?  @map("license_number") @db.VarChar(100)
+  regulatoryBody       String?  @map("regulatory_body") @db.VarChar(200) // IRDAI, etc.
+  establishedYear      Int?     @map("established_year")
+  claimSettlementRatio Decimal? @map("claim_settlement_ratio") @db.Decimal(5, 2)
+
+  // Ratings
+  rating      Decimal? @db.Decimal(2, 1)
+  reviewCount Int      @default(0) @map("review_count")
+
+  // SEO
+  metaTitle       String? @map("meta_title") @db.VarChar(160)
+  metaDescription String? @map("meta_description") @db.VarChar(300)
+
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  plans           InsurancePlan[]
+  tpaAssociations TpaInsuranceLink[]
+  hospitalTies    HospitalInsuranceTie[]
+  claims          InsuranceClaim[]
+
+  @@index([providerType, isActive])
+  @@index([headquartersCountry])
+  @@map("insurance_providers")
+}
+
+model InsurancePlan {
+  id                 Int               @id @default(autoincrement())
+  slug               String            @unique @db.VarChar(255)
+  providerId         Int               @map("provider_id")
+  name               String            @db.VarChar(300)
+  planType           InsurancePlanType @default(individual) @map("plan_type")
+  description        String?
+  coverageHighlights String[]          @default([]) @map("coverage_highlights")
+
+  // Coverage Details
+  sumInsuredMin     Decimal? @map("sum_insured_min") @db.Decimal(15, 2)
+  sumInsuredMax     Decimal? @map("sum_insured_max") @db.Decimal(15, 2)
+  currency          String   @default("INR") @db.VarChar(3)
+  roomRentLimit     String?  @map("room_rent_limit") @db.VarChar(100) // "No cap" or "1% of SI"
+  preCoverDays      Int?     @map("pre_cover_days") // Pre-hospitalization
+  postCoverDays     Int?     @map("post_cover_days") // Post-hospitalization
+  dayCareProcedures Boolean  @default(true) @map("day_care_procedures")
+  ambulanceCover    Decimal? @map("ambulance_cover") @db.Decimal(10, 2)
+  maternitycover    Boolean  @default(false) @map("maternity_cover")
+  ayushCover        Boolean  @default(false) @map("ayush_cover") // Alternative medicine
+  organDonorCover   Boolean  @default(false) @map("organ_donor_cover")
+  domiciliaryCover  Boolean  @default(false) @map("domiciliary_cover")
+  restoreBenefit    Boolean  @default(false) @map("restore_benefit")
+  noClaimBonus      String?  @map("no_claim_bonus") @db.VarChar(100) // e.g., "50% increase"
+
+  // Exclusions & Waiting Periods
+  preExistingWaitYears Int?     @map("pre_existing_wait_years")
+  specificDiseaseWait  Int?     @map("specific_disease_wait_days") // in days
+  majorExclusions      String[] @default([]) @map("major_exclusions")
+
+  // Premium Info
+  premiumStartsAt  Decimal? @map("premium_starts_at") @db.Decimal(10, 2)
+  premiumFrequency String?  @map("premium_frequency") @db.VarChar(50) // monthly, yearly
+
+  // Eligibility
+  entryAgeMin   Int? @map("entry_age_min")
+  entryAgeMax   Int? @map("entry_age_max")
+  renewableUpto Int? @map("renewable_upto") // age
+
+  // Network
+  networkHospitalsCount Int? @map("network_hospitals_count")
+
+  isActive   Boolean  @default(true) @map("is_active")
+  isFeatured Boolean  @default(false) @map("is_featured")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  provider InsuranceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId, isActive])
+  @@index([planType])
+  @@index([sumInsuredMax])
+  @@map("insurance_plans")
+}
+
+model Tpa {
+  id          Int     @id @default(autoincrement())
+  slug        String  @unique @db.VarChar(255)
+  name        String  @db.VarChar(300)
+  shortName   String? @map("short_name") @db.VarChar(100)
+  tpaType     TpaType @default(private) @map("tpa_type")
+  description String?
+  logo        String? @db.VarChar(500)
+
+  // Contact
+  website           String? @db.VarChar(500)
+  customerCarePhone String? @map("customer_care_phone") @db.VarChar(50)
+  claimHelpline     String? @map("claim_helpline") @db.VarChar(50)
+  email             String? @db.VarChar(200)
+
+  // Coverage
+  headquartersCity   String?  @map("headquarters_city") @db.VarChar(100)
+  operatingCountries String[] @default([]) @map("operating_countries")
+  operatingStates    String[] @default([]) @map("operating_states")
+  operatingCities    String[] @default([]) @map("operating_cities")
+
+  // Regulatory
+  licenseNumber   String? @map("license_number") @db.VarChar(100)
+  regulatoryBody  String? @map("regulatory_body") @db.VarChar(200)
+  establishedYear Int?    @map("established_year")
+
+  // Stats
+  networkHospitalsCount Int? @map("network_hospitals_count")
+  livesManaged          Int? @map("lives_managed") // Number of people covered
+
+  // Ratings
+  rating      Decimal? @db.Decimal(2, 1)
+  reviewCount Int      @default(0) @map("review_count")
+
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  insuranceLinks    TpaInsuranceLink[]
+  hospitalLinks     TpaHospitalLink[]
+  geographyPresence TpaGeographyPresence[]
+
+  @@index([tpaType, isActive])
+  @@map("tpas")
+}
+
+model TpaInsuranceLink {
+  id            Int               @id @default(autoincrement())
+  tpaId         Int               @map("tpa_id")
+  insurerId     Int               @map("insurer_id")
+  isExclusive   Boolean           @default(false) @map("is_exclusive")
+  effectiveFrom DateTime?         @map("effective_from") @db.Date
+  effectiveTo   DateTime?         @map("effective_to") @db.Date
+  isActive      Boolean           @default(true) @map("is_active")
+  tpa           Tpa               @relation(fields: [tpaId], references: [id], onDelete: Cascade)
+  insurer       InsuranceProvider @relation(fields: [insurerId], references: [id], onDelete: Cascade)
+
+  @@unique([tpaId, insurerId])
+  @@map("tpa_insurance_links")
+}
+
+model TpaHospitalLink {
+  id              Int      @id @default(autoincrement())
+  tpaId           Int      @map("tpa_id")
+  hospitalId      Int      @map("hospital_id")
+  isCashless      Boolean  @default(true) @map("is_cashless")
+  discountPercent Decimal? @map("discount_percent") @db.Decimal(5, 2)
+  isActive        Boolean  @default(true) @map("is_active")
+  tpa             Tpa      @relation(fields: [tpaId], references: [id], onDelete: Cascade)
+
+  @@unique([tpaId, hospitalId])
+  @@index([hospitalId])
+  @@map("tpa_hospital_links")
+}
+
+model TpaGeographyPresence {
+  id            Int       @id @default(autoincrement())
+  tpaId         Int       @map("tpa_id")
+  geographyId   Int       @map("geography_id")
+  officeAddress String?   @map("office_address") @db.VarChar(500)
+  phone         String?   @db.VarChar(50)
+  isMainOffice  Boolean   @default(false) @map("is_main_office")
+  tpa           Tpa       @relation(fields: [tpaId], references: [id], onDelete: Cascade)
+  geography     Geography @relation(fields: [geographyId], references: [id])
+
+  @@unique([tpaId, geographyId])
+  @@map("tpa_geography_presence")
+}
+
+model HospitalInsuranceTie {
+  id              Int               @id @default(autoincrement())
+  hospitalId      Int               @map("hospital_id")
+  insurerId       Int               @map("insurer_id")
+  isCashless      Boolean           @default(true) @map("is_cashless")
+  isPreferred     Boolean           @default(false) @map("is_preferred")
+  discountPercent Decimal?          @map("discount_percent") @db.Decimal(5, 2)
+  notes           String?
+  isActive        Boolean           @default(true) @map("is_active")
+  hospital        Hospital          @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+  insurer         InsuranceProvider @relation(fields: [insurerId], references: [id], onDelete: Cascade)
+
+  @@unique([hospitalId, insurerId])
+  @@map("hospital_insurance_ties")
+}
+
+model InsuranceClaim {
+  id             String            @id @default(uuid()) @db.Uuid
+  insurerId      Int               @map("insurer_id")
+  claimNumber    String?           @map("claim_number") @db.VarChar(100)
+  patientName    String            @map("patient_name") @db.VarChar(200)
+  patientPhone   String            @map("patient_phone") @db.VarChar(20)
+  patientEmail   String?           @map("patient_email") @db.VarChar(200)
+  policyNumber   String?           @map("policy_number") @db.VarChar(100)
+  claimType      ClaimType         @default(cashless) @map("claim_type")
+  hospitalName   String?           @map("hospital_name") @db.VarChar(300)
+  admissionDate  DateTime?         @map("admission_date") @db.Date
+  dischargeDate  DateTime?         @map("discharge_date") @db.Date
+  diagnosis      String?           @db.VarChar(500)
+  claimAmount    Decimal?          @map("claim_amount") @db.Decimal(15, 2)
+  approvedAmount Decimal?          @map("approved_amount") @db.Decimal(15, 2)
+  status         ClaimStatus       @default(submitted)
+  notes          String?
+  sessionHash    String?           @map("session_hash") @db.VarChar(64)
+  createdAt      DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  insurer        InsuranceProvider @relation(fields: [insurerId], references: [id])
+
+  @@index([insurerId, status])
+  @@index([patientPhone])
+  @@map("insurance_claims")
+}
+
+// Hospital and Insurance Enums
+enum HospitalType {
+  government
+  private
+  public_private_partnership
+  charitable
+  trust
+  corporate_chain
+  standalone
+  teaching
+  research
+  military
+  railway
+  municipal
+}
+
+enum PatientType {
+  domestic
+  international
+}
+
+enum LeadStatus {
+  new
+  contacted
+  qualified
+  converted
+  lost
+  spam
+}
+
+enum InsuranceProviderType {
+  government // LIC, ESIC, CGHS
+  public // Public sector
+  private // Private insurers
+  standalone_health // Standalone health insurers
+  reinsurer
+}
+
+enum InsurancePlanType {
+  individual
+  family_floater
+  senior_citizen
+  critical_illness
+  personal_accident
+  maternity
+  top_up
+  super_top_up
+  group
+  corporate
+}
+
+enum TpaType {
+  private
+  government
+  psu // Public Sector Undertaking
+}
+
+enum ClaimType {
+  cashless
+  reimbursement
+  pre_authorization
+}
+
+enum ClaimStatus {
+  submitted
+  under_review
+  documents_pending
+  approved
+  partially_approved
+  rejected
+  settled
+  closed
+}
+
+// === SEO Content Generation Framework ===
+
+enum ConditionPageStatus {
+  draft
+  review
+  published
+  archived
+}
+
+model ConditionPageContent {
+  id           Int    @id @default(autoincrement())
+  conditionId  Int    @map("condition_id")
+  languageCode String @default("en") @map("language_code") @db.VarChar(5)
+
+  // Hero Section
+  h1Title      String? @map("h1_title") @db.VarChar(200)
+  heroOverview String? @map("hero_overview")
+  keyStats     Json?   @map("key_stats") // {prevalence, demographics, avgAge, globalCases}
+
+  // Section 1: Overview
+  definition          String?
+  typesClassification Json?   @map("types_classification") // [{type, description}]
+
+  // Section 2: Symptoms
+  primarySymptoms   Json? @map("primary_symptoms") // [symptom strings]
+  earlyWarningSigns Json? @map("early_warning_signs")
+  emergencySigns    Json? @map("emergency_signs")
+
+  // Section 3: Causes & Risk Factors
+  causes               Json? // [{cause, description}]
+  riskFactors          Json? @map("risk_factors") // [{factor, category, description}]
+  affectedDemographics Json? @map("affected_demographics")
+
+  // Section 4: Diagnosis
+  diagnosisOverview String? @map("diagnosis_overview")
+  diagnosticTests   Json?   @map("diagnostic_tests") // [{test, purpose, whatToExpect}]
+
+  // Section 5: Treatments
+  treatmentOverview     String? @map("treatment_overview")
+  medicalTreatments     Json?   @map("medical_treatments") // [{name, description, effectiveness}]
+  surgicalOptions       Json?   @map("surgical_options")
+  alternativeTreatments Json?   @map("alternative_treatments")
+  linkedTreatmentSlugs  Json?   @map("linked_treatment_slugs") // [treatment slugs for cards]
+
+  // Section 6: Doctors
+  specialistType       String? @map("specialist_type") @db.VarChar(100)
+  whySeeSpecialist     String? @map("why_see_specialist")
+  doctorSelectionGuide String? @map("doctor_selection_guide")
+
+  // Section 7: Hospitals
+  hospitalCriteria Json? @map("hospital_criteria")
+  keyFacilities    Json? @map("key_facilities")
+
+  // Section 8: Costs
+  costBreakdown       Json?   @map("cost_breakdown") // [{treatment, minCost, maxCost, currency}]
+  insuranceGuide      String? @map("insurance_guide")
+  financialAssistance String? @map("financial_assistance")
+
+  // Section 9: Prevention & Lifestyle
+  preventionStrategies   Json?   @map("prevention_strategies")
+  lifestyleModifications Json?   @map("lifestyle_modifications")
+  dietRecommendations    Json?   @map("diet_recommendations")
+  exerciseGuidelines     String? @map("exercise_guidelines")
+
+  // Section 10: Living With
+  dailyManagement  Json?   @map("daily_management")
+  prognosis        String?
+  recoveryTimeline String? @map("recovery_timeline")
+  complications    Json?
+  supportResources Json?   @map("support_resources")
+
+  // Section 11: Related Conditions
+  confusedWithConditions Json? @map("confused_with_conditions") // [{slug, name, keyDifference}]
+  coOccurringConditions  Json? @map("co_occurring_conditions")
+  relatedConditions      Json? @map("related_conditions")
+
+  // Section 12: FAQs (20+)
+  faqs Json? // [{question, answer, schemaEligible}]
+
+  // Simple Names & Regional Tags (for searchability)
+  simpleName      String? @map("simple_name") @db.VarChar(300) // Non-medical term in local language
+  regionalNames   Json?   @map("regional_names") // [{name, region, language}] - regional variations
+  searchTags      Json?   @map("search_tags") // All searchable terms combined for search bar
+  symptomKeywords Json?   @map("symptom_keywords") // Common symptoms as searchable keywords
+
+  // SEO Meta
+  metaTitle       String? @map("meta_title") @db.VarChar(60)
+  metaDescription String? @map("meta_description") @db.VarChar(160)
+  canonicalUrl    String? @map("canonical_url") @db.VarChar(500)
+  keywords        Json? // [keyword strings]
+
+  // EEAT Signals
+  reviewedByDoctorId Int?      @map("reviewed_by_doctor_id")
+  lastReviewed       DateTime? @map("last_reviewed") @db.Date
+  sources            Json? // [{title, url, accessedDate}]
+
+  // Pre-generated Schema Markup
+  schemaMedicalCondition Json? @map("schema_medical_condition")
+  schemaFaqPage          Json? @map("schema_faq_page")
+  schemaBreadcrumb       Json? @map("schema_breadcrumb")
+  schemaHowTo            Json? @map("schema_how_to")
+
+  // Quality & Status
+  status            ConditionPageStatus @default(draft)
+  qualityScore      Decimal?            @map("quality_score") @db.Decimal(3, 2)
+  wordCount         Int?                @map("word_count")
+  generationVersion String?             @map("generation_version") @db.VarChar(20)
+  createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime            @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  condition MedicalCondition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
+  reviewer  DoctorProvider?  @relation("PageContentReviewer", fields: [reviewedByDoctorId], references: [id])
+
+  @@unique([conditionId, languageCode])
+  @@index([status])
+  @@index([specialistType])
+  @@index([qualityScore(sort: Desc)])
+  @@map("condition_page_content")
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// CONTACT & SUPPORT MODELS
+// ══════════════════════════════════════════════════════════════════════════════
+
+model ContactSubmission {
+  id         Int           @id @default(autoincrement())
+  name       String        @db.VarChar(100)
+  email      String        @db.VarChar(200)
+  message    String        @db.Text
+  status     ContactStatus @default(pending)
+  ipAddress  String?       @map("ip_address") @db.VarChar(45)
+  userAgent  String?       @map("user_agent") @db.VarChar(500)
+  source     String?       @db.VarChar(50) // 'contact_form', 'support_chat', etc.
+  assignedTo String?       @map("assigned_to") @db.VarChar(100)
+  notes      String?       @db.Text
+  resolvedAt DateTime?     @map("resolved_at") @db.Timestamptz(6)
+  createdAt  DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([status])
+  @@index([email])
+  @@index([createdAt(sort: Desc)])
+  @@map("contact_submissions")
+}
+
+enum ContactStatus {
+  pending
+  in_progress
+  resolved
+  spam
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// PLATFORM SETTINGS
+// ══════════════════════════════════════════════════════════════════════════════
+
+model PlatformSetting {
+  key         String   @id @db.VarChar(100)
+  value       Json
+  category    String   @db.VarChar(50) // 'general', 'seo', 'email', 'features', etc.
+  description String?  @db.VarChar(500)
+  isPublic    Boolean  @default(false) @map("is_public") // Can be exposed to frontend
+  updatedBy   String?  @map("updated_by") @db.VarChar(100)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([category])
+  @@map("platform_settings")
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// PAYMENT NOTIFICATION LOG
+// ══════════════════════════════════════════════════════════════════════════════
+
+model PaymentNotification {
+  id            Int       @id @default(autoincrement())
+  providerId    Int       @map("provider_id")
+  eventType     String    @map("event_type") @db.VarChar(50) // 'payment_failed', 'subscription_cancelled', etc.
+  stripeEventId String?   @map("stripe_event_id") @db.VarChar(100)
+  amount        Decimal?  @db.Decimal(10, 2)
+  currency      String?   @db.VarChar(3)
+  errorMessage  String?   @map("error_message") @db.Text
+  emailSent     Boolean   @default(false) @map("email_sent")
+  emailSentAt   DateTime? @map("email_sent_at") @db.Timestamptz(6)
+  metadata      Json?
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  provider DoctorProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId])
+  @@index([eventType])
+  @@index([createdAt(sort: Desc)])
+  @@map("payment_notifications")
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// AUDIT LOG - Track all admin and important user actions
+// ══════════════════════════════════════════════════════════════════════════════
+
+model AuditLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  actorType  String   @map("actor_type") @db.VarChar(20) // 'admin', 'provider', 'system', 'user'
+  actorId    String?  @map("actor_id") @db.VarChar(100)
+  actorEmail String?  @map("actor_email") @db.VarChar(255)
+  action     String   @db.VarChar(100) // 'create', 'update', 'delete', 'login', 'export', etc.
+  resource   String   @db.VarChar(100) // 'doctor', 'condition', 'content', 'lead', etc.
+  resourceId String?  @map("resource_id") @db.VarChar(100)
+  changes    Json? // { field: { old: value, new: value } }
+  metadata   Json? // Additional context (IP, user agent, etc.)
+  ipAddress  String?  @map("ip_address") @db.VarChar(45)
+  userAgent  String?  @map("user_agent") @db.VarChar(500)
+  status     String   @default("success") @db.VarChar(20) // 'success', 'failure', 'pending'
+  errorMsg   String?  @map("error_msg")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([actorType, actorId])
+  @@index([action])
+  @@index([resource, resourceId])
+  @@index([createdAt(sort: Desc)])
+  @@map("audit_logs")
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// FEATURE FLAGS - Control feature rollout and A/B testing
+// ══════════════════════════════════════════════════════════════════════════════
+
+model FeatureFlag {
+  id          Int       @id @default(autoincrement())
+  key         String    @unique @db.VarChar(100)
+  name        String    @db.VarChar(200)
+  description String?
+  isEnabled   Boolean   @default(false) @map("is_enabled")
+  rolloutPct  Int       @default(100) @map("rollout_pct") // 0-100 percentage for gradual rollout
+  targetRules Json?     @map("target_rules") // { countries: [], tiers: [], userIds: [] }
+  variants    Json? // For A/B testing: [{ name: 'control', weight: 50 }, { name: 'variant', weight: 50 }]
+  category    String    @default("general") @db.VarChar(50)
+  expiresAt   DateTime? @map("expires_at") @db.Timestamptz(6)
+  createdBy   String?   @map("created_by") @db.VarChar(100)
+  updatedBy   String?   @map("updated_by") @db.VarChar(100)
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([isEnabled])
+  @@index([category])
+  @@map("feature_flags")
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// MEDICAL SPECIALTY - Standardized specialty definitions
+// ══════════════════════════════════════════════════════════════════════════════
+
+model MedicalSpecialty {
+  id               Int      @id @default(autoincrement())
+  slug             String   @unique @db.VarChar(100)
+  name             String   @db.VarChar(200)
+  shortName        String?  @map("short_name") @db.VarChar(50)
+  description      String?
+  icon             String?  @db.VarChar(50) // Icon name or emoji
+  category         String   @db.VarChar(50) // 'surgical', 'medical', 'diagnostic', 'dental', etc.
+  parentId         Int?     @map("parent_id")
+  bodySystem       String?  @map("body_system") @db.VarChar(100)
+  commonConditions String[] @default([]) @map("common_conditions") // condition slugs
+  relatedTests     String[] @default([]) @map("related_tests") // test slugs
+  consultTypes     String[] @default([]) @map("consult_types") // 'in-person', 'video', 'chat'
+  avgConsultFeeInr Decimal? @map("avg_consult_fee_inr") @db.Decimal(10, 2)
+  avgConsultFeeUsd Decimal? @map("avg_consult_fee_usd") @db.Decimal(10, 2)
+  searchVolume     Int?     @map("search_volume")
+  metaTitle        String?  @map("meta_title") @db.VarChar(160)
+  metaDescription  String?  @map("meta_description") @db.VarChar(300)
+  isActive         Boolean  @default(true) @map("is_active")
+  displayOrder     Int      @default(0) @map("display_order")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  parent   MedicalSpecialty?  @relation("SpecialtyHierarchy", fields: [parentId], references: [id])
+  children MedicalSpecialty[] @relation("SpecialtyHierarchy")
+
+  @@index([category])
+  @@index([parentId])
+  @@index([isActive, displayOrder])
+  @@map("medical_specialties")
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// API RATE LIMIT - Track API usage for rate limiting
+// ══════════════════════════════════════════════════════════════════════════════
+
+model ApiRateLimit {
+  id           Int      @id @default(autoincrement())
+  identifier   String   @db.VarChar(255) // IP, API key, or user ID
+  endpoint     String   @db.VarChar(255)
+  windowStart  DateTime @map("window_start") @db.Timestamptz(6)
+  requestCount Int      @default(1) @map("request_count")
+
+  @@unique([identifier, endpoint, windowStart])
+  @@index([windowStart])
+  @@map("api_rate_limits")
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// EMAIL QUEUE - For async email sending
+// ══════════════════════════════════════════════════════════════════════════════
+
+model EmailQueue {
+  id           String    @id @default(uuid()) @db.Uuid
+  templateName String    @map("template_name") @db.VarChar(100)
+  toEmail      String    @map("to_email") @db.VarChar(255)
+  toName       String?   @map("to_name") @db.VarChar(200)
+  subject      String    @db.VarChar(500)
+  variables    Json      @default("{}")
+  priority     Int       @default(5) // 1-10, lower = higher priority
+  status       String    @default("pending") @db.VarChar(20) // 'pending', 'sent', 'failed', 'cancelled'
+  attempts     Int       @default(0)
+  lastAttempt  DateTime? @map("last_attempt") @db.Timestamptz(6)
+  sentAt       DateTime? @map("sent_at") @db.Timestamptz(6)
+  errorMsg     String?   @map("error_msg")
+  sendgridId   String?   @map("sendgrid_id") @db.VarChar(100)
+  scheduledFor DateTime? @map("scheduled_for") @db.Timestamptz(6)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([status, priority, createdAt])
+  @@index([toEmail])
+  @@index([templateName, status])
+  @@map("email_queue")
+}

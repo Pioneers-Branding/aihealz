@@ -1,0 +1,412 @@
+{
+  "insuranceProviders": [
+    {
+      "name": "Star Health Insurance",
+      "slug": "star-health-insurance",
+      "country": "IN",
+      "providerType": "private",
+      "claimSettlementRatio": 91.5,
+      "description": "Star Health and Allied Insurance is India's first standalone health insurance company and the largest in the sector. Known for comprehensive health plans, wide network, and efficient claim processing. Star Health pioneered products like Diabetes Safe and Senior Citizens Red Carpet plans.",
+      "website": "https://www.starhealth.in",
+      "customerCarePhone": "1800-102-4477",
+      "email": "care@starhealth.in",
+      "headquartersCity": "Chennai",
+      "networkHospitalsCount": 14000,
+      "plans": [
+        {
+          "name": "Family Health Optima",
+          "planType": "family_floater",
+          "sumInsuredRange": "3L - 1Cr",
+          "premiumStartsAt": 8500,
+          "description": "Comprehensive family floater with restoration benefit and coverage for 1000+ procedures"
+        },
+        {
+          "name": "Comprehensive",
+          "planType": "individual",
+          "sumInsuredRange": "5L - 1.5Cr",
+          "premiumStartsAt": 6500,
+          "description": "Complete protection with hospital daily cash and maternity benefits"
+        },
+        {
+          "name": "Young Star",
+          "planType": "individual",
+          "sumInsuredRange": "3L - 25L",
+          "premiumStartsAt": 4000,
+          "description": "Specially designed for ages 18-40 with wellness benefits"
+        },
+        {
+          "name": "Senior Citizens Red Carpet",
+          "planType": "senior_citizen",
+          "sumInsuredRange": "5L - 25L",
+          "premiumStartsAt": 20000,
+          "description": "Tailored for 60+ age group with pre-existing disease coverage after 1 year"
+        },
+        {
+          "name": "Diabetes Safe",
+          "planType": "individual",
+          "sumInsuredRange": "3L - 10L",
+          "premiumStartsAt": 8000,
+          "description": "India's first policy covering Type 1 & Type 2 diabetics"
+        }
+      ],
+      "keyFeatures": [
+        "No medical checkup up to 50L sum insured",
+        "Day-care procedures covered (590+)",
+        "Pre-hospitalization 60 days, post-hospitalization 90 days",
+        "AYUSH treatment covered",
+        "Free annual health checkup",
+        "Worldwide emergency coverage"
+      ],
+      "networkHospitals": [
+        { "name": "Apollo Hospitals Chennai", "slug": "apollo-hospitals-chennai", "city": "Chennai" },
+        { "name": "Fortis FMRI", "slug": "fortis-memorial-research-institute-gurgaon", "city": "Gurugram" },
+        { "name": "Medanta", "slug": "medanta-the-medicity-gurgaon", "city": "Gurugram" },
+        { "name": "Max Hospital Saket", "slug": "max-hospital-saket-delhi", "city": "New Delhi" },
+        { "name": "Manipal Hospital Bangalore", "slug": "manipal-hospital-bangalore", "city": "Bangalore" }
+      ]
+    },
+    {
+      "name": "HDFC ERGO Health Insurance",
+      "slug": "hdfc-ergo-health-insurance",
+      "country": "IN",
+      "providerType": "private",
+      "claimSettlementRatio": 93.2,
+      "description": "HDFC ERGO is one of India's leading general insurance companies, known for its Optima range of health insurance products that offer comprehensive coverage with flexible options. A joint venture between HDFC Ltd and ERGO International AG.",
+      "website": "https://www.hdfcergo.com",
+      "customerCarePhone": "1800-266-0700",
+      "email": "support@hdfcergo.com",
+      "headquartersCity": "Mumbai",
+      "networkHospitalsCount": 13000,
+      "plans": [
+        {
+          "name": "Optima Secure",
+          "planType": "individual",
+          "sumInsuredRange": "5L - 1Cr",
+          "premiumStartsAt": 7000,
+          "description": "Premium plan with unlimited automatic recharge and no claim bonus up to 100%"
+        },
+        {
+          "name": "Optima Restore",
+          "planType": "family_floater",
+          "sumInsuredRange": "3L - 50L",
+          "premiumStartsAt": 6500,
+          "description": "Family floater with restore benefit - sum insured restored for unrelated claims"
+        },
+        {
+          "name": "My Health Suraksha",
+          "planType": "individual",
+          "sumInsuredRange": "3L - 75L",
+          "premiumStartsAt": 5000,
+          "description": "Affordable comprehensive coverage with optional add-ons"
+        }
+      ],
+      "keyFeatures": [
+        "Restore benefit - sum insured restored for unrelated claims",
+        "Unlimited automatic recharge",
+        "No claim bonus up to 100%",
+        "Coverage in 180+ countries",
+        "Free annual health checkup",
+        "OPD cover available"
+      ],
+      "networkHospitals": [
+        { "name": "Fortis FMRI", "slug": "fortis-memorial-research-institute-gurgaon", "city": "Gurugram" },
+        { "name": "Apollo Hospitals Chennai", "slug": "apollo-hospitals-chennai", "city": "Chennai" },
+        { "name": "Medanta", "slug": "medanta-the-medicity-gurgaon", "city": "Gurugram" }
+      ]
+    },
+    {
+      "name": "ICICI Lombard Health Insurance",
+      "slug": "icici-lombard-health-insurance",
+      "country": "IN",
+      "providerType": "private",
+      "claimSettlementRatio": 87.4,
+      "description": "ICICI Lombard is one of the largest private sector general insurance companies in India, offering a wide range of health insurance products backed by strong service network. Known for quick claim settlements and digital-first approach.",
+      "website": "https://www.icicilombard.com",
+      "customerCarePhone": "1800-266-9725",
+      "email": "customersupport@icicilombard.com",
+      "headquartersCity": "Mumbai",
+      "networkHospitalsCount": 6500,
+      "plans": [
+        {
+          "name": "Complete Health Insurance",
+          "planType": "family_floater",
+          "sumInsuredRange": "3L - 50L",
+          "premiumStartsAt": 7500,
+          "description": "Comprehensive protection with modern treatment coverage"
+        },
+        {
+          "name": "iHealth",
+          "planType": "individual",
+          "sumInsuredRange": "5L - 1Cr",
+          "premiumStartsAt": 6000,
+          "description": "Premium plan with air ambulance cover and hospital daily cash"
+        },
+        {
+          "name": "Arogya Sanjeevani",
+          "planType": "individual",
+          "sumInsuredRange": "1L - 5L",
+          "premiumStartsAt": 3000,
+          "description": "Standardized affordable health insurance mandated by IRDAI"
+        }
+      ],
+      "keyFeatures": [
+        "Sum insured protection",
+        "Modern treatment coverage (robotic surgery, etc.)",
+        "Air ambulance cover",
+        "Daily cash benefit",
+        "Organ donor expenses covered",
+        "Quick cashless claims"
+      ],
+      "networkHospitals": [
+        { "name": "Apollo Hospitals Chennai", "slug": "apollo-hospitals-chennai", "city": "Chennai" },
+        { "name": "Fortis FMRI", "slug": "fortis-memorial-research-institute-gurgaon", "city": "Gurugram" }
+      ]
+    },
+    {
+      "name": "Niva Bupa (Max Bupa)",
+      "slug": "niva-bupa-health-insurance",
+      "country": "IN",
+      "providerType": "private",
+      "claimSettlementRatio": 94.1,
+      "description": "Niva Bupa (formerly Max Bupa) combines Indian market knowledge with Bupa's global healthcare expertise to offer comprehensive health insurance solutions. One of the highest claim settlement ratios in the industry.",
+      "website": "https://www.nivabupa.com",
+      "customerCarePhone": "1800-200-7272",
+      "email": "care@nivabupa.com",
+      "headquartersCity": "New Delhi",
+      "networkHospitalsCount": 10000,
+      "plans": [
+        {
+          "name": "ReAssure",
+          "planType": "family_floater",
+          "sumInsuredRange": "3L - 3Cr",
+          "premiumStartsAt": 9000,
+          "description": "Premium plan with comprehensive coverage and OPD benefit"
+        },
+        {
+          "name": "Health Companion",
+          "planType": "individual",
+          "sumInsuredRange": "3L - 1Cr",
+          "premiumStartsAt": 6000,
+          "description": "Complete protection with mental illness coverage"
+        },
+        {
+          "name": "Heartbeat",
+          "planType": "critical_illness",
+          "sumInsuredRange": "5L - 50L",
+          "premiumStartsAt": 3500,
+          "description": "Covers 53 critical illnesses with lump sum payout"
+        }
+      ],
+      "keyFeatures": [
+        "OPD cover available",
+        "Organ donor expenses covered",
+        "Mental illness coverage",
+        "No room rent capping in premium plans",
+        "Direct settlement with hospitals",
+        "Global coverage in emergency"
+      ],
+      "networkHospitals": [
+        { "name": "Medanta", "slug": "medanta-the-medicity-gurgaon", "city": "Gurugram" },
+        { "name": "Apollo Hospitals Chennai", "slug": "apollo-hospitals-chennai", "city": "Chennai" },
+        { "name": "Fortis FMRI", "slug": "fortis-memorial-research-institute-gurgaon", "city": "Gurugram" }
+      ]
+    },
+    {
+      "name": "Daman Insurance",
+      "slug": "daman-insurance-uae",
+      "country": "AE",
+      "providerType": "private",
+      "claimSettlementRatio": 89.5,
+      "description": "National Health Insurance Company (Daman) is the largest health insurer in the UAE, established in partnership with the Abu Dhabi government. It manages the mandatory Thiqa program for UAE nationals and serves over 3 million members.",
+      "website": "https://www.damanhealth.ae",
+      "customerCarePhone": "800-4health",
+      "email": "customerservice@damanhealth.ae",
+      "headquartersCity": "Abu Dhabi",
+      "networkHospitalsCount": 2500,
+      "plans": [
+        {
+          "name": "Thiqa",
+          "planType": "group",
+          "sumInsuredRange": "Unlimited",
+          "premiumStartsAt": 0,
+          "description": "Mandatory government program for UAE nationals with comprehensive coverage"
+        },
+        {
+          "name": "Saada",
+          "planType": "individual",
+          "sumInsuredRange": "250K - 1M AED",
+          "premiumStartsAt": 5000,
+          "description": "Enhanced private coverage with dental and optical"
+        },
+        {
+          "name": "Corporate Health",
+          "planType": "group",
+          "sumInsuredRange": "150K - Unlimited AED",
+          "premiumStartsAt": 3000,
+          "description": "Flexible group plans for businesses"
+        }
+      ],
+      "keyFeatures": [
+        "Mandatory coverage provider for Abu Dhabi",
+        "Wide network across UAE",
+        "Maternity coverage included",
+        "Dental and optical benefits",
+        "24/7 helpline",
+        "Mobile app for claims"
+      ],
+      "networkHospitals": [
+        { "name": "Cleveland Clinic Abu Dhabi", "slug": "cleveland-clinic-abu-dhabi", "city": "Abu Dhabi" },
+        { "name": "Mediclinic City Hospital", "slug": "mediclinic-city-hospital-dubai", "city": "Dubai" }
+      ]
+    },
+    {
+      "name": "AXA Gulf Insurance",
+      "slug": "axa-gulf-insurance-uae",
+      "country": "AE",
+      "providerType": "private",
+      "claimSettlementRatio": 91.0,
+      "description": "AXA is a global insurance leader with strong presence in UAE and GCC, offering comprehensive health insurance solutions for individuals and corporates. Part of AXA Group, one of the world's largest insurers.",
+      "website": "https://www.axa.ae",
+      "customerCarePhone": "+971-4-444-7747",
+      "email": "customerservice@axa-gulf.com",
+      "headquartersCity": "Dubai",
+      "networkHospitalsCount": 3000,
+      "plans": [
+        {
+          "name": "Gold Health",
+          "planType": "individual",
+          "sumInsuredRange": "2M AED",
+          "premiumStartsAt": 8000,
+          "description": "Premium coverage with global options and executive benefits"
+        },
+        {
+          "name": "SmartHealth",
+          "planType": "individual",
+          "sumInsuredRange": "500K - 1M AED",
+          "premiumStartsAt": 4500,
+          "description": "Smart choice for essential coverage with wellness benefits"
+        },
+        {
+          "name": "Corporate Health",
+          "planType": "group",
+          "sumInsuredRange": "250K - Unlimited AED",
+          "premiumStartsAt": 3500,
+          "description": "Customizable group plans for SMEs and corporates"
+        }
+      ],
+      "keyFeatures": [
+        "Global coverage options",
+        "Direct billing network",
+        "Wellness programs included",
+        "24/7 customer support",
+        "Telehealth services",
+        "Mental health coverage"
+      ],
+      "networkHospitals": [
+        { "name": "Cleveland Clinic Abu Dhabi", "slug": "cleveland-clinic-abu-dhabi", "city": "Abu Dhabi" },
+        { "name": "Mediclinic City Hospital", "slug": "mediclinic-city-hospital-dubai", "city": "Dubai" }
+      ]
+    },
+    {
+      "name": "Bupa UK",
+      "slug": "bupa-health-insurance-uk",
+      "country": "GB",
+      "providerType": "private",
+      "claimSettlementRatio": 96.0,
+      "description": "Bupa is the UK's leading private health insurer, serving millions of customers with comprehensive health insurance, dental plans, and health services. Known for fast access to specialists and mental health support.",
+      "website": "https://www.bupa.co.uk",
+      "customerCarePhone": "0345-600-8822",
+      "email": "customerservice@bupa.com",
+      "headquartersCity": "London",
+      "networkHospitalsCount": 400,
+      "plans": [
+        {
+          "name": "Treatment and Care",
+          "planType": "individual",
+          "sumInsuredRange": "Unlimited",
+          "premiumStartsAt": 1200,
+          "description": "Fast access to treatment for new conditions"
+        },
+        {
+          "name": "Comprehensive",
+          "planType": "family_floater",
+          "sumInsuredRange": "Unlimited",
+          "premiumStartsAt": 2000,
+          "description": "Our most complete cover including therapies and mental health"
+        },
+        {
+          "name": "By You",
+          "planType": "individual",
+          "sumInsuredRange": "Customizable",
+          "premiumStartsAt": 800,
+          "description": "Build your own plan with modules you need"
+        },
+        {
+          "name": "Cash Plan",
+          "planType": "individual",
+          "sumInsuredRange": "Fixed benefits",
+          "premiumStartsAt": 100,
+          "description": "Affordable plan that pays cash towards everyday healthcare costs"
+        }
+      ],
+      "keyFeatures": [
+        "Fast access to specialists (usually 2-3 weeks)",
+        "Mental health support",
+        "Digital GP services 24/7",
+        "Health assessments included",
+        "Cancer care and support",
+        "Physiotherapy and therapies"
+      ],
+      "networkHospitals": [
+        { "name": "Royal Marsden Hospital", "slug": "royal-marsden-hospital-london", "city": "London" }
+      ]
+    },
+    {
+      "name": "Allianz Ayudhya Thailand",
+      "slug": "allianz-ayudhya-thailand",
+      "country": "TH",
+      "providerType": "private",
+      "claimSettlementRatio": 90.0,
+      "description": "Allianz Ayudhya is Thailand's leading life and health insurer, combining global Allianz expertise with local market knowledge. Known for comprehensive coverage and strong service network.",
+      "website": "https://www.azay.co.th",
+      "customerCarePhone": "1373",
+      "email": "customercare@azay.co.th",
+      "headquartersCity": "Bangkok",
+      "networkHospitalsCount": 500,
+      "plans": [
+        {
+          "name": "My Health Plus",
+          "planType": "individual",
+          "sumInsuredRange": "5M - 50M THB",
+          "premiumStartsAt": 15000,
+          "description": "Comprehensive health coverage with wellness benefits"
+        },
+        {
+          "name": "Prestige Health",
+          "planType": "individual",
+          "sumInsuredRange": "20M - 100M THB",
+          "premiumStartsAt": 40000,
+          "description": "Premium coverage with international options"
+        },
+        {
+          "name": "Allianz Care",
+          "planType": "family_floater",
+          "sumInsuredRange": "10M - 50M THB",
+          "premiumStartsAt": 25000,
+          "description": "Family-focused plan with maternity benefits"
+        }
+      ],
+      "keyFeatures": [
+        "International coverage option",
+        "Direct billing at partner hospitals",
+        "Cashless treatment",
+        "Wellness benefits",
+        "Annual health checkup",
+        "24/7 customer support"
+      ],
+      "networkHospitals": [
+        { "name": "Bumrungrad International Hospital", "slug": "bumrungrad-international-hospital-bangkok", "city": "Bangkok" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+/**
+ * Dermatology Specialty Template
+ *
+ * Template patterns for skin, hair, and nail conditions including
+ * infections, inflammatory conditions, and cosmetic concerns.
+ */
+
+import type { SpecialtyTemplate } from './base-template';
+
+export const dermatologyTemplate: SpecialtyTemplate = {
+  specialty: 'Dermatology',
+  specialistTitle: 'Dermatologist',
+  specialistTitlePlural: 'Dermatologists',
+  bodySystem: 'Skin, Hair & Nails',
+
+  commonSymptomPatterns: [
+    'Rash or skin discoloration',
+    'Itching (pruritus)',
+    'Dry, flaky, or scaly skin',
+    'Redness and inflammation',
+    'Bumps, blisters, or pustules',
+    'Hair loss or thinning',
+    'Nail changes (color, texture, shape)',
+    'Skin growths or moles',
+    'Skin peeling or cracking',
+    'Burning or stinging sensation',
+    'Swelling or puffiness',
+    'Open sores that won\'t heal',
+    'Changes in existing moles',
+    'Excessive sweating',
+    'Pigmentation changes',
+  ],
+
+  commonTreatmentTypes: [
+    {
+      type: 'medication',
+      examples: [
+        'Topical corticosteroids',
+        'Topical retinoids (Tretinoin)',
+        'Antihistamines (Cetirizine, Loratadine)',
+        'Oral antibiotics (Doxycycline, Minocycline)',
+        'Topical antibiotics (Clindamycin, Mupirocin)',
+        'Antifungals (Terbinafine, Fluconazole)',
+        'Immunosuppressants (Methotrexate, Cyclosporine)',
+        'Biologics (Adalimumab, Secukinumab)',
+        'Oral isotretinoin (Accutane)',
+        'Topical calcineurin inhibitors (Tacrolimus)',
+      ],
+    },
+    {
+      type: 'procedure',
+      examples: [
+        'Chemical peels',
+        'Microdermabrasion',
+        'Laser therapy',
+        'Phototherapy (PUVA, UVB)',
+        'Cryotherapy',
+        'Intralesional injections',
+        'Dermabrasion',
+        'Sclerotherapy',
+        'Electrosurgery',
+        'Platelet-rich plasma (PRP) therapy',
+      ],
+    },
+    {
+      type: 'surgery',
+      examples: [
+        'Excision of skin lesions',
+        'Mohs micrographic surgery',
+        'Skin grafting',
+        'Hair transplantation',
+        'Lipoma removal',
+        'Cyst removal',
+        'Nail surgery',
+        'Blepharoplasty',
+        'Scar revision surgery',
+        'Lymph node biopsy',
+      ],
+    },
+    {
+      type: 'lifestyle',
+      examples: [
+        'Sun protection (SPF 30+)',
+        'Moisturizing routine',
+        'Gentle skincare products',
+        'Stress management',
+        'Diet modifications',
+        'Allergen avoidance',
+        'Proper hygiene practices',
+        'Smoking cessation',
+        'Adequate sleep',
+        'Hydration maintenance',
+      ],
+    },
+  ],
+
+  commonRiskFactors: [
+    { factor: 'Excessive sun exposure', category: 'lifestyle', description: 'UV radiation damages skin and increases cancer risk', modifiable: true },
+    { factor: 'Family history of skin conditions', category: 'genetic', description: 'Genetic predisposition to eczema, psoriasis, skin cancer', modifiable: false },
+    { factor: 'Fair skin and light eyes', category: 'demographic', description: 'Less melanin protection from UV damage', modifiable: false },
+    { factor: 'Weakened immune system', category: 'medical', description: 'Increased susceptibility to skin infections and cancers', modifiable: true },
+    { factor: 'Allergies and sensitivities', category: 'medical', description: 'Higher risk of contact dermatitis and eczema', modifiable: true },
+    { factor: 'Hormonal changes', category: 'medical', description: 'Can trigger acne, melasma, and other skin changes', modifiable: false },
+    { factor: 'Stress', category: 'lifestyle', description: 'Exacerbates psoriasis, eczema, and acne', modifiable: true },
+    { factor: 'Poor diet', category: 'lifestyle', description: 'Can worsen acne and inflammatory skin conditions', modifiable: true },
+    { factor: 'Smoking', category: 'lifestyle', description: 'Accelerates skin aging and impairs wound healing', modifiable: true },
+    { factor: 'Age', category: 'demographic', description: 'Skin becomes thinner, drier, and more susceptible to conditions', modifiable: false },
+    { factor: 'Occupational exposure', category: 'environmental', description: 'Chemicals, allergens, or irritants at work', modifiable: true },
+    { factor: 'History of sunburns', category: 'lifestyle', description: 'Each severe sunburn increases skin cancer risk', modifiable: false },
+  ],
+
+  commonDiagnosticTests: [
+    { test: 'Skin biopsy', purpose: 'Examine skin tissue under microscope for diagnosis', whatToExpect: 'Small sample removed under local anesthesia. Mild discomfort. Results in 1-2 weeks.' },
+    { test: 'Dermoscopy', purpose: 'Magnified examination of skin lesions and moles', whatToExpect: 'Dermatologist uses handheld device to examine skin closely. Non-invasive.' },
+    { test: 'Patch testing', purpose: 'Identify contact allergens causing dermatitis', whatToExpect: 'Allergen patches applied to back for 48 hours. Readings taken over several days.' },
+    { test: 'KOH preparation', purpose: 'Detect fungal infections', whatToExpect: 'Skin scraping mixed with potassium hydroxide and viewed under microscope. Quick results.' },
+    { test: 'Wood\'s lamp examination', purpose: 'Detect fungal infections and pigmentation disorders', whatToExpect: 'Skin examined under UV light in dark room. Non-invasive.' },
+    { test: 'Skin culture', purpose: 'Identify bacterial or fungal organisms', whatToExpect: 'Swab or sample taken from affected area. Results in 3-7 days.' },
+    { test: 'Blood tests (ANA, CBC, allergy panel)', purpose: 'Screen for autoimmune or systemic causes', whatToExpect: 'Simple blood draw. Results in 1-3 days.' },
+    { test: 'Skin prick test', purpose: 'Identify immediate allergic reactions', whatToExpect: 'Small amounts of allergens applied to skin. Results in 15-20 minutes.' },
+    { test: 'Confocal microscopy', purpose: 'Real-time imaging of skin layers', whatToExpect: 'Handheld device placed on skin. Non-invasive. Takes 10-15 minutes.' },
+    { test: 'Total body photography', purpose: 'Document moles for monitoring changes', whatToExpect: 'Photographs taken of entire skin surface. Takes 30-45 minutes.' },
+  ],
+
+  faqTemplates: [
+    'What causes sudden skin rashes?',
+    'Can eczema be cured permanently?',
+    'How do I know if a mole is cancerous?',
+    'What is the best treatment for acne scars?',
+    'Are all skin cancers dangerous?',
+    'Can psoriasis spread to others?',
+    'What triggers hair loss and can it be reversed?',
+    'How can I prevent premature skin aging?',
+    'Are skin allergies the same as eczema?',
+    'What SPF should I use daily?',
+    'Can fungal infections spread to family members?',
+    'Is it safe to remove moles at home?',
+    'What causes white patches on skin?',
+    'How do I treat persistent dandruff?',
+    'Can stress cause skin problems?',
+  ],
+
+  linkedTreatmentSlugs: [
+    'laser-skin-treatment',
+    'chemical-peel',
+    'phototherapy',
+    'mohs-surgery',
+    'hair-transplant',
+    'prp-treatment',
+    'cryotherapy',
+    'microdermabrasion',
+    'skin-biopsy',
+    'acne-treatment',
+  ],
+
+  costRanges: {
+    consultation: { min: 500, max: 2000, currency: 'INR' },
+    skinBiopsy: { min: 2000, max: 5000, currency: 'INR' },
+    patchTesting: { min: 2000, max: 6000, currency: 'INR' },
+    chemicalPeel: { min: 3000, max: 15000, currency: 'INR' },
+    laserTherapy: { min: 5000, max: 50000, currency: 'INR' },
+    phototherapy: { min: 1000, max: 3000, currency: 'INR' },
+    mohsSurgery: { min: 30000, max: 80000, currency: 'INR' },
+    hairTransplant: { min: 50000, max: 300000, currency: 'INR' },
+    prpTreatment: { min: 5000, max: 20000, currency: 'INR' },
+    acneTreatment: { min: 3000, max: 30000, currency: 'INR' },
+  },
+
+  emergencyIndicators: [
+    'Rapidly spreading rash with fever',
+    'Severe allergic reaction (anaphylaxis) with swelling',
+    'Large blistering burns',
+    'Signs of severe infection (fever, red streaks, pus)',
+    'Sudden severe hair loss',
+    'Skin lesion that bleeds and won\'t heal',
+    'Severe drug reaction with skin peeling',
+    'Sudden widespread hives with breathing difficulty',
+    'Purple or dark spots that don\'t blanch with pressure',
+    'Severe pain with skin changes',
+  ],
+
+  lifestyleRecommendations: [
+    'Apply broad-spectrum SPF 30+ sunscreen daily',
+    'Use gentle, fragrance-free skincare products',
+    'Moisturize immediately after bathing',
+    'Avoid hot showers; use lukewarm water',
+    'Wear protective clothing in the sun',
+    'Manage stress through relaxation techniques',
+    'Get adequate sleep (7-9 hours)',
+    'Stay hydrated with plenty of water',
+    'Avoid known triggers and allergens',
+    'Don\'t pick or squeeze skin lesions',
+  ],
+
+  dietPatterns: {
+    recommended: [
+      'Antioxidant-rich foods (berries, leafy greens)',
+      'Omega-3 fatty acids (fatty fish, walnuts)',
+      'Vitamin C foods (citrus, bell peppers)',
+      'Vitamin E sources (nuts, seeds)',
+      'Zinc-rich foods (oysters, pumpkin seeds)',
+      'Adequate protein for skin repair',
+      'Green tea for anti-inflammatory effects',
+      'Colorful vegetables for skin health',
+      'Probiotic foods (yogurt, kefir)',
+      'Adequate water intake (8+ glasses daily)',
+    ],
+    avoid: [
+      'High-glycemic foods (white bread, sugary snacks)',
+      'Excessive dairy if acne-prone',
+      'Processed and fried foods',
+      'Excessive alcohol',
+      'Foods that trigger individual sensitivities',
+      'Excessive salt causing puffiness',
+      'Artificial additives and preservatives',
+      'Spicy foods if rosacea is present',
+      'Excessive caffeine',
+      'Trans fats and hydrogenated oils',
+    ],
+  },
+};
+
+export default dermatologyTemplate;

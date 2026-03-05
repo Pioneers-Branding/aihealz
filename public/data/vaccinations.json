@@ -1,0 +1,330 @@
+{
+  "schedules": {
+    "usa": {
+      "name": "CDC Immunization Schedule",
+      "authority": "Centers for Disease Control and Prevention",
+      "infant": [
+        { "vaccine": "HepB", "name": "Hepatitis B", "doses": [{ "age": "Birth", "note": "First dose within 24 hours" }, { "age": "1-2 months" }, { "age": "6-18 months" }] },
+        { "vaccine": "RV", "name": "Rotavirus", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months", "note": "If using RotaTeq" }] },
+        { "vaccine": "DTaP", "name": "Diphtheria, Tetanus, Pertussis", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }, { "age": "15-18 months" }, { "age": "4-6 years" }] },
+        { "vaccine": "Hib", "name": "Haemophilus influenzae type b", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months", "note": "Depending on brand" }, { "age": "12-15 months" }] },
+        { "vaccine": "PCV", "name": "Pneumococcal conjugate", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }, { "age": "12-15 months" }] },
+        { "vaccine": "IPV", "name": "Inactivated Poliovirus", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6-18 months" }, { "age": "4-6 years" }] },
+        { "vaccine": "Influenza", "name": "Flu vaccine", "doses": [{ "age": "6 months", "note": "Annual vaccination" }] },
+        { "vaccine": "MMR", "name": "Measles, Mumps, Rubella", "doses": [{ "age": "12-15 months" }, { "age": "4-6 years" }] },
+        { "vaccine": "Varicella", "name": "Chickenpox", "doses": [{ "age": "12-15 months" }, { "age": "4-6 years" }] },
+        { "vaccine": "HepA", "name": "Hepatitis A", "doses": [{ "age": "12-23 months" }, { "age": "6 months later" }] }
+      ],
+      "adolescent": [
+        { "vaccine": "Tdap", "name": "Tetanus, Diphtheria, Pertussis booster", "doses": [{ "age": "11-12 years" }] },
+        { "vaccine": "HPV", "name": "Human Papillomavirus", "doses": [{ "age": "11-12 years", "note": "2 doses if started before 15" }] },
+        { "vaccine": "MenACWY", "name": "Meningococcal conjugate", "doses": [{ "age": "11-12 years" }, { "age": "16 years", "note": "Booster" }] },
+        { "vaccine": "MenB", "name": "Meningococcal B", "doses": [{ "age": "16-18 years", "note": "Based on shared decision" }] }
+      ],
+      "adult": [
+        { "vaccine": "Influenza", "name": "Flu vaccine", "doses": [{ "age": "Annual", "note": "Everyone 6 months and older" }] },
+        { "vaccine": "Td/Tdap", "name": "Tetanus, Diphtheria booster", "doses": [{ "age": "Every 10 years" }] },
+        { "vaccine": "Zoster", "name": "Shingles (Shingrix)", "doses": [{ "age": "50+ years", "note": "2 doses, 2-6 months apart" }] },
+        { "vaccine": "PPSV23", "name": "Pneumococcal polysaccharide", "doses": [{ "age": "65+ years" }] },
+        { "vaccine": "PCV20", "name": "Pneumococcal conjugate", "doses": [{ "age": "65+ years", "note": "Or PCV15 + PPSV23" }] },
+        { "vaccine": "COVID-19", "name": "COVID-19 vaccine", "doses": [{ "age": "6 months+", "note": "Updated annually" }] },
+        { "vaccine": "RSV", "name": "Respiratory Syncytial Virus", "doses": [{ "age": "60+ years", "note": "Single dose" }] }
+      ]
+    },
+    "uk": {
+      "name": "NHS Vaccination Schedule",
+      "authority": "National Health Service",
+      "infant": [
+        { "vaccine": "6-in-1", "name": "DTaP/IPV/Hib/HepB", "doses": [{ "age": "8 weeks" }, { "age": "12 weeks" }, { "age": "16 weeks" }] },
+        { "vaccine": "PCV", "name": "Pneumococcal conjugate", "doses": [{ "age": "12 weeks" }, { "age": "1 year" }] },
+        { "vaccine": "RV", "name": "Rotavirus", "doses": [{ "age": "8 weeks" }, { "age": "12 weeks" }] },
+        { "vaccine": "MenB", "name": "Meningococcal B", "doses": [{ "age": "8 weeks" }, { "age": "16 weeks" }, { "age": "1 year" }] },
+        { "vaccine": "Hib/MenC", "name": "Haemophilus influenzae/Meningococcal C", "doses": [{ "age": "1 year" }] },
+        { "vaccine": "MMR", "name": "Measles, Mumps, Rubella", "doses": [{ "age": "1 year" }, { "age": "3 years 4 months" }] }
+      ],
+      "child": [
+        { "vaccine": "Flu", "name": "Influenza nasal spray", "doses": [{ "age": "2-3 years", "note": "Annual" }, { "age": "School years", "note": "Annual" }] },
+        { "vaccine": "4-in-1", "name": "DTaP/IPV booster", "doses": [{ "age": "3 years 4 months" }] }
+      ],
+      "adolescent": [
+        { "vaccine": "HPV", "name": "Human Papillomavirus", "doses": [{ "age": "12-13 years", "note": "Year 8 school" }] },
+        { "vaccine": "3-in-1", "name": "Td/IPV booster", "doses": [{ "age": "14 years", "note": "Year 9 school" }] },
+        { "vaccine": "MenACWY", "name": "Meningococcal ACWY", "doses": [{ "age": "14 years", "note": "Year 9 school" }] }
+      ],
+      "adult": [
+        { "vaccine": "Flu", "name": "Influenza", "doses": [{ "age": "65+", "note": "Annual" }, { "age": "At risk groups", "note": "Annual" }] },
+        { "vaccine": "Shingles", "name": "Shingrix", "doses": [{ "age": "70 years", "note": "Catch-up to 79" }] },
+        { "vaccine": "PPV", "name": "Pneumococcal polysaccharide", "doses": [{ "age": "65+ years" }] },
+        { "vaccine": "COVID-19", "name": "COVID-19 vaccine", "doses": [{ "age": "Various", "note": "Per current guidance" }] }
+      ]
+    },
+    "india": {
+      "name": "National Immunization Programme (NIP)",
+      "authority": "Ministry of Health and Family Welfare",
+      "infant": [
+        { "vaccine": "BCG", "name": "Bacillus Calmette-Guérin (TB)", "doses": [{ "age": "Birth" }] },
+        { "vaccine": "OPV", "name": "Oral Polio Vaccine", "doses": [{ "age": "Birth" }, { "age": "6 weeks" }, { "age": "10 weeks" }, { "age": "14 weeks" }] },
+        { "vaccine": "HepB", "name": "Hepatitis B", "doses": [{ "age": "Birth" }, { "age": "6 weeks" }, { "age": "10 weeks" }, { "age": "14 weeks" }] },
+        { "vaccine": "Pentavalent", "name": "DPT+HepB+Hib", "doses": [{ "age": "6 weeks" }, { "age": "10 weeks" }, { "age": "14 weeks" }] },
+        { "vaccine": "RV", "name": "Rotavirus", "doses": [{ "age": "6 weeks" }, { "age": "10 weeks" }, { "age": "14 weeks" }] },
+        { "vaccine": "PCV", "name": "Pneumococcal conjugate", "doses": [{ "age": "6 weeks" }, { "age": "14 weeks" }, { "age": "9 months" }] },
+        { "vaccine": "IPV", "name": "Inactivated Polio Vaccine", "doses": [{ "age": "6 weeks" }, { "age": "14 weeks" }] },
+        { "vaccine": "MR", "name": "Measles-Rubella", "doses": [{ "age": "9-12 months" }, { "age": "16-24 months" }] },
+        { "vaccine": "JE", "name": "Japanese Encephalitis", "doses": [{ "age": "9 months", "note": "Endemic areas" }, { "age": "16-24 months" }] },
+        { "vaccine": "Vitamin A", "name": "Vitamin A supplementation", "doses": [{ "age": "9 months" }, { "age": "Every 6 months till 5 years" }] }
+      ],
+      "booster": [
+        { "vaccine": "DPT Booster", "name": "Diphtheria, Pertussis, Tetanus", "doses": [{ "age": "16-24 months" }, { "age": "5-6 years" }] },
+        { "vaccine": "OPV Booster", "name": "Oral Polio", "doses": [{ "age": "16-24 months" }] }
+      ],
+      "adolescent": [
+        { "vaccine": "Td", "name": "Tetanus-Diphtheria", "doses": [{ "age": "10 years" }, { "age": "16 years" }] },
+        { "vaccine": "HPV", "name": "Human Papillomavirus", "doses": [{ "age": "9-14 years", "note": "Girls, optional" }] }
+      ]
+    },
+    "thailand": {
+      "name": "Expanded Programme on Immunization",
+      "authority": "Ministry of Public Health",
+      "infant": [
+        { "vaccine": "BCG", "name": "TB vaccine", "doses": [{ "age": "Birth" }] },
+        { "vaccine": "HepB", "name": "Hepatitis B", "doses": [{ "age": "Birth" }, { "age": "2 months" }, { "age": "6 months" }] },
+        { "vaccine": "DTP-HB-Hib", "name": "Pentavalent", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }] },
+        { "vaccine": "OPV", "name": "Oral Polio", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }] },
+        { "vaccine": "IPV", "name": "Inactivated Polio", "doses": [{ "age": "4 months" }] },
+        { "vaccine": "MMR", "name": "Measles, Mumps, Rubella", "doses": [{ "age": "9-12 months" }, { "age": "2.5 years" }] },
+        { "vaccine": "JE", "name": "Japanese Encephalitis", "doses": [{ "age": "1 year" }, { "age": "2.5 years" }] }
+      ],
+      "child": [
+        { "vaccine": "DTP", "name": "Diphtheria, Tetanus, Pertussis booster", "doses": [{ "age": "18 months" }, { "age": "4 years" }] },
+        { "vaccine": "OPV", "name": "Oral Polio booster", "doses": [{ "age": "18 months" }, { "age": "4 years" }] }
+      ],
+      "adolescent": [
+        { "vaccine": "dT", "name": "Diphtheria-Tetanus", "doses": [{ "age": "12 years" }] },
+        { "vaccine": "HPV", "name": "Human Papillomavirus", "doses": [{ "age": "11-12 years", "note": "Girls, 2 doses" }] }
+      ]
+    },
+    "mexico": {
+      "name": "Esquema Nacional de Vacunación",
+      "authority": "Secretaría de Salud",
+      "infant": [
+        { "vaccine": "BCG", "name": "Tuberculosis", "doses": [{ "age": "Birth" }] },
+        { "vaccine": "HepB", "name": "Hepatitis B", "doses": [{ "age": "Birth" }, { "age": "2 months" }, { "age": "6 months" }] },
+        { "vaccine": "Pentavalente", "name": "DPT+HB+Hib", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }, { "age": "18 months" }] },
+        { "vaccine": "Rotavirus", "name": "Rotavirus", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }] },
+        { "vaccine": "Neumococo", "name": "Pneumococcal conjugate", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "12 months" }] },
+        { "vaccine": "Influenza", "name": "Flu vaccine", "doses": [{ "age": "6-59 months", "note": "Annual" }] },
+        { "vaccine": "SRP", "name": "Measles, Mumps, Rubella", "doses": [{ "age": "12 months" }, { "age": "6 years" }] }
+      ],
+      "child": [
+        { "vaccine": "DPT", "name": "Diphtheria, Pertussis, Tetanus booster", "doses": [{ "age": "4 years" }] }
+      ],
+      "adolescent": [
+        { "vaccine": "VPH", "name": "Human Papillomavirus", "doses": [{ "age": "11 years", "note": "Girls, 2 doses" }] },
+        { "vaccine": "Tdpa", "name": "Tetanus, Diphtheria, Pertussis", "doses": [{ "age": "Pregnancy", "note": "Each pregnancy" }] }
+      ],
+      "adult": [
+        { "vaccine": "Td", "name": "Tetanus-Diphtheria", "doses": [{ "age": "Every 10 years" }] },
+        { "vaccine": "Influenza", "name": "Flu vaccine", "doses": [{ "age": "60+ years", "note": "Annual" }] },
+        { "vaccine": "Neumococo", "name": "Pneumococcal", "doses": [{ "age": "65+ years" }] }
+      ]
+    },
+    "turkey": {
+      "name": "Genişletilmiş Bağışıklama Programı",
+      "authority": "Ministry of Health",
+      "infant": [
+        { "vaccine": "BCG", "name": "TB vaccine", "doses": [{ "age": "2 months" }] },
+        { "vaccine": "HepB", "name": "Hepatitis B", "doses": [{ "age": "Birth" }, { "age": "1 month" }, { "age": "6 months" }] },
+        { "vaccine": "DTaP-IPV-Hib", "name": "Pentavalent", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }] },
+        { "vaccine": "PCV", "name": "Pneumococcal conjugate", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "12 months" }] },
+        { "vaccine": "OPV", "name": "Oral Polio", "doses": [{ "age": "6 months" }, { "age": "18 months" }] },
+        { "vaccine": "HepA", "name": "Hepatitis A", "doses": [{ "age": "18 months" }, { "age": "24 months" }] },
+        { "vaccine": "MMR", "name": "Measles, Mumps, Rubella", "doses": [{ "age": "12 months" }, { "age": "4 years" }] },
+        { "vaccine": "Varicella", "name": "Chickenpox", "doses": [{ "age": "12 months" }] }
+      ],
+      "child": [
+        { "vaccine": "DTaP-IPV", "name": "Booster", "doses": [{ "age": "18 months" }, { "age": "4 years" }] }
+      ],
+      "adolescent": [
+        { "vaccine": "Td", "name": "Tetanus-Diphtheria", "doses": [{ "age": "12 years" }] },
+        { "vaccine": "HPV", "name": "Human Papillomavirus", "doses": [{ "age": "11-12 years", "note": "2 doses" }] }
+      ]
+    },
+    "uae": {
+      "name": "National Immunization Programme",
+      "authority": "Ministry of Health and Prevention",
+      "infant": [
+        { "vaccine": "BCG", "name": "TB vaccine", "doses": [{ "age": "Birth" }] },
+        { "vaccine": "HepB", "name": "Hepatitis B", "doses": [{ "age": "Birth" }, { "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }] },
+        { "vaccine": "Hexavalent", "name": "DTaP-IPV-Hib-HepB", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }] },
+        { "vaccine": "PCV", "name": "Pneumococcal conjugate", "doses": [{ "age": "2 months" }, { "age": "4 months" }, { "age": "6 months" }, { "age": "12 months" }] },
+        { "vaccine": "RV", "name": "Rotavirus", "doses": [{ "age": "2 months" }, { "age": "4 months" }] },
+        { "vaccine": "MMR", "name": "Measles, Mumps, Rubella", "doses": [{ "age": "12 months" }, { "age": "18 months" }] },
+        { "vaccine": "Varicella", "name": "Chickenpox", "doses": [{ "age": "12 months" }] },
+        { "vaccine": "HepA", "name": "Hepatitis A", "doses": [{ "age": "12 months" }, { "age": "18 months" }] },
+        { "vaccine": "MenACWY", "name": "Meningococcal conjugate", "doses": [{ "age": "12 months" }] }
+      ],
+      "child": [
+        { "vaccine": "DTaP-IPV", "name": "Booster", "doses": [{ "age": "18 months" }, { "age": "4 years" }] },
+        { "vaccine": "OPV", "name": "Oral Polio booster", "doses": [{ "age": "18 months" }] },
+        { "vaccine": "MMR", "name": "MMR booster", "doses": [{ "age": "4 years" }] }
+      ],
+      "adolescent": [
+        { "vaccine": "Tdap", "name": "Tetanus, Diphtheria, Pertussis", "doses": [{ "age": "12 years" }] },
+        { "vaccine": "HPV", "name": "Human Papillomavirus", "doses": [{ "age": "11-12 years", "note": "2-3 doses" }] },
+        { "vaccine": "MenACWY", "name": "Meningococcal booster", "doses": [{ "age": "16 years" }] }
+      ],
+      "adult": [
+        { "vaccine": "Influenza", "name": "Flu vaccine", "doses": [{ "age": "Annual", "note": "Recommended for all" }] },
+        { "vaccine": "COVID-19", "name": "COVID-19 vaccine", "doses": [{ "age": "Per guidance" }] }
+      ]
+    }
+  },
+  "travel_vaccines": [
+    {
+      "id": "yellow_fever",
+      "name": "Yellow Fever",
+      "description": "Required or recommended for travel to certain areas of Africa and South America",
+      "required_regions": ["Sub-Saharan Africa", "Tropical South America", "Panama"],
+      "timing": "At least 10 days before travel",
+      "duration": "Lifetime",
+      "certificate": true,
+      "costs": { "usa": { "min": 150, "max": 300 }, "uk": { "min": 60, "max": 100 }, "india": { "min": 15, "max": 40 }, "thailand": { "min": 20, "max": 50 }, "mexico": { "min": 30, "max": 80 }, "turkey": { "min": 25, "max": 60 }, "uae": { "min": 50, "max": 120 } }
+    },
+    {
+      "id": "typhoid",
+      "name": "Typhoid",
+      "description": "Recommended for travel to areas with poor sanitation",
+      "required_regions": ["South Asia", "Southeast Asia", "Africa", "Central/South America", "Middle East"],
+      "timing": "At least 2 weeks before travel",
+      "duration": "2-5 years depending on type",
+      "certificate": false,
+      "costs": { "usa": { "min": 80, "max": 150 }, "uk": { "min": 30, "max": 50 }, "india": { "min": 5, "max": 15 }, "thailand": { "min": 10, "max": 25 }, "mexico": { "min": 15, "max": 40 }, "turkey": { "min": 15, "max": 35 }, "uae": { "min": 30, "max": 70 } }
+    },
+    {
+      "id": "hepatitis_a",
+      "name": "Hepatitis A",
+      "description": "Recommended for travel to developing countries with poor sanitation",
+      "required_regions": ["Africa", "Asia", "Central/South America", "Eastern Europe", "Middle East"],
+      "timing": "At least 2 weeks before travel",
+      "duration": "20+ years with booster",
+      "certificate": false,
+      "costs": { "usa": { "min": 75, "max": 150 }, "uk": { "min": 50, "max": 80 }, "india": { "min": 10, "max": 25 }, "thailand": { "min": 15, "max": 35 }, "mexico": { "min": 20, "max": 50 }, "turkey": { "min": 20, "max": 45 }, "uae": { "min": 40, "max": 90 } }
+    },
+    {
+      "id": "hepatitis_b",
+      "name": "Hepatitis B",
+      "description": "Recommended for longer stays, medical procedures, or intimate contact abroad",
+      "required_regions": ["Sub-Saharan Africa", "East Asia", "Pacific Islands", "Amazon Basin"],
+      "timing": "6 months before travel for full series",
+      "duration": "Lifetime",
+      "certificate": false,
+      "costs": { "usa": { "min": 60, "max": 120 }, "uk": { "min": 40, "max": 70 }, "india": { "min": 8, "max": 20 }, "thailand": { "min": 12, "max": 30 }, "mexico": { "min": 18, "max": 45 }, "turkey": { "min": 15, "max": 40 }, "uae": { "min": 35, "max": 80 } }
+    },
+    {
+      "id": "japanese_encephalitis",
+      "name": "Japanese Encephalitis",
+      "description": "Recommended for extended stays in rural Asia or Pacific islands",
+      "required_regions": ["East Asia", "Southeast Asia", "South Asia", "Pacific Islands"],
+      "timing": "At least 1 month before travel",
+      "duration": "1-2 years, booster if ongoing risk",
+      "certificate": false,
+      "costs": { "usa": { "min": 300, "max": 500 }, "uk": { "min": 100, "max": 180 }, "india": { "min": 20, "max": 50 }, "thailand": { "min": 25, "max": 60 }, "mexico": { "min": 60, "max": 150 }, "turkey": { "min": 50, "max": 120 }, "uae": { "min": 80, "max": 180 } }
+    },
+    {
+      "id": "rabies",
+      "name": "Rabies (Pre-exposure)",
+      "description": "Recommended for travelers involved in outdoor activities or animal work",
+      "required_regions": ["Africa", "Asia", "Central/South America"],
+      "timing": "At least 1 month before travel",
+      "duration": "3 doses over 21-28 days",
+      "certificate": false,
+      "costs": { "usa": { "min": 600, "max": 1200 }, "uk": { "min": 150, "max": 300 }, "india": { "min": 30, "max": 80 }, "thailand": { "min": 40, "max": 100 }, "mexico": { "min": 80, "max": 200 }, "turkey": { "min": 70, "max": 150 }, "uae": { "min": 150, "max": 350 } }
+    },
+    {
+      "id": "meningococcal",
+      "name": "Meningococcal (ACWY)",
+      "description": "Required for Hajj/Umrah; recommended for meningitis belt of Africa",
+      "required_regions": ["Saudi Arabia (Hajj)", "Sub-Saharan Africa (meningitis belt)"],
+      "timing": "At least 2 weeks before travel",
+      "duration": "5 years",
+      "certificate": true,
+      "costs": { "usa": { "min": 120, "max": 200 }, "uk": { "min": 50, "max": 90 }, "india": { "min": 15, "max": 40 }, "thailand": { "min": 25, "max": 60 }, "mexico": { "min": 40, "max": 100 }, "turkey": { "min": 35, "max": 80 }, "uae": { "min": 60, "max": 140 } }
+    },
+    {
+      "id": "cholera",
+      "name": "Cholera",
+      "description": "Consider for humanitarian workers or travelers to active outbreak areas",
+      "required_regions": ["Active outbreak areas", "Haiti", "Parts of Africa", "Southeast Asia"],
+      "timing": "At least 1 week before travel",
+      "duration": "2 years",
+      "certificate": false,
+      "costs": { "usa": { "min": 100, "max": 200 }, "uk": { "min": 40, "max": 70 }, "india": { "min": 8, "max": 20 }, "thailand": { "min": 12, "max": 30 }, "mexico": { "min": 25, "max": 60 }, "turkey": { "min": 20, "max": 50 }, "uae": { "min": 45, "max": 100 } }
+    },
+    {
+      "id": "tick_borne_encephalitis",
+      "name": "Tick-Borne Encephalitis",
+      "description": "Recommended for outdoor activities in forested areas of endemic regions",
+      "required_regions": ["Central/Eastern Europe", "Russia", "Northern China", "Japan"],
+      "timing": "At least 1 month before travel",
+      "duration": "3-5 years with booster",
+      "certificate": false,
+      "costs": { "usa": { "min": 200, "max": 400 }, "uk": { "min": 65, "max": 120 }, "india": { "min": 25, "max": 60 }, "thailand": { "min": 30, "max": 70 }, "mexico": { "min": 50, "max": 120 }, "turkey": { "min": 40, "max": 100 }, "uae": { "min": 70, "max": 160 } }
+    },
+    {
+      "id": "polio",
+      "name": "Polio (Booster)",
+      "description": "Booster recommended for travel to polio-endemic or outbreak areas",
+      "required_regions": ["Afghanistan", "Pakistan", "Nigeria", "Outbreak countries"],
+      "timing": "Any time before travel",
+      "duration": "Lifetime (after primary series)",
+      "certificate": true,
+      "costs": { "usa": { "min": 40, "max": 80 }, "uk": { "min": 25, "max": 50 }, "india": { "min": 2, "max": 8 }, "thailand": { "min": 5, "max": 15 }, "mexico": { "min": 10, "max": 30 }, "turkey": { "min": 10, "max": 25 }, "uae": { "min": 20, "max": 50 } }
+    },
+    {
+      "id": "malaria_prophylaxis",
+      "name": "Malaria Prevention",
+      "description": "Antimalarial medication for travel to malaria-endemic areas",
+      "required_regions": ["Sub-Saharan Africa", "South Asia", "Southeast Asia", "Central/South America", "Pacific Islands"],
+      "timing": "Varies by medication (1 day to 2 weeks before)",
+      "duration": "During travel + 1-4 weeks after",
+      "certificate": false,
+      "note": "Not a vaccine - prescription medication required",
+      "costs": { "usa": { "min": 50, "max": 300 }, "uk": { "min": 30, "max": 150 }, "india": { "min": 5, "max": 30 }, "thailand": { "min": 10, "max": 50 }, "mexico": { "min": 20, "max": 100 }, "turkey": { "min": 15, "max": 80 }, "uae": { "min": 30, "max": 150 } }
+    }
+  ],
+  "vaccine_info": {
+    "DTaP": { "fullName": "Diphtheria, Tetanus, Pertussis", "type": "Inactivated/Toxoid", "protects": ["Diphtheria", "Tetanus", "Whooping Cough"] },
+    "IPV": { "fullName": "Inactivated Poliovirus", "type": "Inactivated", "protects": ["Poliomyelitis"] },
+    "OPV": { "fullName": "Oral Poliovirus", "type": "Live Attenuated", "protects": ["Poliomyelitis"] },
+    "MMR": { "fullName": "Measles, Mumps, Rubella", "type": "Live Attenuated", "protects": ["Measles", "Mumps", "Rubella"] },
+    "HepB": { "fullName": "Hepatitis B", "type": "Recombinant", "protects": ["Hepatitis B"] },
+    "HepA": { "fullName": "Hepatitis A", "type": "Inactivated", "protects": ["Hepatitis A"] },
+    "Hib": { "fullName": "Haemophilus influenzae type b", "type": "Conjugate", "protects": ["Bacterial Meningitis", "Pneumonia", "Epiglottitis"] },
+    "PCV": { "fullName": "Pneumococcal Conjugate", "type": "Conjugate", "protects": ["Pneumonia", "Meningitis", "Sepsis"] },
+    "RV": { "fullName": "Rotavirus", "type": "Live Attenuated", "protects": ["Rotavirus gastroenteritis"] },
+    "Varicella": { "fullName": "Varicella (Chickenpox)", "type": "Live Attenuated", "protects": ["Chickenpox"] },
+    "HPV": { "fullName": "Human Papillomavirus", "type": "Recombinant", "protects": ["HPV-related cancers", "Genital warts"] },
+    "MenACWY": { "fullName": "Meningococcal Conjugate", "type": "Conjugate", "protects": ["Meningococcal disease"] },
+    "MenB": { "fullName": "Meningococcal B", "type": "Recombinant", "protects": ["Meningococcal disease (serogroup B)"] },
+    "BCG": { "fullName": "Bacillus Calmette-Guérin", "type": "Live Attenuated", "protects": ["Tuberculosis"] },
+    "Influenza": { "fullName": "Influenza (Flu)", "type": "Inactivated/Live", "protects": ["Seasonal Flu"] },
+    "Zoster": { "fullName": "Shingrix (Shingles)", "type": "Recombinant", "protects": ["Shingles", "Postherpetic Neuralgia"] },
+    "COVID-19": { "fullName": "COVID-19 Vaccine", "type": "Various (mRNA, Viral Vector, Protein)", "protects": ["COVID-19"] },
+    "RSV": { "fullName": "Respiratory Syncytial Virus", "type": "Various", "protects": ["RSV infection"] }
+  },
+  "destinations": [
+    { "region": "Western Europe", "vaccines": ["Routine vaccines", "Hepatitis B"], "malaria": false },
+    { "region": "Eastern Europe", "vaccines": ["Routine vaccines", "Hepatitis A", "Hepatitis B", "Tick-Borne Encephalitis"], "malaria": false },
+    { "region": "North Africa", "vaccines": ["Hepatitis A", "Hepatitis B", "Typhoid", "Rabies"], "malaria": "Some areas" },
+    { "region": "Sub-Saharan Africa", "vaccines": ["Yellow Fever", "Hepatitis A", "Hepatitis B", "Typhoid", "Meningococcal", "Rabies", "Cholera"], "malaria": true },
+    { "region": "Middle East", "vaccines": ["Hepatitis A", "Hepatitis B", "Typhoid", "Meningococcal (for Hajj)"], "malaria": "Some areas" },
+    { "region": "South Asia", "vaccines": ["Hepatitis A", "Hepatitis B", "Typhoid", "Japanese Encephalitis", "Rabies"], "malaria": true },
+    { "region": "Southeast Asia", "vaccines": ["Hepatitis A", "Hepatitis B", "Typhoid", "Japanese Encephalitis", "Rabies"], "malaria": "Rural areas" },
+    { "region": "East Asia", "vaccines": ["Hepatitis A", "Hepatitis B", "Japanese Encephalitis"], "malaria": "Some areas" },
+    { "region": "Australia/New Zealand", "vaccines": ["Routine vaccines"], "malaria": false },
+    { "region": "Pacific Islands", "vaccines": ["Hepatitis A", "Hepatitis B", "Typhoid", "Japanese Encephalitis"], "malaria": "Some islands" },
+    { "region": "Central America", "vaccines": ["Hepatitis A", "Hepatitis B", "Typhoid", "Rabies"], "malaria": "Some areas" },
+    { "region": "South America", "vaccines": ["Yellow Fever", "Hepatitis A", "Hepatitis B", "Typhoid", "Rabies"], "malaria": "Amazon region" },
+    { "region": "Caribbean", "vaccines": ["Hepatitis A", "Hepatitis B", "Typhoid"], "malaria": "Haiti, Dominican Republic" }
+  ]
+}

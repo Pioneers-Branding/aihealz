@@ -1,0 +1,607 @@
+{
+  "categories": [
+    { "id": "cardiology", "name": "Cardiology", "icon": "❤️" },
+    { "id": "pulmonology", "name": "Pulmonology", "icon": "🫁" },
+    { "id": "neurology", "name": "Neurology", "icon": "🧠" },
+    { "id": "gastroenterology", "name": "Gastroenterology/Hepatology", "icon": "🫀" },
+    { "id": "critical_care", "name": "Critical Care/ICU", "icon": "🏥" },
+    { "id": "nephrology", "name": "Nephrology", "icon": "🫘" },
+    { "id": "hematology", "name": "Hematology/Coagulation", "icon": "🩸" },
+    { "id": "emergency", "name": "Emergency Medicine", "icon": "🚑" },
+    { "id": "surgery", "name": "Surgery/Trauma", "icon": "🔪" },
+    { "id": "infectious", "name": "Infectious Disease", "icon": "🦠" }
+  ],
+  "scores": [
+    {
+      "id": "wells_dvt",
+      "name": "Wells Score for DVT",
+      "category": "hematology",
+      "description": "Estimates probability of deep vein thrombosis based on clinical criteria",
+      "reference": "Wells PS, et al. NEJM 2003",
+      "fields": [
+        { "key": "cancer", "label": "Active cancer (treatment within 6 months)", "type": "checkbox", "points": 1 },
+        { "key": "paralysis", "label": "Paralysis, paresis, or recent cast immobilization of lower extremity", "type": "checkbox", "points": 1 },
+        { "key": "bedridden", "label": "Bedridden >3 days or major surgery within 12 weeks", "type": "checkbox", "points": 1 },
+        { "key": "tenderness", "label": "Localized tenderness along deep venous system", "type": "checkbox", "points": 1 },
+        { "key": "swelling", "label": "Entire leg swollen", "type": "checkbox", "points": 1 },
+        { "key": "calf", "label": "Calf swelling >3cm compared to asymptomatic leg", "type": "checkbox", "points": 1 },
+        { "key": "edema", "label": "Pitting edema confined to symptomatic leg", "type": "checkbox", "points": 1 },
+        { "key": "collateral", "label": "Collateral superficial veins (non-varicose)", "type": "checkbox", "points": 1 },
+        { "key": "previous", "label": "Previously documented DVT", "type": "checkbox", "points": 1 },
+        { "key": "alternative", "label": "Alternative diagnosis at least as likely as DVT", "type": "checkbox", "points": -2 }
+      ],
+      "interpretation": [
+        { "range": [-2, 0], "risk": "Low", "probability": "5%", "action": "D-dimer testing; if negative, DVT excluded" },
+        { "range": [1, 2], "risk": "Moderate", "probability": "17%", "action": "D-dimer or ultrasound" },
+        { "range": [3, 9], "risk": "High", "probability": "53%", "action": "Ultrasound recommended; consider empiric anticoagulation" }
+      ]
+    },
+    {
+      "id": "wells_pe",
+      "name": "Wells Score for PE",
+      "category": "pulmonology",
+      "description": "Estimates probability of pulmonary embolism",
+      "reference": "Wells PS, et al. Thromb Haemost 2000",
+      "fields": [
+        { "key": "dvt_symptoms", "label": "Clinical signs/symptoms of DVT", "type": "checkbox", "points": 3 },
+        { "key": "alternative", "label": "PE is #1 diagnosis or equally likely", "type": "checkbox", "points": 3 },
+        { "key": "tachycardia", "label": "Heart rate >100 bpm", "type": "checkbox", "points": 1.5 },
+        { "key": "immobilization", "label": "Immobilization ≥3 days or surgery in past 4 weeks", "type": "checkbox", "points": 1.5 },
+        { "key": "previous_dvt_pe", "label": "Previous DVT/PE", "type": "checkbox", "points": 1.5 },
+        { "key": "hemoptysis", "label": "Hemoptysis", "type": "checkbox", "points": 1 },
+        { "key": "malignancy", "label": "Malignancy (treatment within 6 months or palliative)", "type": "checkbox", "points": 1 }
+      ],
+      "interpretation": [
+        { "range": [0, 1], "risk": "Low", "probability": "1.3%", "action": "PERC rule or D-dimer" },
+        { "range": [2, 6], "risk": "Moderate", "probability": "16.2%", "action": "D-dimer; if positive, CT angiography" },
+        { "range": [6.5, 12.5], "risk": "High", "probability": "37.5%", "action": "CT angiography; consider empiric anticoagulation" }
+      ]
+    },
+    {
+      "id": "chadsvasc",
+      "name": "CHA₂DS₂-VASc Score",
+      "category": "cardiology",
+      "description": "Stroke risk stratification in atrial fibrillation",
+      "reference": "Lip GY, et al. Chest 2010",
+      "fields": [
+        { "key": "chf", "label": "Congestive heart failure (or LVEF ≤40%)", "type": "checkbox", "points": 1 },
+        { "key": "hypertension", "label": "Hypertension", "type": "checkbox", "points": 1 },
+        { "key": "age75", "label": "Age ≥75 years", "type": "checkbox", "points": 2 },
+        { "key": "diabetes", "label": "Diabetes mellitus", "type": "checkbox", "points": 1 },
+        { "key": "stroke", "label": "Stroke/TIA/thromboembolism history", "type": "checkbox", "points": 2 },
+        { "key": "vascular", "label": "Vascular disease (prior MI, PAD, aortic plaque)", "type": "checkbox", "points": 1 },
+        { "key": "age65", "label": "Age 65-74 years", "type": "checkbox", "points": 1 },
+        { "key": "female", "label": "Sex category (female)", "type": "checkbox", "points": 1 }
+      ],
+      "interpretation": [
+        { "range": [0, 0], "risk": "Low", "probability": "0.2%/year", "action": "No anticoagulation (or aspirin)" },
+        { "range": [1, 1], "risk": "Low-Moderate", "probability": "0.6%/year", "action": "Consider anticoagulation vs aspirin" },
+        { "range": [2, 9], "risk": "Moderate-High", "probability": "2.2-15.2%/year", "action": "Anticoagulation recommended (DOAC preferred)" }
+      ]
+    },
+    {
+      "id": "hasbled",
+      "name": "HAS-BLED Score",
+      "category": "cardiology",
+      "description": "Bleeding risk assessment for anticoagulation in AFib",
+      "reference": "Pisters R, et al. Chest 2010",
+      "fields": [
+        { "key": "hypertension", "label": "Hypertension (uncontrolled, SBP >160)", "type": "checkbox", "points": 1 },
+        { "key": "renal", "label": "Abnormal renal function (dialysis, transplant, Cr >2.3)", "type": "checkbox", "points": 1 },
+        { "key": "liver", "label": "Abnormal liver function (cirrhosis, bilirubin >2x, AST/ALT >3x)", "type": "checkbox", "points": 1 },
+        { "key": "stroke", "label": "Stroke history", "type": "checkbox", "points": 1 },
+        { "key": "bleeding", "label": "Bleeding history or predisposition", "type": "checkbox", "points": 1 },
+        { "key": "inr", "label": "Labile INRs (TTR <60%)", "type": "checkbox", "points": 1 },
+        { "key": "elderly", "label": "Elderly (age >65)", "type": "checkbox", "points": 1 },
+        { "key": "drugs", "label": "Drugs (antiplatelet, NSAIDs)", "type": "checkbox", "points": 1 },
+        { "key": "alcohol", "label": "Alcohol excess (≥8 drinks/week)", "type": "checkbox", "points": 1 }
+      ],
+      "interpretation": [
+        { "range": [0, 2], "risk": "Low", "probability": "1.0-3.7%/year", "action": "Anticoagulation reasonable" },
+        { "range": [3, 9], "risk": "High", "probability": ">3.7%/year", "action": "Caution with anticoagulation; address modifiable risk factors" }
+      ]
+    },
+    {
+      "id": "gcs",
+      "name": "Glasgow Coma Scale (GCS)",
+      "category": "neurology",
+      "description": "Assessment of consciousness level in acute brain injury",
+      "reference": "Teasdale G, Jennett B. Lancet 1974",
+      "fields": [
+        { "key": "eye", "label": "Eye Opening", "type": "select", "options": [
+          { "label": "Spontaneous", "value": 4 },
+          { "label": "To voice", "value": 3 },
+          { "label": "To pain", "value": 2 },
+          { "label": "None", "value": 1 }
+        ]},
+        { "key": "verbal", "label": "Verbal Response", "type": "select", "options": [
+          { "label": "Oriented", "value": 5 },
+          { "label": "Confused", "value": 4 },
+          { "label": "Inappropriate words", "value": 3 },
+          { "label": "Incomprehensible sounds", "value": 2 },
+          { "label": "None", "value": 1 }
+        ]},
+        { "key": "motor", "label": "Motor Response", "type": "select", "options": [
+          { "label": "Obeys commands", "value": 6 },
+          { "label": "Localizes pain", "value": 5 },
+          { "label": "Withdraws from pain", "value": 4 },
+          { "label": "Abnormal flexion (decorticate)", "value": 3 },
+          { "label": "Extension (decerebrate)", "value": 2 },
+          { "label": "None", "value": 1 }
+        ]}
+      ],
+      "interpretation": [
+        { "range": [13, 15], "risk": "Mild", "action": "Observation; CT if risk factors present" },
+        { "range": [9, 12], "risk": "Moderate", "action": "CT scan; close monitoring; consider ICU" },
+        { "range": [3, 8], "risk": "Severe", "action": "Intubation; ICU; neurosurgery consult" }
+      ]
+    },
+    {
+      "id": "nihss",
+      "name": "NIH Stroke Scale (NIHSS)",
+      "category": "neurology",
+      "description": "Quantifies stroke severity for treatment decisions",
+      "reference": "NIH Stroke Scale",
+      "fields": [
+        { "key": "loc", "label": "1a. Level of Consciousness", "type": "select", "options": [
+          { "label": "Alert", "value": 0 },
+          { "label": "Not alert, arousable", "value": 1 },
+          { "label": "Not alert, requires stimulation", "value": 2 },
+          { "label": "Unresponsive", "value": 3 }
+        ]},
+        { "key": "loc_questions", "label": "1b. LOC Questions (month, age)", "type": "select", "options": [
+          { "label": "Both correct", "value": 0 },
+          { "label": "One correct", "value": 1 },
+          { "label": "Neither correct", "value": 2 }
+        ]},
+        { "key": "loc_commands", "label": "1c. LOC Commands (close eyes, grip)", "type": "select", "options": [
+          { "label": "Both correct", "value": 0 },
+          { "label": "One correct", "value": 1 },
+          { "label": "Neither correct", "value": 2 }
+        ]},
+        { "key": "gaze", "label": "2. Best Gaze", "type": "select", "options": [
+          { "label": "Normal", "value": 0 },
+          { "label": "Partial gaze palsy", "value": 1 },
+          { "label": "Forced deviation", "value": 2 }
+        ]},
+        { "key": "visual", "label": "3. Visual Fields", "type": "select", "options": [
+          { "label": "No visual loss", "value": 0 },
+          { "label": "Partial hemianopia", "value": 1 },
+          { "label": "Complete hemianopia", "value": 2 },
+          { "label": "Bilateral hemianopia", "value": 3 }
+        ]},
+        { "key": "facial", "label": "4. Facial Palsy", "type": "select", "options": [
+          { "label": "Normal", "value": 0 },
+          { "label": "Minor paralysis", "value": 1 },
+          { "label": "Partial paralysis", "value": 2 },
+          { "label": "Complete paralysis", "value": 3 }
+        ]},
+        { "key": "motor_arm_l", "label": "5a. Motor Arm (Left)", "type": "select", "options": [
+          { "label": "No drift", "value": 0 },
+          { "label": "Drift before 10 sec", "value": 1 },
+          { "label": "Falls before 10 sec", "value": 2 },
+          { "label": "No effort against gravity", "value": 3 },
+          { "label": "No movement", "value": 4 }
+        ]},
+        { "key": "motor_arm_r", "label": "5b. Motor Arm (Right)", "type": "select", "options": [
+          { "label": "No drift", "value": 0 },
+          { "label": "Drift before 10 sec", "value": 1 },
+          { "label": "Falls before 10 sec", "value": 2 },
+          { "label": "No effort against gravity", "value": 3 },
+          { "label": "No movement", "value": 4 }
+        ]},
+        { "key": "motor_leg_l", "label": "6a. Motor Leg (Left)", "type": "select", "options": [
+          { "label": "No drift", "value": 0 },
+          { "label": "Drift before 5 sec", "value": 1 },
+          { "label": "Falls before 5 sec", "value": 2 },
+          { "label": "No effort against gravity", "value": 3 },
+          { "label": "No movement", "value": 4 }
+        ]},
+        { "key": "motor_leg_r", "label": "6b. Motor Leg (Right)", "type": "select", "options": [
+          { "label": "No drift", "value": 0 },
+          { "label": "Drift before 5 sec", "value": 1 },
+          { "label": "Falls before 5 sec", "value": 2 },
+          { "label": "No effort against gravity", "value": 3 },
+          { "label": "No movement", "value": 4 }
+        ]},
+        { "key": "ataxia", "label": "7. Limb Ataxia", "type": "select", "options": [
+          { "label": "Absent", "value": 0 },
+          { "label": "Present in one limb", "value": 1 },
+          { "label": "Present in two limbs", "value": 2 }
+        ]},
+        { "key": "sensory", "label": "8. Sensory", "type": "select", "options": [
+          { "label": "Normal", "value": 0 },
+          { "label": "Mild-moderate loss", "value": 1 },
+          { "label": "Severe or total loss", "value": 2 }
+        ]},
+        { "key": "language", "label": "9. Best Language", "type": "select", "options": [
+          { "label": "No aphasia", "value": 0 },
+          { "label": "Mild-moderate aphasia", "value": 1 },
+          { "label": "Severe aphasia", "value": 2 },
+          { "label": "Mute/global aphasia", "value": 3 }
+        ]},
+        { "key": "dysarthria", "label": "10. Dysarthria", "type": "select", "options": [
+          { "label": "Normal", "value": 0 },
+          { "label": "Mild-moderate", "value": 1 },
+          { "label": "Severe/unintelligible", "value": 2 }
+        ]},
+        { "key": "neglect", "label": "11. Extinction/Inattention", "type": "select", "options": [
+          { "label": "No abnormality", "value": 0 },
+          { "label": "Partial neglect", "value": 1 },
+          { "label": "Complete neglect", "value": 2 }
+        ]}
+      ],
+      "interpretation": [
+        { "range": [0, 4], "risk": "Minor Stroke", "action": "tPA may not be beneficial; supportive care" },
+        { "range": [5, 15], "risk": "Moderate Stroke", "action": "tPA candidate if within window; monitor closely" },
+        { "range": [16, 20], "risk": "Moderate-Severe", "action": "tPA + thrombectomy evaluation; ICU" },
+        { "range": [21, 42], "risk": "Severe Stroke", "action": "Consider thrombectomy; guarded prognosis" }
+      ]
+    },
+    {
+      "id": "meld",
+      "name": "MELD Score",
+      "category": "gastroenterology",
+      "description": "Model for End-Stage Liver Disease; predicts 90-day mortality and transplant priority",
+      "reference": "Kamath PS, et al. Hepatology 2001",
+      "fields": [
+        { "key": "creatinine", "label": "Creatinine (mg/dL)", "type": "number", "min": 1, "max": 4 },
+        { "key": "bilirubin", "label": "Bilirubin (mg/dL)", "type": "number", "min": 1 },
+        { "key": "inr", "label": "INR", "type": "number", "min": 1 },
+        { "key": "dialysis", "label": "Dialysis (≥2x in past week)", "type": "checkbox" },
+        { "key": "sodium", "label": "Sodium (mEq/L) - for MELD-Na", "type": "number", "min": 125, "max": 137 }
+      ],
+      "formula": "MELD = 10 × (0.957 × ln(Cr) + 0.378 × ln(Bili) + 1.120 × ln(INR) + 0.643)",
+      "interpretation": [
+        { "range": [6, 9], "risk": "1.9% 90-day mortality", "action": "Monitor; outpatient management" },
+        { "range": [10, 19], "risk": "6% 90-day mortality", "action": "Evaluate for transplant listing" },
+        { "range": [20, 29], "risk": "19.6% 90-day mortality", "action": "Transplant priority; hospitalization may be needed" },
+        { "range": [30, 39], "risk": "52.6% 90-day mortality", "action": "High transplant priority" },
+        { "range": [40, 50], "risk": "71.3% 90-day mortality", "action": "Urgent transplant; intensive care" }
+      ]
+    },
+    {
+      "id": "child_pugh",
+      "name": "Child-Pugh Score",
+      "category": "gastroenterology",
+      "description": "Classification of cirrhosis severity",
+      "reference": "Pugh RN, et al. Br J Surg 1973",
+      "fields": [
+        { "key": "encephalopathy", "label": "Encephalopathy", "type": "select", "options": [
+          { "label": "None", "value": 1 },
+          { "label": "Grade 1-2 (mild)", "value": 2 },
+          { "label": "Grade 3-4 (severe)", "value": 3 }
+        ]},
+        { "key": "ascites", "label": "Ascites", "type": "select", "options": [
+          { "label": "None", "value": 1 },
+          { "label": "Mild (or controlled)", "value": 2 },
+          { "label": "Moderate-Severe (refractory)", "value": 3 }
+        ]},
+        { "key": "bilirubin", "label": "Bilirubin (mg/dL)", "type": "select", "options": [
+          { "label": "<2", "value": 1 },
+          { "label": "2-3", "value": 2 },
+          { "label": ">3", "value": 3 }
+        ]},
+        { "key": "albumin", "label": "Albumin (g/dL)", "type": "select", "options": [
+          { "label": ">3.5", "value": 1 },
+          { "label": "2.8-3.5", "value": 2 },
+          { "label": "<2.8", "value": 3 }
+        ]},
+        { "key": "pt", "label": "PT prolongation (sec) / INR", "type": "select", "options": [
+          { "label": "<4 sec / INR <1.7", "value": 1 },
+          { "label": "4-6 sec / INR 1.7-2.3", "value": 2 },
+          { "label": ">6 sec / INR >2.3", "value": 3 }
+        ]}
+      ],
+      "interpretation": [
+        { "range": [5, 6], "risk": "Class A", "action": "1-year survival 100%; good operative candidate" },
+        { "range": [7, 9], "risk": "Class B", "action": "1-year survival 80%; increased operative risk" },
+        { "range": [10, 15], "risk": "Class C", "action": "1-year survival 45%; poor surgical candidate; consider transplant" }
+      ]
+    },
+    {
+      "id": "qsofa",
+      "name": "qSOFA (Quick SOFA)",
+      "category": "critical_care",
+      "description": "Rapid bedside sepsis screening tool",
+      "reference": "Seymour CW, et al. JAMA 2016",
+      "fields": [
+        { "key": "altered", "label": "Altered mental status (GCS <15)", "type": "checkbox", "points": 1 },
+        { "key": "respiratory", "label": "Respiratory rate ≥22/min", "type": "checkbox", "points": 1 },
+        { "key": "sbp", "label": "Systolic BP ≤100 mmHg", "type": "checkbox", "points": 1 }
+      ],
+      "interpretation": [
+        { "range": [0, 1], "risk": "Low", "action": "Continue to monitor; look for other signs of infection" },
+        { "range": [2, 3], "risk": "High", "action": "High mortality risk; prompt investigation for organ dysfunction; consider ICU" }
+      ]
+    },
+    {
+      "id": "sofa",
+      "name": "SOFA Score",
+      "category": "critical_care",
+      "description": "Sequential Organ Failure Assessment for ICU patients",
+      "reference": "Vincent JL, et al. Intensive Care Med 1996",
+      "fields": [
+        { "key": "pao2", "label": "Respiration (PaO2/FiO2)", "type": "select", "options": [
+          { "label": "≥400", "value": 0 },
+          { "label": "<400", "value": 1 },
+          { "label": "<300", "value": 2 },
+          { "label": "<200 with ventilation", "value": 3 },
+          { "label": "<100 with ventilation", "value": 4 }
+        ]},
+        { "key": "platelets", "label": "Coagulation (Platelets ×10³/µL)", "type": "select", "options": [
+          { "label": "≥150", "value": 0 },
+          { "label": "<150", "value": 1 },
+          { "label": "<100", "value": 2 },
+          { "label": "<50", "value": 3 },
+          { "label": "<20", "value": 4 }
+        ]},
+        { "key": "bilirubin", "label": "Liver (Bilirubin mg/dL)", "type": "select", "options": [
+          { "label": "<1.2", "value": 0 },
+          { "label": "1.2-1.9", "value": 1 },
+          { "label": "2.0-5.9", "value": 2 },
+          { "label": "6.0-11.9", "value": 3 },
+          { "label": "≥12", "value": 4 }
+        ]},
+        { "key": "map", "label": "Cardiovascular (MAP/Vasopressors)", "type": "select", "options": [
+          { "label": "MAP ≥70", "value": 0 },
+          { "label": "MAP <70", "value": 1 },
+          { "label": "Dopamine ≤5 or dobutamine", "value": 2 },
+          { "label": "Dopamine >5 or epi/norepi ≤0.1", "value": 3 },
+          { "label": "Dopamine >15 or epi/norepi >0.1", "value": 4 }
+        ]},
+        { "key": "gcs", "label": "CNS (Glasgow Coma Scale)", "type": "select", "options": [
+          { "label": "15", "value": 0 },
+          { "label": "13-14", "value": 1 },
+          { "label": "10-12", "value": 2 },
+          { "label": "6-9", "value": 3 },
+          { "label": "<6", "value": 4 }
+        ]},
+        { "key": "creatinine", "label": "Renal (Creatinine mg/dL or UOP)", "type": "select", "options": [
+          { "label": "<1.2", "value": 0 },
+          { "label": "1.2-1.9", "value": 1 },
+          { "label": "2.0-3.4", "value": 2 },
+          { "label": "3.5-4.9 or UOP <500ml/day", "value": 3 },
+          { "label": "≥5.0 or UOP <200ml/day", "value": 4 }
+        ]}
+      ],
+      "interpretation": [
+        { "range": [0, 6], "risk": "<10% mortality", "action": "Continue supportive care" },
+        { "range": [7, 9], "risk": "15-20% mortality", "action": "Escalate care; review goals" },
+        { "range": [10, 12], "risk": "40-50% mortality", "action": "Consider goals of care discussion" },
+        { "range": [13, 24], "risk": ">80% mortality", "action": "Palliative care considerations" }
+      ]
+    },
+    {
+      "id": "curb65",
+      "name": "CURB-65",
+      "category": "pulmonology",
+      "description": "Pneumonia severity and need for hospitalization",
+      "reference": "Lim WS, et al. Thorax 2003",
+      "fields": [
+        { "key": "confusion", "label": "Confusion (new disorientation)", "type": "checkbox", "points": 1 },
+        { "key": "bun", "label": "BUN >19 mg/dL (>7 mmol/L)", "type": "checkbox", "points": 1 },
+        { "key": "respiratory", "label": "Respiratory rate ≥30/min", "type": "checkbox", "points": 1 },
+        { "key": "bp", "label": "BP: SBP <90 or DBP ≤60 mmHg", "type": "checkbox", "points": 1 },
+        { "key": "age", "label": "Age ≥65 years", "type": "checkbox", "points": 1 }
+      ],
+      "interpretation": [
+        { "range": [0, 1], "risk": "Low", "probability": "0.6-2.7% 30-day mortality", "action": "Outpatient treatment" },
+        { "range": [2, 2], "risk": "Moderate", "probability": "6.8% 30-day mortality", "action": "Consider hospital admission" },
+        { "range": [3, 5], "risk": "High", "probability": "14-27% 30-day mortality", "action": "Hospitalize; consider ICU if score 4-5" }
+      ]
+    },
+    {
+      "id": "heart_score",
+      "name": "HEART Score",
+      "category": "cardiology",
+      "description": "Risk stratification for chest pain in emergency department",
+      "reference": "Six AJ, et al. Neth Heart J 2008",
+      "fields": [
+        { "key": "history", "label": "History", "type": "select", "options": [
+          { "label": "Slightly suspicious", "value": 0 },
+          { "label": "Moderately suspicious", "value": 1 },
+          { "label": "Highly suspicious", "value": 2 }
+        ]},
+        { "key": "ecg", "label": "ECG", "type": "select", "options": [
+          { "label": "Normal", "value": 0 },
+          { "label": "Non-specific changes", "value": 1 },
+          { "label": "Significant ST depression", "value": 2 }
+        ]},
+        { "key": "age", "label": "Age", "type": "select", "options": [
+          { "label": "<45", "value": 0 },
+          { "label": "45-64", "value": 1 },
+          { "label": "≥65", "value": 2 }
+        ]},
+        { "key": "risk_factors", "label": "Risk Factors", "type": "select", "options": [
+          { "label": "No risk factors", "value": 0 },
+          { "label": "1-2 risk factors", "value": 1 },
+          { "label": "≥3 risk factors or known CAD", "value": 2 }
+        ]},
+        { "key": "troponin", "label": "Troponin", "type": "select", "options": [
+          { "label": "Normal", "value": 0 },
+          { "label": "1-3× normal", "value": 1 },
+          { "label": ">3× normal", "value": 2 }
+        ]}
+      ],
+      "interpretation": [
+        { "range": [0, 3], "risk": "Low", "probability": "0.9-1.7% MACE", "action": "Consider discharge with outpatient follow-up" },
+        { "range": [4, 6], "risk": "Moderate", "probability": "12-16% MACE", "action": "Admit for observation; serial troponins" },
+        { "range": [7, 10], "risk": "High", "probability": "50-65% MACE", "action": "Admit; early invasive strategy" }
+      ]
+    },
+    {
+      "id": "parkland",
+      "name": "Parkland Formula",
+      "category": "surgery",
+      "description": "Fluid resuscitation for burn patients",
+      "reference": "Baxter CR. Surg Clin North Am 1978",
+      "fields": [
+        { "key": "weight", "label": "Weight (kg)", "type": "number" },
+        { "key": "tbsa", "label": "Total Body Surface Area burned (%)", "type": "number" }
+      ],
+      "formula": "LR = 4 mL × weight (kg) × TBSA burned (%)",
+      "interpretation": [
+        { "range": [0, 100], "risk": "24hr fluid requirement", "action": "Give 50% in first 8 hours, 50% in next 16 hours. Titrate to UOP 0.5-1 mL/kg/hr" }
+      ]
+    },
+    {
+      "id": "apache2",
+      "name": "APACHE II Score",
+      "category": "critical_care",
+      "description": "ICU mortality prediction within first 24 hours",
+      "reference": "Knaus WA, et al. Crit Care Med 1985",
+      "fields": [
+        { "key": "temp", "label": "Temperature (°C)", "type": "select", "options": [
+          { "label": "36-38.4", "value": 0 },
+          { "label": "38.5-38.9 or 34-35.9", "value": 1 },
+          { "label": "32-33.9", "value": 2 },
+          { "label": "39-40.9 or 30-31.9", "value": 3 },
+          { "label": "≥41 or ≤29.9", "value": 4 }
+        ]},
+        { "key": "map", "label": "Mean Arterial Pressure", "type": "select", "options": [
+          { "label": "70-109", "value": 0 },
+          { "label": "110-129 or 50-69", "value": 2 },
+          { "label": "130-159", "value": 3 },
+          { "label": "≥160 or ≤49", "value": 4 }
+        ]},
+        { "key": "hr", "label": "Heart Rate", "type": "select", "options": [
+          { "label": "70-109", "value": 0 },
+          { "label": "110-139 or 55-69", "value": 2 },
+          { "label": "140-179 or 40-54", "value": 3 },
+          { "label": "≥180 or ≤39", "value": 4 }
+        ]},
+        { "key": "rr", "label": "Respiratory Rate", "type": "select", "options": [
+          { "label": "12-24", "value": 0 },
+          { "label": "25-34 or 10-11", "value": 1 },
+          { "label": "6-9", "value": 2 },
+          { "label": "35-49", "value": 3 },
+          { "label": "≥50 or ≤5", "value": 4 }
+        ]},
+        { "key": "pao2", "label": "A-a gradient or PaO2", "type": "select", "options": [
+          { "label": "PaO2 >70", "value": 0 },
+          { "label": "PaO2 61-70", "value": 1 },
+          { "label": "PaO2 55-60", "value": 3 },
+          { "label": "PaO2 <55", "value": 4 }
+        ]},
+        { "key": "ph", "label": "Arterial pH", "type": "select", "options": [
+          { "label": "7.33-7.49", "value": 0 },
+          { "label": "7.50-7.59 or 7.25-7.32", "value": 1 },
+          { "label": "7.60-7.69 or 7.15-7.24", "value": 3 },
+          { "label": "≥7.70 or <7.15", "value": 4 }
+        ]},
+        { "key": "sodium", "label": "Sodium (mEq/L)", "type": "select", "options": [
+          { "label": "130-149", "value": 0 },
+          { "label": "150-154 or 120-129", "value": 1 },
+          { "label": "155-159 or 111-119", "value": 2 },
+          { "label": "160-179 or ≤110", "value": 3 },
+          { "label": "≥180", "value": 4 }
+        ]},
+        { "key": "potassium", "label": "Potassium (mEq/L)", "type": "select", "options": [
+          { "label": "3.5-5.4", "value": 0 },
+          { "label": "5.5-5.9 or 3.0-3.4", "value": 1 },
+          { "label": "6.0-6.9 or 2.5-2.9", "value": 3 },
+          { "label": "≥7.0 or <2.5", "value": 4 }
+        ]},
+        { "key": "creatinine", "label": "Creatinine (mg/dL)", "type": "select", "options": [
+          { "label": "0.6-1.4", "value": 0 },
+          { "label": "1.5-1.9 or <0.6", "value": 2 },
+          { "label": "2.0-3.4", "value": 3 },
+          { "label": "≥3.5", "value": 4 }
+        ]},
+        { "key": "hct", "label": "Hematocrit (%)", "type": "select", "options": [
+          { "label": "30-45.9", "value": 0 },
+          { "label": "46-49.9 or 20-29.9", "value": 1 },
+          { "label": "50-59.9", "value": 2 },
+          { "label": "≥60 or <20", "value": 4 }
+        ]},
+        { "key": "wbc", "label": "WBC (×10³/µL)", "type": "select", "options": [
+          { "label": "3-14.9", "value": 0 },
+          { "label": "15-19.9 or 1-2.9", "value": 1 },
+          { "label": "20-39.9", "value": 2 },
+          { "label": "≥40 or <1", "value": 4 }
+        ]},
+        { "key": "gcs", "label": "GCS Points (15 - GCS)", "type": "number", "min": 0, "max": 12 },
+        { "key": "age", "label": "Age Points", "type": "select", "options": [
+          { "label": "<44", "value": 0 },
+          { "label": "45-54", "value": 2 },
+          { "label": "55-64", "value": 3 },
+          { "label": "65-74", "value": 5 },
+          { "label": "≥75", "value": 6 }
+        ]},
+        { "key": "chronic", "label": "Chronic Health Points", "type": "select", "options": [
+          { "label": "None", "value": 0 },
+          { "label": "Non-operative or emergency post-op", "value": 5 },
+          { "label": "Elective post-op", "value": 2 }
+        ]}
+      ],
+      "interpretation": [
+        { "range": [0, 4], "risk": "~4% mortality", "action": "Standard ICU care" },
+        { "range": [5, 9], "risk": "~8% mortality", "action": "Standard ICU care" },
+        { "range": [10, 14], "risk": "~15% mortality", "action": "Escalate monitoring" },
+        { "range": [15, 19], "risk": "~25% mortality", "action": "Consider goals of care" },
+        { "range": [20, 24], "risk": "~40% mortality", "action": "Family meeting recommended" },
+        { "range": [25, 29], "risk": "~55% mortality", "action": "Palliative care discussion" },
+        { "range": [30, 34], "risk": "~75% mortality", "action": "Guarded prognosis" },
+        { "range": [35, 71], "risk": ">85% mortality", "action": "Comfort care considerations" }
+      ]
+    },
+    {
+      "id": "egfr",
+      "name": "eGFR (CKD-EPI)",
+      "category": "nephrology",
+      "description": "Estimated glomerular filtration rate for kidney function",
+      "reference": "Levey AS, et al. Ann Intern Med 2009",
+      "fields": [
+        { "key": "creatinine", "label": "Serum Creatinine (mg/dL)", "type": "number" },
+        { "key": "age", "label": "Age (years)", "type": "number" },
+        { "key": "female", "label": "Female", "type": "checkbox" }
+      ],
+      "interpretation": [
+        { "range": [90, 200], "risk": "G1: Normal or High", "action": "Monitor if other signs of CKD" },
+        { "range": [60, 89], "risk": "G2: Mild decrease", "action": "Monitor annually" },
+        { "range": [45, 59], "risk": "G3a: Mild-moderate", "action": "Nephrology referral; adjust medications" },
+        { "range": [30, 44], "risk": "G3b: Moderate-severe", "action": "Nephrology co-management" },
+        { "range": [15, 29], "risk": "G4: Severe decrease", "action": "Prepare for RRT; nephrology" },
+        { "range": [0, 14], "risk": "G5: Kidney failure", "action": "Dialysis or transplant evaluation" }
+      ]
+    },
+    {
+      "id": "corrected_calcium",
+      "name": "Corrected Calcium",
+      "category": "nephrology",
+      "description": "Adjusts calcium for albumin level",
+      "reference": "Payne RB, et al. Br Med J 1973",
+      "fields": [
+        { "key": "calcium", "label": "Serum Calcium (mg/dL)", "type": "number" },
+        { "key": "albumin", "label": "Serum Albumin (g/dL)", "type": "number" }
+      ],
+      "formula": "Corrected Ca = Measured Ca + 0.8 × (4.0 - Albumin)",
+      "interpretation": [
+        { "range": [8.5, 10.5], "risk": "Normal", "action": "No action needed" },
+        { "range": [10.6, 12], "risk": "Mild hypercalcemia", "action": "Investigate etiology" },
+        { "range": [12.1, 14], "risk": "Moderate hypercalcemia", "action": "IV fluids; bisphosphonates" },
+        { "range": [14.1, 20], "risk": "Severe hypercalcemia", "action": "Emergency treatment; ICU" }
+      ]
+    },
+    {
+      "id": "anion_gap",
+      "name": "Anion Gap",
+      "category": "critical_care",
+      "description": "Evaluates metabolic acidosis etiology",
+      "reference": "Emmett M, Narins RG. Medicine 1977",
+      "fields": [
+        { "key": "sodium", "label": "Sodium (mEq/L)", "type": "number" },
+        { "key": "chloride", "label": "Chloride (mEq/L)", "type": "number" },
+        { "key": "bicarb", "label": "Bicarbonate (mEq/L)", "type": "number" },
+        { "key": "albumin", "label": "Albumin (g/dL) - for correction", "type": "number" }
+      ],
+      "formula": "AG = Na - (Cl + HCO3); Corrected AG = AG + 2.5 × (4 - Albumin)",
+      "interpretation": [
+        { "range": [8, 12], "risk": "Normal", "action": "If acidosis, consider non-AG causes (RTA, diarrhea)" },
+        { "range": [13, 20], "risk": "Elevated AG", "action": "MUDPILES: Methanol, Uremia, DKA, Propylene glycol, INH/Iron, Lactic acid, Ethylene glycol, Salicylates" },
+        { "range": [21, 50], "risk": "High AG", "action": "Severe metabolic acidosis; urgent workup" }
+      ]
+    }
+  ]
+}

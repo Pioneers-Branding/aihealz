@@ -1,0 +1,4631 @@
+{
+  "count": 771,
+  "conditions": [
+    {
+      "id": 22532,
+      "slug": "unspecified-abdominal-pain-r109",
+      "name": "Abdominal pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 72041,
+      "slug": "achilles-tendinitis",
+      "name": "Achilles Tendinitis",
+      "specialist": "Podiatry"
+    },
+    {
+      "id": 9,
+      "slug": "gerd",
+      "name": "Acid Reflux",
+      "specialist": "Gastroenterologist"
+    },
+    {
+      "id": 71939,
+      "slug": "acl-tear",
+      "name": "ACL Tear",
+      "specialist": "Sports Medicine"
+    },
+    {
+      "id": 16,
+      "slug": "acne",
+      "name": "Acne",
+      "specialist": "Dermatologist"
+    },
+    {
+      "id": 11364,
+      "slug": "acne-conglobata-l701",
+      "name": "Acne conglobata",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11368,
+      "slug": "acne-excoriee-l705",
+      "name": "Acne excoriee",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11382,
+      "slug": "acne-keloid-l730",
+      "name": "Acne keloid",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11366,
+      "slug": "acne-tropica-l703",
+      "name": "Acne tropica",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11365,
+      "slug": "acne-varioliformis-l702",
+      "name": "Acne varioliformis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11363,
+      "slug": "acne-vulgaris-l700",
+      "name": "Acne vulgaris",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 2875,
+      "slug": "acquired-hemophilia-d68311",
+      "name": "Acquired hemophilia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 347,
+      "slug": "actinomycotic-meningitis-a4281",
+      "name": "Actinomycotic meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 346,
+      "slug": "actinomycotic-sepsis-a427",
+      "name": "Actinomycotic sepsis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 10490,
+      "slug": "unspecified-acute-appendicitis-k3580",
+      "name": "Acute appendicitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 9941,
+      "slug": "acute-bronchitis-due-to-mycoplasma-pneumoniae-j200",
+      "name": "Acute bronchitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 10877,
+      "slug": "acute-cholecystitis-k810",
+      "name": "Acute cholecystitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 9858,
+      "slug": "acute-frontal-sinusitis-unspecified-j0110",
+      "name": "Acute frontal sinusitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 750,
+      "slug": "acute-hepatitis-e-b172",
+      "name": "Acute hepatitis E",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 18434,
+      "slug": "acute-kidney-failure-unspecified-n179",
+      "name": "Acute kidney failure",
+      "specialist": "Urology"
+    },
+    {
+      "id": 9879,
+      "slug": "acute-laryngitis-j040",
+      "name": "Acute laryngitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 211,
+      "slug": "acute-miliary-tuberculosis-unspecified-a192",
+      "name": "Acute miliary tuberculosis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8573,
+      "slug": "acute-myocardial-infarction-unspecified-i219",
+      "name": "Acute myocardial infarction",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 5203,
+      "slug": "acute-pain-due-to-trauma-g8911",
+      "name": "Acute pain",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 8667,
+      "slug": "acute-pericarditis-unspecified-i309",
+      "name": "Acute pericarditis",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 9871,
+      "slug": "acute-pharyngitis-due-to-other-specified-organisms-j028",
+      "name": "Acute pharyngitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 18396,
+      "slug": "acute-pyelonephritis-n10",
+      "name": "Acute pyelonephritis",
+      "specialist": "Urology"
+    },
+    {
+      "id": 8775,
+      "slug": "acute-right-heart-failure-i50811",
+      "name": "Acute right heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 9868,
+      "slug": "acute-sinusitis-unspecified-j0190",
+      "name": "Acute sinusitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 9875,
+      "slug": "acute-tonsillitis-due-to-other-specified-organisms-j0380",
+      "name": "Acute tonsillitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 18748,
+      "slug": "acute-vaginitis-n760",
+      "name": "Acute vaginitis",
+      "specialist": "Urology"
+    },
+    {
+      "id": 751,
+      "slug": "other-specified-acute-viral-hepatitis-b178",
+      "name": "Acute viral hepatitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 612,
+      "slug": "adenoviral-meningitis-a871",
+      "name": "Adenoviral meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 9911,
+      "slug": "adenoviral-pneumonia-j120",
+      "name": "Adenoviral pneumonia",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 813,
+      "slug": "adenovirus-infection-unspecified-b340",
+      "name": "Adenovirus infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 62,
+      "slug": "adhd",
+      "name": "ADHD",
+      "specialist": "Psychiatrist"
+    },
+    {
+      "id": 4535,
+      "slug": "adjustment-insomnia-f5102",
+      "name": "Adjustment insomnia",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 6484,
+      "slug": "unspecified-age-related-cataract-h259",
+      "name": "Age-related cataract",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 71817,
+      "slug": "age-related-macular-degeneration",
+      "name": "Age-related Macular Degeneration",
+      "specialist": "Geriatrics"
+    },
+    {
+      "id": 8711,
+      "slug": "alcoholic-cardiomyopathy-i426",
+      "name": "Alcoholic cardiomyopathy",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 10777,
+      "slug": "alcoholic-fatty-liver-k700",
+      "name": "Alcoholic fatty liver",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 10785,
+      "slug": "alcoholic-liver-disease-unspecified-k709",
+      "name": "Alcoholic liver disease",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 71847,
+      "slug": "allergic-asthma",
+      "name": "Allergic Asthma",
+      "specialist": "Allergy & Immunology"
+    },
+    {
+      "id": 11186,
+      "slug": "allergic-contact-dermatitis-due-to-other-agents-l2389",
+      "name": "Allergic contact dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 9959,
+      "slug": "allergic-rhinitis-due-to-food-j305",
+      "name": "Allergic rhinitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 71846,
+      "slug": "allergic-rhinitis-hay-fever",
+      "name": "Allergic Rhinitis (Hay Fever)",
+      "specialist": "Allergy & Immunology"
+    },
+    {
+      "id": 11275,
+      "slug": "allergic-urticaria-l500",
+      "name": "Allergic urticaria",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 71621,
+      "slug": "allergy-to-eggs-z91012",
+      "name": "Allergy to eggs",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 71619,
+      "slug": "allergy-to-peanuts-z91010",
+      "name": "Allergy to peanuts",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 71622,
+      "slug": "allergy-to-seafood-z91013",
+      "name": "Allergy to seafood",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 11333,
+      "slug": "alopecia-capitis-totalis-l630",
+      "name": "Alopecia  totalis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11337,
+      "slug": "alopecia-areata-unspecified-l639",
+      "name": "Alopecia areata",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11343,
+      "slug": "alopecia-mucinosa-l652",
+      "name": "Alopecia mucinosa",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11334,
+      "slug": "alopecia-universalis-l631",
+      "name": "Alopecia universalis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 2803,
+      "slug": "alpha-thalassemia-d560",
+      "name": "Alpha thalassemia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 142,
+      "slug": "amebic-cystitis-a0681",
+      "name": "Amebic cystitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 18882,
+      "slug": "amenorrhea-unspecified-n912",
+      "name": "Amenorrhea",
+      "specialist": "Urology"
+    },
+    {
+      "id": 4717,
+      "slug": "amyotrophic-lateral-sclerosis-g1221",
+      "name": "Amyotrophic lateral sclerosis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 71850,
+      "slug": "anaphylaxis",
+      "name": "Anaphylaxis",
+      "specialist": "Allergy & Immunology"
+    },
+    {
+      "id": 11340,
+      "slug": "androgenic-alopecia-unspecified-l649",
+      "name": "Androgenic alopecia",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 83,
+      "slug": "anemia",
+      "name": "Anemia",
+      "specialist": "Hematologist"
+    },
+    {
+      "id": 2859,
+      "slug": "anemia-in-chronic-kidney-disease-d631",
+      "name": "Anemia in chronic kidney disease",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 8563,
+      "slug": "angina-pectoris-unspecified-i209",
+      "name": "Angina pectoris",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 72070,
+      "slug": "ankylosing-spondylitis",
+      "name": "Ankylosing Spondylitis",
+      "specialist": "Rheumatology"
+    },
+    {
+      "id": 14380,
+      "slug": "ankylosing-spondylitis-lumbar-region-m456",
+      "name": "Ankylosing spondylitis lumbar region",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 514,
+      "slug": "anogenital-venereal-warts-a630",
+      "name": "Anogenital  warts",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 22934,
+      "slug": "anorexia-r630",
+      "name": "Anorexia",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 4526,
+      "slug": "anorexia-nervosa-unspecified-f5000",
+      "name": "Anorexia nervosa",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 231,
+      "slug": "anthrax-sepsis-a227",
+      "name": "Anthrax sepsis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 10,
+      "slug": "anxiety",
+      "name": "Anxiety",
+      "specialist": "Psychiatrist"
+    },
+    {
+      "id": 3945,
+      "slug": "anxiety-disorder-due-to-known-physiological-condition-f064",
+      "name": "Anxiety disorder",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 4482,
+      "slug": "other-specified-anxiety-disorders-f418",
+      "name": "Anxiety disorders",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 71911,
+      "slug": "aortic-aneurysm-repair",
+      "name": "Aortic Aneurysm Repair",
+      "specialist": "Cardiothoracic & Vascular Surgery"
+    },
+    {
+      "id": 2849,
+      "slug": "aplastic-anemia-due-to-other-external-agents-d612",
+      "name": "Aplastic anemia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 10493,
+      "slug": "unspecified-appendicitis-k37",
+      "name": "Appendicitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 541,
+      "slug": "arthritis-due-to-lyme-disease-a6923",
+      "name": "Arthritis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 13187,
+      "slug": "other-specified-arthritis-unspecified-elbow-m13829",
+      "name": "Arthritis elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13196,
+      "slug": "other-specified-arthritis-unspecified-hip-m13859",
+      "name": "Arthritis hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13199,
+      "slug": "other-specified-arthritis-unspecified-knee-m13869",
+      "name": "Arthritis knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13184,
+      "slug": "other-specified-arthritis-unspecified-shoulder-m13819",
+      "name": "Arthritis shoulder",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13203,
+      "slug": "other-specified-arthritis-other-site-m1388",
+      "name": "Arthritis site",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13190,
+      "slug": "other-specified-arthritis-unspecified-wrist-m13839",
+      "name": "Arthritis wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13186,
+      "slug": "other-specified-arthritis-left-elbow-m13822",
+      "name": "Arthritis, left elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13195,
+      "slug": "other-specified-arthritis-left-hip-m13852",
+      "name": "Arthritis, left hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13198,
+      "slug": "other-specified-arthritis-left-knee-m13862",
+      "name": "Arthritis, left knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13189,
+      "slug": "other-specified-arthritis-left-wrist-m13832",
+      "name": "Arthritis, left wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13185,
+      "slug": "other-specified-arthritis-right-elbow-m13821",
+      "name": "Arthritis, right elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13194,
+      "slug": "other-specified-arthritis-right-hip-m13851",
+      "name": "Arthritis, right hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13197,
+      "slug": "other-specified-arthritis-right-knee-m13861",
+      "name": "Arthritis, right knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13188,
+      "slug": "other-specified-arthritis-right-wrist-m13831",
+      "name": "Arthritis, right wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 11235,
+      "slug": "arthropathic-psoriasis-unspecified-l4050",
+      "name": "Arthropathic psoriasis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 1037,
+      "slug": "ascariasis-pneumonia-b7781",
+      "name": "Ascariasis pneumonia",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 7,
+      "slug": "asthma",
+      "name": "Asthma",
+      "specialist": "Pulmonologist"
+    },
+    {
+      "id": 5152,
+      "slug": "ataxic-cerebral-palsy-g804",
+      "name": "Ataxic cerebral palsy",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 9445,
+      "slug": "unspecified-atherosclerosis-i7090",
+      "name": "Atherosclerosis",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 9202,
+      "slug": "atherosclerosis-of-aorta-i700",
+      "name": "Atherosclerosis of aorta",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 5151,
+      "slug": "athetoid-cerebral-palsy-g803",
+      "name": "Athetoid cerebral palsy",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 11171,
+      "slug": "atopic-dermatitis-unspecified-l209",
+      "name": "Atopic dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 71861,
+      "slug": "atopic-dermatitis-eczema",
+      "name": "Atopic Dermatitis (Eczema)",
+      "specialist": "Allergy & Immunology"
+    },
+    {
+      "id": 8749,
+      "slug": "unspecified-atrial-fibrillation-i4891",
+      "name": "Atrial fibrillation",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 8319,
+      "slug": "aural-vertigo-unspecified-ear-h81319",
+      "name": "Aural vertigo ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 10821,
+      "slug": "autoimmune-hepatitis-k754",
+      "name": "Autoimmune hepatitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 5285,
+      "slug": "autonomic-neuropathy-in-diseases-classified-elsewhere-g990",
+      "name": "Autonomic neuropathy",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 2123,
+      "slug": "unspecified-b-cell-lymphoma-unspecified-site-c8510",
+      "name": "B-cell lymphoma",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 1,
+      "slug": "back-pain",
+      "name": "Back Pain",
+      "specialist": "Orthopedic Surgeon"
+    },
+    {
+      "id": 374,
+      "slug": "bacterial-infection-unspecified-a499",
+      "name": "Bacterial infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 4677,
+      "slug": "bacterial-meningitis-unspecified-g009",
+      "name": "Bacterial meningitis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 9932,
+      "slug": "unspecified-bacterial-pneumonia-j159",
+      "name": "Bacterial pneumonia",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 1422,
+      "slug": "basal-cell-carcinoma-of-anal-skin-c44510",
+      "name": "Basal cell carcinoma of anal skin",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 1460,
+      "slug": "basal-cell-carcinoma-of-skin-unspecified-c4491",
+      "name": "Basal cell carcinoma of skin",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 71625,
+      "slug": "bee-allergy-status-z91030",
+      "name": "Bee allergy status",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 2804,
+      "slug": "beta-thalassemia-d561",
+      "name": "Beta thalassemia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 10814,
+      "slug": "biliary-cirrhosis-unspecified-k745",
+      "name": "Biliary cirrhosis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 4530,
+      "slug": "binge-eating-disorder-f5081",
+      "name": "Binge eating disorder",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 4431,
+      "slug": "bipolar-disorder-unspecified-f319",
+      "name": "Bipolar disorder",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 8779,
+      "slug": "biventricular-heart-failure-i5082",
+      "name": "Biventricular heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 62052,
+      "slug": "bloodstream-infection-due-to-central-venous-catheter-subs-t80211d",
+      "name": "Bloodstream infection",
+      "specialist": "Emergency Medicine"
+    },
+    {
+      "id": 63599,
+      "slug": "bone-graft-infection-t86832",
+      "name": "Bone graft infection",
+      "specialist": "Emergency Medicine"
+    },
+    {
+      "id": 127,
+      "slug": "botulism-food-poisoning-a051",
+      "name": "Botulism food poisoning",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 71894,
+      "slug": "brain-tumor-glioma",
+      "name": "Brain Tumor (Glioma)",
+      "specialist": "Neurosurgery"
+    },
+    {
+      "id": 71877,
+      "slug": "breakthrough-pain",
+      "name": "Breakthrough Pain",
+      "specialist": "Pain Medicine & Palliative Care"
+    },
+    {
+      "id": 47,
+      "slug": "breast-cancer",
+      "name": "Breast Cancer",
+      "specialist": "Oncologist"
+    },
+    {
+      "id": 41,
+      "slug": "bronchitis",
+      "name": "Bronchitis",
+      "specialist": "Pulmonologist"
+    },
+    {
+      "id": 4529,
+      "slug": "bulimia-nervosa-f502",
+      "name": "Bulimia nervosa",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 2013,
+      "slug": "burkitt-lymphoma-unspecified-site-c8370",
+      "name": "Burkitt lymphoma",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 15756,
+      "slug": "bursitis-of-unspecified-shoulder-m7550",
+      "name": "Bursitis of  shoulder",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15209,
+      "slug": "calcific-tendinitis-unspecified-site-m6520",
+      "name": "Calcific tendinitis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15228,
+      "slug": "calcific-tendinitis-other-site-m6528",
+      "name": "Calcific tendinitis site",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 843,
+      "slug": "candidal-endocarditis-b376",
+      "name": "Candidal endocarditis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 842,
+      "slug": "candidal-meningitis-b375",
+      "name": "Candidal meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 844,
+      "slug": "candidal-sepsis-b377",
+      "name": "Candidal sepsis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8760,
+      "slug": "cardiac-arrhythmia-unspecified-i499",
+      "name": "Cardiac arrhythmia",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 8712,
+      "slug": "cardiomyopathy-due-to-drug-and-external-agent-i427",
+      "name": "Cardiomyopathy",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 32,
+      "slug": "carpal-tunnel",
+      "name": "Carpal Tunnel Syndrome",
+      "specialist": "Orthopedic Surgeon"
+    },
+    {
+      "id": 5021,
+      "slug": "carpal-tunnel-syndrome-unspecified-upper-limb-g5600",
+      "name": "Carpal tunnel syndrome upper limb",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 70751,
+      "slug": "carrier-of-typhoid-z220",
+      "name": "Carrier of typhoid",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 6552,
+      "slug": "other-specified-cataract-h268",
+      "name": "Cataract",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 4379,
+      "slug": "catatonic-schizophrenia-f202",
+      "name": "Catatonic schizophrenia",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 10922,
+      "slug": "celiac-disease-k900",
+      "name": "Celiac disease",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 10018,
+      "slug": "centrilobular-emphysema-j432",
+      "name": "Centrilobular emphysema",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 979,
+      "slug": "cercarial-dermatitis-b653",
+      "name": "Cercarial dermatitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8946,
+      "slug": "cerebral-atherosclerosis-i672",
+      "name": "Cerebral atherosclerosis",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 5154,
+      "slug": "cerebral-palsy-unspecified-g809",
+      "name": "Cerebral palsy",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 1017,
+      "slug": "cestode-infection-unspecified-b719",
+      "name": "Cestode infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 22495,
+      "slug": "chest-pain-unspecified-r079",
+      "name": "Chest pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 72006,
+      "slug": "chikungunya",
+      "name": "Chikungunya",
+      "specialist": "Tropical Medicine"
+    },
+    {
+      "id": 622,
+      "slug": "chikungunya-virus-disease-a920",
+      "name": "Chikungunya virus disease",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 549,
+      "slug": "chlamydial-conjunctivitis-a740",
+      "name": "Chlamydial conjunctivitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 552,
+      "slug": "chlamydial-infection-unspecified-a749",
+      "name": "Chlamydial infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 9933,
+      "slug": "chlamydial-pneumonia-j160",
+      "name": "Chlamydial pneumonia",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 10880,
+      "slug": "cholecystitis-unspecified-k819",
+      "name": "Cholecystitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 84,
+      "slug": "cholera-due-to-vibrio-cholerae-01-biovar-cholerae-a000",
+      "name": "Cholera",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 11280,
+      "slug": "cholinergic-urticaria-l505",
+      "name": "Cholinergic urticaria",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 8746,
+      "slug": "chronic-atrial-fibrillation-i482",
+      "name": "Chronic atrial fibrillation",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 10015,
+      "slug": "unspecified-chronic-bronchitis-j42",
+      "name": "Chronic bronchitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 10878,
+      "slug": "chronic-cholecystitis-k811",
+      "name": "Chronic cholecystitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 22908,
+      "slug": "chronic-fatigue-unspecified-r5382",
+      "name": "Chronic fatigue",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 81,
+      "slug": "chronic-fatigue-syndrome",
+      "name": "Chronic Fatigue Syndrome",
+      "specialist": "Internal Medicine"
+    },
+    {
+      "id": 12673,
+      "slug": "chronic-gout-due-to-renal-impairment-unsp-site-w-o-tophus-m1a30x0",
+      "name": "Chronic gout",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 10808,
+      "slug": "chronic-hepatitis-unspecified-k739",
+      "name": "Chronic hepatitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 18441,
+      "slug": "chronic-kidney-disease-unspecified-n189",
+      "name": "Chronic kidney disease",
+      "specialist": "Urology"
+    },
+    {
+      "id": 71788,
+      "slug": "chronic-kidney-disease-stage-1",
+      "name": "Chronic Kidney Disease Stage 1",
+      "specialist": "Nephrology"
+    },
+    {
+      "id": 71789,
+      "slug": "chronic-kidney-disease-stage-2",
+      "name": "Chronic Kidney Disease Stage 2",
+      "specialist": "Nephrology"
+    },
+    {
+      "id": 71790,
+      "slug": "chronic-kidney-disease-stage-3",
+      "name": "Chronic Kidney Disease Stage 3",
+      "specialist": "Nephrology"
+    },
+    {
+      "id": 71791,
+      "slug": "chronic-kidney-disease-stage-4",
+      "name": "Chronic Kidney Disease Stage 4",
+      "specialist": "Nephrology"
+    },
+    {
+      "id": 18435,
+      "slug": "chronic-kidney-disease-stage-1-n181",
+      "name": "Chronic kidney disease, stage 1",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18436,
+      "slug": "chronic-kidney-disease-stage-2-mild-n182",
+      "name": "Chronic kidney disease, stage 2",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18437,
+      "slug": "chronic-kidney-disease-stage-3-moderate-n183",
+      "name": "Chronic kidney disease, stage 3",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18438,
+      "slug": "chronic-kidney-disease-stage-4-severe-n184",
+      "name": "Chronic kidney disease, stage 4",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18439,
+      "slug": "chronic-kidney-disease-stage-5-n185",
+      "name": "Chronic kidney disease, stage 5",
+      "specialist": "Urology"
+    },
+    {
+      "id": 9993,
+      "slug": "chronic-laryngitis-j370",
+      "name": "Chronic laryngitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 71835,
+      "slug": "chronic-low-back-pain",
+      "name": "Chronic Low Back Pain",
+      "specialist": "Physical Medicine & Rehabilitation"
+    },
+    {
+      "id": 4681,
+      "slug": "chronic-meningitis-g031",
+      "name": "Chronic meningitis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 10023,
+      "slug": "chronic-obstructive-pulmonary-disease-unspecified-j449",
+      "name": "Chronic obstructive pulmonary disease",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 5206,
+      "slug": "chronic-pain-due-to-trauma-g8921",
+      "name": "Chronic pain",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 5211,
+      "slug": "chronic-pain-syndrome-g894",
+      "name": "Chronic pain syndrome",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 9965,
+      "slug": "chronic-pharyngitis-j312",
+      "name": "Chronic pharyngitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 8656,
+      "slug": "chronic-pulmonary-embolism-i2782",
+      "name": "Chronic pulmonary embolism",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 9963,
+      "slug": "chronic-rhinitis-j310",
+      "name": "Chronic rhinitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 8776,
+      "slug": "chronic-right-heart-failure-i50812",
+      "name": "Chronic right heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 9972,
+      "slug": "chronic-sinusitis-unspecified-j329",
+      "name": "Chronic sinusitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 9984,
+      "slug": "chronic-tonsillitis-j3501",
+      "name": "Chronic tonsillitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 71848,
+      "slug": "chronic-urticaria",
+      "name": "Chronic Urticaria",
+      "specialist": "Allergy & Immunology"
+    },
+    {
+      "id": 757,
+      "slug": "chronic-viral-hepatitis-unspecified-b189",
+      "name": "Chronic viral hepatitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 755,
+      "slug": "chronic-viral-hepatitis-c-b182",
+      "name": "Chronic viral hepatitis C",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 11352,
+      "slug": "cicatricial-alopecia-unspecified-l669",
+      "name": "Cicatricial alopecia",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 10815,
+      "slug": "unspecified-cirrhosis-of-liver-k7460",
+      "name": "Cirrhosis of liver",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 18541,
+      "slug": "coital-incontinence-n39491",
+      "name": "Coital incontinence",
+      "specialist": "Urology"
+    },
+    {
+      "id": 635,
+      "slug": "colorado-tick-fever-a932",
+      "name": "Colorado tick fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 50,
+      "slug": "colorectal-cancer",
+      "name": "Colorectal Cancer",
+      "specialist": "Oncologist"
+    },
+    {
+      "id": 10963,
+      "slug": "colostomy-infection-k9402",
+      "name": "Colostomy infection",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 10188,
+      "slug": "compensatory-emphysema-j983",
+      "name": "Compensatory emphysema",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 6526,
+      "slug": "unspecified-complicated-cataract-h2620",
+      "name": "Complicated cataract",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 71944,
+      "slug": "concussion-in-sports",
+      "name": "Concussion in Sports",
+      "specialist": "Sports Medicine"
+    },
+    {
+      "id": 8367,
+      "slug": "conductive-hearing-loss-unspecified-h902",
+      "name": "Conductive hearing loss",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 22346,
+      "slug": "congenital-alopecia-q840",
+      "name": "Congenital alopecia",
+      "specialist": "Genetics"
+    },
+    {
+      "id": 21862,
+      "slug": "congenital-bronchiectasis-q334",
+      "name": "Congenital bronchiectasis",
+      "specialist": "Genetics"
+    },
+    {
+      "id": 21700,
+      "slug": "congenital-cataract-q120",
+      "name": "Congenital cataract",
+      "specialist": "Genetics"
+    },
+    {
+      "id": 21576,
+      "slug": "congenital-cirrhosis-of-liver-p7881",
+      "name": "Congenital cirrhosis",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 21722,
+      "slug": "congenital-glaucoma-q150",
+      "name": "Congenital glaucoma",
+      "specialist": "Genetics"
+    },
+    {
+      "id": 21381,
+      "slug": "congenital-pneumonia-due-to-viral-agent-p230",
+      "name": "Congenital pneumonia",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 22272,
+      "slug": "congenital-scoliosis-due-to-congenital-bony-malformation-q763",
+      "name": "Congenital scoliosis",
+      "specialist": "Genetics"
+    },
+    {
+      "id": 21451,
+      "slug": "congenital-tuberculosis-p370",
+      "name": "Congenital tuberculosis",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 798,
+      "slug": "conjunctivitis-due-to-adenovirus-b301",
+      "name": "Conjunctivitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 10708,
+      "slug": "constipation-unspecified-k5900",
+      "name": "Constipation",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 11199,
+      "slug": "unspecified-contact-dermatitis-due-to-cosmetics-l250",
+      "name": "Contact dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11206,
+      "slug": "unspecified-contact-dermatitis-unspecified-cause-l259",
+      "name": "Contact dermatitis cause",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11281,
+      "slug": "contact-urticaria-l506",
+      "name": "Contact urticaria",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 39,
+      "slug": "copd",
+      "name": "COPD",
+      "specialist": "Pulmonologist"
+    },
+    {
+      "id": 22,
+      "slug": "coronary-artery-disease",
+      "name": "Coronary Artery Disease",
+      "specialist": "Cardiologist"
+    },
+    {
+      "id": 8637,
+      "slug": "coronary-atherosclerosis-due-to-lipid-rich-plaque-i2583",
+      "name": "Coronary atherosclerosis",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 815,
+      "slug": "coronavirus-infection-unspecified-b342",
+      "name": "Coronavirus infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 22471,
+      "slug": "cough-r05",
+      "name": "Cough",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 10040,
+      "slug": "cough-variant-asthma-j45991",
+      "name": "Cough variant asthma",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 3878,
+      "slug": "cystic-fibrosis-unspecified-e849",
+      "name": "Cystic fibrosis",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 70689,
+      "slug": "cystic-fibrosis-carrier-z141",
+      "name": "Cystic fibrosis carrier",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 22052,
+      "slug": "cystic-kidney-disease-unspecified-q619",
+      "name": "Cystic kidney disease",
+      "specialist": "Genetics"
+    },
+    {
+      "id": 18941,
+      "slug": "cystostomy-infection-n99511",
+      "name": "Cystostomy infection",
+      "specialist": "Urology"
+    },
+    {
+      "id": 3888,
+      "slug": "dehydration-e860",
+      "name": "Dehydration",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 21555,
+      "slug": "dehydration-of-newborn-p741",
+      "name": "Dehydration of newborn",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 2805,
+      "slug": "delta-beta-thalassemia-d562",
+      "name": "Delta-beta thalassemia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 77,
+      "slug": "dengue-fever",
+      "name": "Dengue Fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 11,
+      "slug": "depression",
+      "name": "Depression",
+      "specialist": "Psychiatrist"
+    },
+    {
+      "id": 11210,
+      "slug": "dermatitis-due-to-ingested-food-l272",
+      "name": "Dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11160,
+      "slug": "dermatitis-herpetiformis-l130",
+      "name": "Dermatitis herpetiformis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 21948,
+      "slug": "developmental-ovarian-cyst-q501",
+      "name": "Developmental ovarian cyst",
+      "specialist": "Genetics"
+    },
+    {
+      "id": 3074,
+      "slug": "diabetes-due-to-underlying-condition-w-hyprosm-w-coma-e0801",
+      "name": "Diabetes",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 3526,
+      "slug": "diabetes-insipidus-e232",
+      "name": "Diabetes insipidus",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 3148,
+      "slug": "diabetes-mellitus-due-to-underlying-condition-w-foot-ulcer-e08621",
+      "name": "Diabetes mellitus",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 19341,
+      "slug": "unspecified-diabetes-mellitus-in-childbirth-o2492",
+      "name": "Diabetes mellitus in childbirth",
+      "specialist": "Obstetrics"
+    },
+    {
+      "id": 3500,
+      "slug": "other-specified-diabetes-mellitus-without-complications-e139",
+      "name": "Diabetes mellitus s",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 71,
+      "slug": "diabetic-retinopathy",
+      "name": "Diabetic Retinopathy",
+      "specialist": "Ophthalmologist"
+    },
+    {
+      "id": 11176,
+      "slug": "diaper-dermatitis-l22",
+      "name": "Diaper dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 22586,
+      "slug": "diarrhea-unspecified-r197",
+      "name": "Diarrhea",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 8766,
+      "slug": "unspecified-diastolic-congestive-heart-failure-i5030",
+      "name": "Diastolic  heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 8705,
+      "slug": "dilated-cardiomyopathy-i420",
+      "name": "Dilated cardiomyopathy",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 289,
+      "slug": "diphtheritic-cardiomyopathy-a3681",
+      "name": "Diphtheritic cardiomyopathy",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 294,
+      "slug": "diphtheritic-conjunctivitis-a3686",
+      "name": "Diphtheritic conjunctivitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 293,
+      "slug": "diphtheritic-cystitis-a3685",
+      "name": "Diphtheritic cystitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 4378,
+      "slug": "disorganized-schizophrenia-f201",
+      "name": "Disorganized schizophrenia",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 71852,
+      "slug": "drug-allergy",
+      "name": "Drug Allergy",
+      "specialist": "Allergy & Immunology"
+    },
+    {
+      "id": 10711,
+      "slug": "drug-induced-constipation-k5903",
+      "name": "Drug induced constipation",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 22896,
+      "slug": "drug-induced-fever-r502",
+      "name": "Drug induced fever",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 18649,
+      "slug": "drug-induced-erectile-dysfunction-n522",
+      "name": "Drug-induced erectile dysfunction",
+      "specialist": "Urology"
+    },
+    {
+      "id": 12819,
+      "slug": "drug-induced-gout-unspecified-site-m1020",
+      "name": "Drug-induced gout",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 3661,
+      "slug": "drug-induced-obesity-e661",
+      "name": "Drug-induced obesity",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 18906,
+      "slug": "dysmenorrhea-unspecified-n946",
+      "name": "Dysmenorrhea",
+      "specialist": "Urology"
+    },
+    {
+      "id": 4532,
+      "slug": "other-specified-eating-disorder-f5089",
+      "name": "Eating disorder",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 21,
+      "slug": "eczema",
+      "name": "Eczema",
+      "specialist": "Dermatologist"
+    },
+    {
+      "id": 654,
+      "slug": "eczema-herpeticum-b000",
+      "name": "Eczema herpeticum",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 10020,
+      "slug": "emphysema-unspecified-j439",
+      "name": "Emphysema",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 8781,
+      "slug": "end-stage-heart-failure-i5084",
+      "name": "End stage heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 8698,
+      "slug": "endocarditis-valve-unspecified-i38",
+      "name": "Endocarditis, valve",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 20,
+      "slug": "endometriosis",
+      "name": "Endometriosis",
+      "specialist": "Gynecologist"
+    },
+    {
+      "id": 18764,
+      "slug": "endometriosis-of-intestine-n805",
+      "name": "Endometriosis of intestine",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18760,
+      "slug": "endometriosis-of-ovary-n801",
+      "name": "Endometriosis of ovary",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18759,
+      "slug": "endometriosis-of-uterus-n800",
+      "name": "Endometriosis of uterus",
+      "specialist": "Urology"
+    },
+    {
+      "id": 10968,
+      "slug": "enterostomy-infection-k9412",
+      "name": "Enterostomy infection",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 611,
+      "slug": "enteroviral-meningitis-a870",
+      "name": "Enteroviral meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 814,
+      "slug": "enterovirus-infection-unspecified-b341",
+      "name": "Enterovirus infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 617,
+      "slug": "epidemic-vertigo-a881",
+      "name": "Epidemic vertigo",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 22508,
+      "slug": "epigastric-pain-r1013",
+      "name": "Epigastric pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 29,
+      "slug": "epilepsy",
+      "name": "Epilepsy",
+      "specialist": "Neurologist"
+    },
+    {
+      "id": 18645,
+      "slug": "erectile-dysfunction-due-to-arterial-insufficiency-n5201",
+      "name": "Erectile dysfunction",
+      "specialist": "Urology"
+    },
+    {
+      "id": 13257,
+      "slug": "erosive-osteo-arthritis-m154",
+      "name": "Erosive arthritis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 10978,
+      "slug": "esophagostomy-infection-k9432",
+      "name": "Esophagostomy infection",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 8543,
+      "slug": "essential-primary-hypertension-i10",
+      "name": "Essential  hypertension",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 11207,
+      "slug": "exfoliative-dermatitis-l26",
+      "name": "Exfoliative dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11798,
+      "slug": "factitial-dermatitis-l981",
+      "name": "Factitial dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 18742,
+      "slug": "female-pelvic-inflammatory-disease-unspecified-n739",
+      "name": "Female pelvic inflammatory disease",
+      "specialist": "Urology"
+    },
+    {
+      "id": 22901,
+      "slug": "fever-unspecified-r509",
+      "name": "Fever",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 80,
+      "slug": "fibromyalgia",
+      "name": "Fibromyalgia",
+      "specialist": "Rheumatologist"
+    },
+    {
+      "id": 10753,
+      "slug": "first-degree-hemorrhoids-k640",
+      "name": "First degree hemorrhoids",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 11167,
+      "slug": "flexural-eczema-l2082",
+      "name": "Flexural eczema",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 9891,
+      "slug": "flu-due-to-ident-novel-influenza-a-virus-w-oth-resp-manifest-j09x2",
+      "name": "Flu",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 989,
+      "slug": "fluke-infection-unspecified-b669",
+      "name": "Fluke infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 1963,
+      "slug": "follicular-lymphoma-unspecified-unspecified-site-c8290",
+      "name": "Follicular lymphoma",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 71851,
+      "slug": "food-allergy",
+      "name": "Food Allergy",
+      "specialist": "Allergy & Immunology"
+    },
+    {
+      "id": 10756,
+      "slug": "fourth-degree-hemorrhoids-k643",
+      "name": "Fourth degree hemorrhoids",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 22555,
+      "slug": "full-incontinence-of-feces-r159",
+      "name": "Full incontinence of feces",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 10714,
+      "slug": "functional-diarrhea-k591",
+      "name": "Functional diarrhea",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 22717,
+      "slug": "functional-urinary-incontinence-r3981",
+      "name": "Functional urinary incontinence",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 37,
+      "slug": "gallstones",
+      "name": "Gallstones",
+      "specialist": "Gastroenterologist"
+    },
+    {
+      "id": 22549,
+      "slug": "gas-pain-r141",
+      "name": "Gas pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 10973,
+      "slug": "gastrostomy-infection-k9422",
+      "name": "Gastrostomy infection",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 4480,
+      "slug": "generalized-anxiety-disorder-f411",
+      "name": "Generalized anxiety disorder",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 9446,
+      "slug": "generalized-atherosclerosis-i7091",
+      "name": "Generalized atherosclerosis",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 71821,
+      "slug": "geriatric-depression",
+      "name": "Geriatric Depression",
+      "specialist": "Geriatrics"
+    },
+    {
+      "id": 18,
+      "slug": "glaucoma",
+      "name": "Glaucoma",
+      "specialist": "Ophthalmologist"
+    },
+    {
+      "id": 15765,
+      "slug": "gluteal-tendinitis-unspecified-hip-m7600",
+      "name": "Gluteal tendinitis hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 473,
+      "slug": "gonococcal-arthritis-a5442",
+      "name": "Gonococcal arthritis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 467,
+      "slug": "gonococcal-conjunctivitis-a5431",
+      "name": "Gonococcal conjunctivitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 485,
+      "slug": "gonococcal-infection-unspecified-a549",
+      "name": "Gonococcal infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 469,
+      "slug": "gonococcal-keratitis-a5433",
+      "name": "Gonococcal keratitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 478,
+      "slug": "gonococcal-meningitis-a5481",
+      "name": "Gonococcal meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 476,
+      "slug": "gonococcal-pharyngitis-a545",
+      "name": "Gonococcal pharyngitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 481,
+      "slug": "gonococcal-pneumonia-a5484",
+      "name": "Gonococcal pneumonia",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 483,
+      "slug": "gonococcal-sepsis-a5486",
+      "name": "Gonococcal sepsis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 82,
+      "slug": "gout",
+      "name": "Gout",
+      "specialist": "Rheumatologist"
+    },
+    {
+      "id": 72047,
+      "slug": "gout-podiatric",
+      "name": "Gout (Podiatric)",
+      "specialist": "Podiatry"
+    },
+    {
+      "id": 335,
+      "slug": "gram-negative-sepsis-unspecified-a4150",
+      "name": "Gram-negative sepsis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 10820,
+      "slug": "granulomatous-hepatitis-not-elsewhere-classified-k753",
+      "name": "Granulomatous hepatitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 11234,
+      "slug": "guttate-psoriasis-l404",
+      "name": "Guttate psoriasis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 22902,
+      "slug": "headache-r51",
+      "name": "Headache",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 8398,
+      "slug": "other-specified-hearing-loss-unspecified-ear-h918x9",
+      "name": "Hearing loss ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 8396,
+      "slug": "other-specified-hearing-loss-left-ear-h918x2",
+      "name": "Hearing loss, left ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 8395,
+      "slug": "other-specified-hearing-loss-right-ear-h918x1",
+      "name": "Hearing loss, right ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 8783,
+      "slug": "heart-failure-unspecified-i509",
+      "name": "Heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 4672,
+      "slug": "hemophilus-meningitis-g000",
+      "name": "Hemophilus meningitis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 10760,
+      "slug": "unspecified-hemorrhoids-k649",
+      "name": "Hemorrhoids",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 73,
+      "slug": "hepatitis-b",
+      "name": "Hepatitis B",
+      "specialist": "Gastroenterologist"
+    },
+    {
+      "id": 74,
+      "slug": "hepatitis-c",
+      "name": "Hepatitis C",
+      "specialist": "Gastroenterologist"
+    },
+    {
+      "id": 72094,
+      "slug": "herniated-disc-mri",
+      "name": "Herniated Disc (MRI)",
+      "specialist": "Radiology"
+    },
+    {
+      "id": 71901,
+      "slug": "herniated-disc-surgical",
+      "name": "Herniated Disc (Surgical)",
+      "specialist": "Neurosurgery"
+    },
+    {
+      "id": 662,
+      "slug": "herpesviral-conjunctivitis-b0053",
+      "name": "Herpesviral conjunctivitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 665,
+      "slug": "herpesviral-hepatitis-b0081",
+      "name": "Herpesviral hepatitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 668,
+      "slug": "herpesviral-infection-unspecified-b009",
+      "name": "Herpesviral infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 661,
+      "slug": "herpesviral-keratitis-b0052",
+      "name": "Herpesviral keratitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 657,
+      "slug": "herpesviral-meningitis-b003",
+      "name": "Herpesviral meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 5,
+      "slug": "hypertension",
+      "name": "High Blood Pressure",
+      "specialist": "Cardiologist"
+    },
+    {
+      "id": 8780,
+      "slug": "high-output-heart-failure-i5083",
+      "name": "High output heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 72,
+      "slug": "hiv-aids",
+      "name": "HIV/AIDS",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 57,
+      "slug": "hives",
+      "name": "Hives",
+      "specialist": "Dermatologist"
+    },
+    {
+      "id": 1873,
+      "slug": "hodgkin-lymphoma-unspecified-unspecified-site-c8190",
+      "name": "Hodgkin lymphoma",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 1880,
+      "slug": "hodgkin-lymphoma-unspecified-spleen-c8197",
+      "name": "Hodgkin lymphoma, spleen",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 72014,
+      "slug": "hookworm-infection",
+      "name": "Hookworm Infection",
+      "specialist": "Tropical Medicine"
+    },
+    {
+      "id": 22968,
+      "slug": "hyperglycemia-unspecified-r739",
+      "name": "Hyperglycemia",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 4926,
+      "slug": "hypnic-headache-g4481",
+      "name": "Hypnic headache",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 3504,
+      "slug": "hypoglycemia-unspecified-e162",
+      "name": "Hypoglycemia",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 3036,
+      "slug": "hypothyroidism-due-to-meds-and-oth-exogenous-substances-e032",
+      "name": "Hypothyroidism",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 12771,
+      "slug": "idiopathic-gout-unspecified-site-m1000",
+      "name": "Idiopathic gout",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 10100,
+      "slug": "idiopathic-pulmonary-fibrosis-j84112",
+      "name": "Idiopathic pulmonary fibrosis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 11276,
+      "slug": "idiopathic-urticaria-l501",
+      "name": "Idiopathic urticaria",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11168,
+      "slug": "infantile-acute-chronic-eczema-l2083",
+      "name": "Infantile   eczema",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11367,
+      "slug": "infantile-acne-l704",
+      "name": "Infantile acne",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 10981,
+      "slug": "infection-due-to-gastric-band-procedure-k9501",
+      "name": "Infection",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 11225,
+      "slug": "infective-dermatitis-l303",
+      "name": "Infective dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 8665,
+      "slug": "infective-pericarditis-i301",
+      "name": "Infective pericarditis",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 5366,
+      "slug": "unspecified-inflammation-of-eyelid-h019",
+      "name": "Inflammation of eyelid",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 10824,
+      "slug": "inflammatory-liver-disease-unspecified-k759",
+      "name": "Inflammatory liver disease",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 9890,
+      "slug": "influenza-due-to-ident-novel-influenza-a-virus-w-pneumonia-j09x1",
+      "name": "Influenza",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 71853,
+      "slug": "insect-venom-allergy",
+      "name": "Insect Venom Allergy",
+      "specialist": "Allergy & Immunology"
+    },
+    {
+      "id": 4538,
+      "slug": "insomnia-due-to-other-mental-disorder-f5105",
+      "name": "Insomnia",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 5089,
+      "slug": "intercostal-neuropathy-g580",
+      "name": "Intercostal neuropathy",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 22493,
+      "slug": "intercostal-pain-r0782",
+      "name": "Intercostal pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 10187,
+      "slug": "interstitial-emphysema-j982",
+      "name": "Interstitial emphysema",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 11169,
+      "slug": "intrinsic-allergic-eczema-l2084",
+      "name": "Intrinsic  eczema",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 2781,
+      "slug": "iron-deficiency-anemia-unspecified-d509",
+      "name": "Iron deficiency anemia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 17,
+      "slug": "ibs",
+      "name": "Irritable Bowel Syndrome",
+      "specialist": "Gastroenterologist"
+    },
+    {
+      "id": 10703,
+      "slug": "irritable-bowel-syndrome-with-diarrhea-k580",
+      "name": "Irritable bowel syndrome with diarrhea",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 11188,
+      "slug": "irritant-contact-dermatitis-due-to-detergents-l240",
+      "name": "Irritant contact dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 8603,
+      "slug": "ischemic-cardiomyopathy-i255",
+      "name": "Ischemic cardiomyopathy",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 22957,
+      "slug": "jaw-pain-r6884",
+      "name": "Jaw pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 12432,
+      "slug": "juvenile-ankylosing-spondylitis-m081",
+      "name": "Juvenile ankylosing spondylitis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12505,
+      "slug": "juvenile-arthritis-unspecified-unspecified-site-m0890",
+      "name": "Juvenile arthritis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12520,
+      "slug": "juvenile-arthritis-unspecified-unspecified-hip-m08959",
+      "name": "Juvenile arthritis hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12523,
+      "slug": "juvenile-arthritis-unspecified-unspecified-knee-m08969",
+      "name": "Juvenile arthritis knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12423,
+      "slug": "unspecified-juvenile-rheumatoid-arthritis-unspecified-hip-m08059",
+      "name": "Juvenile rheumatoid arthritis hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12426,
+      "slug": "unspecified-juvenile-rheumatoid-arthritis-unspecified-knee-m08069",
+      "name": "Juvenile rheumatoid arthritis knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 6166,
+      "slug": "unspecified-keratitis-h169",
+      "name": "Keratitis",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 18442,
+      "slug": "unspecified-kidney-failure-n19",
+      "name": "Kidney failure",
+      "specialist": "Urology"
+    },
+    {
+      "id": 643,
+      "slug": "lassa-fever-a962",
+      "name": "Lassa fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 71860,
+      "slug": "latex-allergy",
+      "name": "Latex Allergy",
+      "specialist": "Allergy & Immunology"
+    },
+    {
+      "id": 71627,
+      "slug": "latex-allergy-status-z91040",
+      "name": "Latex allergy status",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 12795,
+      "slug": "lead-induced-gout-unspecified-site-m1010",
+      "name": "Lead-induced gout",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 52,
+      "slug": "leukemia",
+      "name": "Leukemia",
+      "specialist": "Oncologist"
+    },
+    {
+      "id": 2284,
+      "slug": "leukemia-unspecified-in-relapse-c9592",
+      "name": "Leukemia, in relapse",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 2283,
+      "slug": "leukemia-unspecified-in-remission-c9591",
+      "name": "Leukemia, in remission",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 279,
+      "slug": "listerial-endocarditis-a3282",
+      "name": "Listerial endocarditis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 275,
+      "slug": "listerial-meningitis-a3211",
+      "name": "Listerial meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 277,
+      "slug": "listerial-sepsis-a327",
+      "name": "Listerial sepsis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 10835,
+      "slug": "liver-disease-unspecified-k769",
+      "name": "Liver disease",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 62055,
+      "slug": "local-infection-due-to-central-venous-catheter-subs-encntr-t80212d",
+      "name": "Local infection",
+      "specialist": "Emergency Medicine"
+    },
+    {
+      "id": 14742,
+      "slug": "low-back-pain-m545",
+      "name": "Low back pain",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 71932,
+      "slug": "ludwig-angina",
+      "name": "Ludwig Angina",
+      "specialist": "Maxillofacial & Oral Surgery"
+    },
+    {
+      "id": 48,
+      "slug": "lung-cancer",
+      "name": "Lung Cancer",
+      "specialist": "Oncologist"
+    },
+    {
+      "id": 78,
+      "slug": "lupus",
+      "name": "Lupus",
+      "specialist": "Rheumatologist"
+    },
+    {
+      "id": 71803,
+      "slug": "lupus-nephritis",
+      "name": "Lupus Nephritis",
+      "specialist": "Nephrology"
+    },
+    {
+      "id": 538,
+      "slug": "lyme-disease-unspecified-a6920",
+      "name": "Lyme disease",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 53,
+      "slug": "lymphoma",
+      "name": "Lymphoma",
+      "specialist": "Oncologist"
+    },
+    {
+      "id": 6866,
+      "slug": "unspecified-macular-degeneration-h3530",
+      "name": "Macular degeneration",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 76,
+      "slug": "malaria",
+      "name": "Malaria",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 18659,
+      "slug": "male-erectile-dysfunction-unspecified-n529",
+      "name": "Male erectile dysfunction",
+      "specialist": "Urology"
+    },
+    {
+      "id": 10124,
+      "slug": "malignant-pleural-effusion-j910",
+      "name": "Malignant pleural effusion",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 1983,
+      "slug": "mantle-cell-lymphoma-unspecified-site-c8310",
+      "name": "Mantle cell lymphoma",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 701,
+      "slug": "measles-without-complication-b059",
+      "name": "Measles",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 698,
+      "slug": "measles-with-intestinal-complications-b054",
+      "name": "Measles s",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 7580,
+      "slug": "mechanical-strabismus-unspecified-h5060",
+      "name": "Mechanical strabismus",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 51,
+      "slug": "melanoma",
+      "name": "Melanoma",
+      "specialist": "Oncologist"
+    },
+    {
+      "id": 2343,
+      "slug": "melanoma-in-situ-unspecified-d039",
+      "name": "Melanoma in situ",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 4684,
+      "slug": "meningitis-unspecified-g039",
+      "name": "Meningitis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 320,
+      "slug": "meningococcal-arthritis-a3983",
+      "name": "Meningococcal arthritis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 315,
+      "slug": "meningococcal-endocarditis-a3951",
+      "name": "Meningococcal endocarditis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 323,
+      "slug": "meningococcal-infection-unspecified-a399",
+      "name": "Meningococcal infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 309,
+      "slug": "meningococcal-meningitis-a390",
+      "name": "Meningococcal meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 317,
+      "slug": "meningococcal-pericarditis-a3953",
+      "name": "Meningococcal pericarditis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 71940,
+      "slug": "meniscus-tear",
+      "name": "Meniscus Tear",
+      "specialist": "Sports Medicine"
+    },
+    {
+      "id": 3911,
+      "slug": "metabolic-syndrome-e8881",
+      "name": "Metabolic syndrome",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 2,
+      "slug": "migraine",
+      "name": "Migraine",
+      "specialist": "Neurologist"
+    },
+    {
+      "id": 213,
+      "slug": "miliary-tuberculosis-unspecified-a199",
+      "name": "Miliary tuberculosis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 18539,
+      "slug": "mixed-incontinence-n3946",
+      "name": "Mixed incontinence",
+      "specialist": "Urology"
+    },
+    {
+      "id": 10705,
+      "slug": "mixed-irritable-bowel-syndrome-k582",
+      "name": "Mixed irritable bowel syndrome",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 3659,
+      "slug": "morbid-severe-obesity-due-to-excess-calories-e6601",
+      "name": "Morbid  obesity",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 2178,
+      "slug": "multiple-myeloma-in-relapse-c9002",
+      "name": "Multiple myeloma in relapse",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 2177,
+      "slug": "multiple-myeloma-in-remission-c9001",
+      "name": "Multiple myeloma in remission",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 4789,
+      "slug": "multiple-sclerosis-g35",
+      "name": "Multiple sclerosis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 780,
+      "slug": "mumps-without-complication-b269",
+      "name": "Mumps",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 778,
+      "slug": "mumps-arthritis-b2685",
+      "name": "Mumps arthritis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 772,
+      "slug": "mumps-encephalitis-b262",
+      "name": "Mumps encephalitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 774,
+      "slug": "mumps-hepatitis-b2681",
+      "name": "Mumps hepatitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 771,
+      "slug": "mumps-meningitis-b261",
+      "name": "Mumps meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 775,
+      "slug": "mumps-myocarditis-b2682",
+      "name": "Mumps myocarditis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 776,
+      "slug": "mumps-nephritis-b2683",
+      "name": "Mumps nephritis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 770,
+      "slug": "mumps-orchitis-b260",
+      "name": "Mumps orchitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 773,
+      "slug": "mumps-pancreatitis-b263",
+      "name": "Mumps pancreatitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 273,
+      "slug": "mycobacterial-infection-unspecified-a319",
+      "name": "Mycobacterial infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 372,
+      "slug": "mycoplasma-infection-unspecified-site-a493",
+      "name": "Mycoplasma infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8574,
+      "slug": "myocardial-infarction-type-2-i21a1",
+      "name": "Myocardial infarction type 2",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 72051,
+      "slug": "nasal-polyps",
+      "name": "Nasal Polyps",
+      "specialist": "ENT"
+    },
+    {
+      "id": 21537,
+      "slug": "neonatal-diabetes-mellitus-p702",
+      "name": "Neonatal diabetes mellitus",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 21549,
+      "slug": "neonatal-goiter-not-elsewhere-classified-p720",
+      "name": "Neonatal goiter",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 21428,
+      "slug": "neonatal-hypertension-p292",
+      "name": "Neonatal hypertension",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 21465,
+      "slug": "neonatal-skin-infection-p394",
+      "name": "Neonatal skin infection",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 21464,
+      "slug": "neonatal-urinary-tract-infection-p393",
+      "name": "Neonatal urinary tract infection",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 5283,
+      "slug": "neurogenic-arthritis-not-elsewhere-classified-g980",
+      "name": "Neurogenic arthritis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 71866,
+      "slug": "neuropathic-pain",
+      "name": "Neuropathic Pain",
+      "specialist": "Pain Medicine & Palliative Care"
+    },
+    {
+      "id": 71958,
+      "slug": "noise-induced-hearing-loss",
+      "name": "Noise-Induced Hearing Loss",
+      "specialist": "Occupational Medicine"
+    },
+    {
+      "id": 2153,
+      "slug": "non-hodgkin-lymphoma-unspecified-unspecified-site-c8590",
+      "name": "Non-Hodgkin lymphoma",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 2160,
+      "slug": "non-hodgkin-lymphoma-unspecified-spleen-c8597",
+      "name": "Non-Hodgkin lymphoma, spleen",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 4680,
+      "slug": "nonpyogenic-meningitis-g030",
+      "name": "Nonpyogenic meningitis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 11344,
+      "slug": "other-specified-nonscarring-hair-loss-l658",
+      "name": "Nonscarring hair loss",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 3045,
+      "slug": "other-specified-nontoxic-goiter-e048",
+      "name": "Nontoxic goiter",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 11222,
+      "slug": "nummular-dermatitis-l300",
+      "name": "Nummular dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 2796,
+      "slug": "nutritional-anemia-unspecified-d539",
+      "name": "Nutritional anemia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 623,
+      "slug": "o-nyong-nyong-fever-a921",
+      "name": "O'nyong-nyong fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 3665,
+      "slug": "obesity-unspecified-e669",
+      "name": "Obesity",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 71881,
+      "slug": "obesity-management",
+      "name": "Obesity Management",
+      "specialist": "Family Medicine"
+    },
+    {
+      "id": 71996,
+      "slug": "obesity-prevention",
+      "name": "Obesity Prevention",
+      "specialist": "Preventive & Public Health"
+    },
+    {
+      "id": 283,
+      "slug": "obstetrical-tetanus-a34",
+      "name": "Obstetrical tetanus",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 4969,
+      "slug": "obstructive-sleep-apnea-adult-pediatric-g4733",
+      "name": "Obstructive sleep apnea",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 71954,
+      "slug": "occupational-asthma",
+      "name": "Occupational Asthma",
+      "specialist": "Occupational Medicine"
+    },
+    {
+      "id": 71960,
+      "slug": "occupational-dermatitis",
+      "name": "Occupational Dermatitis",
+      "specialist": "Occupational Medicine"
+    },
+    {
+      "id": 61,
+      "slug": "ocd",
+      "name": "OCD",
+      "specialist": "Psychiatrist"
+    },
+    {
+      "id": 71938,
+      "slug": "odontogenic-infection",
+      "name": "Odontogenic Infection",
+      "specialist": "Maxillofacial & Oral Surgery"
+    },
+    {
+      "id": 8599,
+      "slug": "old-myocardial-infarction-i252",
+      "name": "Old myocardial infarction",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 71937,
+      "slug": "orofacial-pain",
+      "name": "Orofacial Pain",
+      "specialist": "Maxillofacial & Oral Surgery"
+    },
+    {
+      "id": 8,
+      "slug": "osteoarthritis",
+      "name": "Osteoarthritis",
+      "specialist": "Orthopedic Surgeon"
+    },
+    {
+      "id": 13274,
+      "slug": "osteoarthritis-of-hip-unspecified-m169",
+      "name": "Osteoarthritis of hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13285,
+      "slug": "osteoarthritis-of-knee-unspecified-m179",
+      "name": "Osteoarthritis of knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 30,
+      "slug": "osteoporosis",
+      "name": "Osteoporosis",
+      "specialist": "Endocrinologist"
+    },
+    {
+      "id": 4539,
+      "slug": "oth-insomnia-not-due-to-a-substance-or-known-physiol-cond-f5109",
+      "name": "Oth insomnia not",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 2143,
+      "slug": "oth-types-of-non-hodgkin-lymphoma-unspecified-site-c8580",
+      "name": "Oth types of non-Hodgkin lymphoma",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 11369,
+      "slug": "other-acne-l708",
+      "name": "Other acne",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 10491,
+      "slug": "other-acute-appendicitis-k3589",
+      "name": "Other acute appendicitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 18433,
+      "slug": "other-acute-kidney-failure-n178",
+      "name": "Other acute kidney failure",
+      "specialist": "Urology"
+    },
+    {
+      "id": 9866,
+      "slug": "other-acute-sinusitis-j0180",
+      "name": "Other acute sinusitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 9961,
+      "slug": "other-allergic-rhinitis-j3089",
+      "name": "Other allergic rhinitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 11336,
+      "slug": "other-alopecia-areata-l638",
+      "name": "Other alopecia areata",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 10492,
+      "slug": "other-appendicitis-k36",
+      "name": "Other appendicitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 10041,
+      "slug": "other-asthma-j45998",
+      "name": "Other asthma",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 11170,
+      "slug": "other-atopic-dermatitis-l2089",
+      "name": "Other atopic dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 4430,
+      "slug": "other-bipolar-disorder-f3189",
+      "name": "Other bipolar disorder",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 15683,
+      "slug": "other-bursitis-not-elsewhere-classified-unspecified-site-m7150",
+      "name": "Other bursitis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15686,
+      "slug": "other-bursitis-not-elsewhere-classified-unspecified-elbow-m71529",
+      "name": "Other bursitis,  elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15695,
+      "slug": "other-bursitis-not-elsewhere-classified-unspecified-hip-m71559",
+      "name": "Other bursitis,  hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15698,
+      "slug": "other-bursitis-not-elsewhere-classified-unspecified-knee-m71569",
+      "name": "Other bursitis,  knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15702,
+      "slug": "other-bursitis-not-elsewhere-classified-other-site-m7158",
+      "name": "Other bursitis,  site",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15689,
+      "slug": "other-bursitis-not-elsewhere-classified-unspecified-wrist-m71539",
+      "name": "Other bursitis,  wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 5153,
+      "slug": "other-cerebral-palsy-g808",
+      "name": "Other cerebral palsy",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 22494,
+      "slug": "other-chest-pain-r0789",
+      "name": "Other chest pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 10807,
+      "slug": "other-chronic-hepatitis-not-elsewhere-classified-k738",
+      "name": "Other chronic hepatitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 5209,
+      "slug": "other-chronic-pain-g8929",
+      "name": "Other chronic pain",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 10915,
+      "slug": "other-chronic-pancreatitis-k861",
+      "name": "Other chronic pancreatitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 9971,
+      "slug": "other-chronic-sinusitis-j328",
+      "name": "Other chronic sinusitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 5882,
+      "slug": "other-conjunctivitis-h1089",
+      "name": "Other conjunctivitis",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 10713,
+      "slug": "other-constipation-k5909",
+      "name": "Other constipation",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 10019,
+      "slug": "other-emphysema-j438",
+      "name": "Other emphysema",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 18766,
+      "slug": "other-endometriosis-n808",
+      "name": "Other endometriosis",
+      "specialist": "Urology"
+    },
+    {
+      "id": 22909,
+      "slug": "other-fatigue-r5383",
+      "name": "Other fatigue",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 8782,
+      "slug": "other-heart-failure-i5089",
+      "name": "Other heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 10759,
+      "slug": "other-hemorrhoids-k648",
+      "name": "Other hemorrhoids",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 1863,
+      "slug": "other-hodgkin-lymphoma-unspecified-site-c8170",
+      "name": "Other Hodgkin lymphoma",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 1870,
+      "slug": "other-hodgkin-lymphoma-spleen-c8177",
+      "name": "Other Hodgkin lymphoma, spleen",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 3503,
+      "slug": "other-hypoglycemia-e161",
+      "name": "Other hypoglycemia",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 62057,
+      "slug": "other-infection-due-to-central-venous-catheter-init-encntr-t80218a",
+      "name": "Other infection",
+      "specialist": "Emergency Medicine"
+    },
+    {
+      "id": 4950,
+      "slug": "other-insomnia-g4709",
+      "name": "Other insomnia",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 10706,
+      "slug": "other-irritable-bowel-syndrome-k588",
+      "name": "Other irritable bowel syndrome",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 6165,
+      "slug": "other-keratitis-h168",
+      "name": "Other keratitis",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 934,
+      "slug": "other-malaria-not-elsewhere-classified-b538",
+      "name": "Other malaria",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 18658,
+      "slug": "other-male-erectile-dysfunction-n528",
+      "name": "Other male erectile dysfunction",
+      "specialist": "Urology"
+    },
+    {
+      "id": 212,
+      "slug": "other-miliary-tuberculosis-a198",
+      "name": "Other miliary tuberculosis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8575,
+      "slug": "other-myocardial-infarction-type-i21a9",
+      "name": "Other myocardial infarction type",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 3664,
+      "slug": "other-obesity-e668",
+      "name": "Other obesity",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 18803,
+      "slug": "other-ovarian-cyst-unspecified-side-n83299",
+      "name": "Other ovarian cyst side",
+      "specialist": "Urology"
+    },
+    {
+      "id": 2894,
+      "slug": "other-primary-thrombocytopenia-d6949",
+      "name": "Other primary thrombocytopenia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 11241,
+      "slug": "other-psoriasis-l408",
+      "name": "Other psoriasis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 11373,
+      "slug": "other-rosacea-l718",
+      "name": "Other rosacea",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 4383,
+      "slug": "other-schizophrenia-f2089",
+      "name": "Other schizophrenia",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 11174,
+      "slug": "other-seborrheic-dermatitis-l218",
+      "name": "Other seborrheic dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 4974,
+      "slug": "other-sleep-apnea-g4739",
+      "name": "Other sleep apnea",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 14497,
+      "slug": "other-spondylosis-site-unspecified-m47899",
+      "name": "Other spondylosis, site",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 284,
+      "slug": "other-tetanus-a35",
+      "name": "Other tetanus",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 10613,
+      "slug": "other-ulcerative-colitis-with-other-complication-k51818",
+      "name": "Other ulcerative colitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 10608,
+      "slug": "other-ulcerative-colitis-without-complications-k5180",
+      "name": "Other ulcerative colitis s",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 11282,
+      "slug": "other-urticaria-l508",
+      "name": "Other urticaria",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 801,
+      "slug": "other-viral-conjunctivitis-b308",
+      "name": "Other viral conjunctivitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 614,
+      "slug": "other-viral-meningitis-a878",
+      "name": "Other viral meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 9916,
+      "slug": "other-viral-pneumonia-j1289",
+      "name": "Other viral pneumonia",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 711,
+      "slug": "other-viral-warts-b078",
+      "name": "Other viral warts",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8077,
+      "slug": "otitis-media-in-diseases-classified-elsewhere-left-ear-h672",
+      "name": "Otitis media , left ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 8076,
+      "slug": "otitis-media-in-diseases-classified-elsewhere-right-ear-h671",
+      "name": "Otitis media , right ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 72055,
+      "slug": "chronic-otitis-media",
+      "name": "Otitis Media (Chronic)",
+      "specialist": "ENT"
+    },
+    {
+      "id": 8072,
+      "slug": "otitis-media-unspecified-unspecified-ear-h6690",
+      "name": "Otitis media ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 8074,
+      "slug": "otitis-media-unspecified-left-ear-h6692",
+      "name": "Otitis media, left ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 8073,
+      "slug": "otitis-media-unspecified-right-ear-h6691",
+      "name": "Otitis media, right ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 8385,
+      "slug": "ototoxic-hearing-loss-unspecified-ear-h9109",
+      "name": "Ototoxic hearing loss ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 72092,
+      "slug": "ovarian-cyst-ultrasound",
+      "name": "Ovarian Cyst (Ultrasound)",
+      "specialist": "Radiology"
+    },
+    {
+      "id": 18800,
+      "slug": "unspecified-ovarian-cyst-unspecified-side-n83209",
+      "name": "Ovarian cyst side",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18799,
+      "slug": "unspecified-ovarian-cyst-left-side-n83202",
+      "name": "Ovarian cyst, left side",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18798,
+      "slug": "unspecified-ovarian-cyst-right-side-n83201",
+      "name": "Ovarian cyst, right side",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18540,
+      "slug": "overflow-incontinence-n39490",
+      "name": "Overflow incontinence",
+      "specialist": "Urology"
+    },
+    {
+      "id": 22903,
+      "slug": "pain-unspecified-r52",
+      "name": "Pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 13967,
+      "slug": "pain-in-unspecified-elbow-m25529",
+      "name": "Pain in  elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15843,
+      "slug": "pain-in-unspecified-finger-s-m79646",
+      "name": "Pain in  finger",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15837,
+      "slug": "pain-in-unspecified-forearm-m79639",
+      "name": "Pain in  forearm",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13976,
+      "slug": "pain-in-unspecified-hip-m25559",
+      "name": "Pain in  hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13961,
+      "slug": "pain-in-unspecified-joint-m2550",
+      "name": "Pain in  joint",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13979,
+      "slug": "pain-in-unspecified-knee-m25569",
+      "name": "Pain in  knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15831,
+      "slug": "pain-in-unspecified-limb-m79609",
+      "name": "Pain in  limb",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13964,
+      "slug": "pain-in-unspecified-shoulder-m25519",
+      "name": "Pain in  shoulder",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15846,
+      "slug": "pain-in-unspecified-thigh-m79659",
+      "name": "Pain in  thigh",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15855,
+      "slug": "pain-in-unspecified-toe-s-m79676",
+      "name": "Pain in  toe",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13970,
+      "slug": "pain-in-unspecified-wrist-m25539",
+      "name": "Pain in  wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13966,
+      "slug": "pain-in-left-elbow-m25522",
+      "name": "Pain in left elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13975,
+      "slug": "pain-in-left-hip-m25552",
+      "name": "Pain in left hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13978,
+      "slug": "pain-in-left-knee-m25562",
+      "name": "Pain in left knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15845,
+      "slug": "pain-in-left-thigh-m79652",
+      "name": "Pain in left thigh",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15854,
+      "slug": "pain-in-left-toe-s-m79675",
+      "name": "Pain in left toe",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13969,
+      "slug": "pain-in-left-wrist-m25532",
+      "name": "Pain in left wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13974,
+      "slug": "pain-in-right-hip-m25551",
+      "name": "Pain in right hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13977,
+      "slug": "pain-in-right-knee-m25561",
+      "name": "Pain in right knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 15853,
+      "slug": "pain-in-right-toe-s-m79674",
+      "name": "Pain in right toe",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 22489,
+      "slug": "pain-in-throat-r070",
+      "name": "Pain in throat",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 10017,
+      "slug": "panlobular-emphysema-j431",
+      "name": "Panlobular emphysema",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 817,
+      "slug": "papovavirus-infection-unspecified-b344",
+      "name": "Papovavirus infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 4536,
+      "slug": "paradoxical-insomnia-f5103",
+      "name": "Paradoxical insomnia",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 7533,
+      "slug": "unspecified-paralytic-strabismus-h499",
+      "name": "Paralytic strabismus",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 4377,
+      "slug": "paranoid-schizophrenia-f200",
+      "name": "Paranoid schizophrenia",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 726,
+      "slug": "parapoxvirus-infection-unspecified-b0860",
+      "name": "Parapoxvirus infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 97,
+      "slug": "paratyphoid-fever-unspecified-a014",
+      "name": "Paratyphoid fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 94,
+      "slug": "paratyphoid-fever-a-a011",
+      "name": "Paratyphoid fever A",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 95,
+      "slug": "paratyphoid-fever-b-a012",
+      "name": "Paratyphoid fever B",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 96,
+      "slug": "paratyphoid-fever-c-a013",
+      "name": "Paratyphoid fever C",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8744,
+      "slug": "paroxysmal-atrial-fibrillation-i480",
+      "name": "Paroxysmal atrial fibrillation",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 816,
+      "slug": "parvovirus-infection-unspecified-b343",
+      "name": "Parvovirus infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 15780,
+      "slug": "patellar-tendinitis-unspecified-knee-m7650",
+      "name": "Patellar tendinitis knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 45,
+      "slug": "pcos",
+      "name": "PCOS",
+      "specialist": "Endocrinologist"
+    },
+    {
+      "id": 67,
+      "slug": "pelvic-inflammatory-disease",
+      "name": "Pelvic Inflammatory Disease",
+      "specialist": "Gynecologist"
+    },
+    {
+      "id": 38,
+      "slug": "peptic-ulcer",
+      "name": "Peptic Ulcer",
+      "specialist": "Gastroenterologist"
+    },
+    {
+      "id": 21577,
+      "slug": "peptic-ulcer-of-newborn-p7882",
+      "name": "Peptic ulcer of newborn",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 8675,
+      "slug": "pericarditis-in-diseases-classified-elsewhere-i32",
+      "name": "Pericarditis",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 11371,
+      "slug": "perioral-dermatitis-l710",
+      "name": "Perioral dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 20989,
+      "slug": "peripartum-cardiomyopathy-o903",
+      "name": "Peripartum cardiomyopathy",
+      "specialist": "Obstetrics"
+    },
+    {
+      "id": 71913,
+      "slug": "peripheral-artery-disease-surgical",
+      "name": "Peripheral Artery Disease (Surgical)",
+      "specialist": "Cardiothoracic & Vascular Surgery"
+    },
+    {
+      "id": 22513,
+      "slug": "periumbilical-pain-r1033",
+      "name": "Periumbilical pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 8745,
+      "slug": "persistent-atrial-fibrillation-i481",
+      "name": "Persistent atrial fibrillation",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 71868,
+      "slug": "phantom-limb-pain",
+      "name": "Phantom Limb Pain",
+      "specialist": "Pain Medicine & Palliative Care"
+    },
+    {
+      "id": 4478,
+      "slug": "phobic-anxiety-disorder-unspecified-f409",
+      "name": "Phobic anxiety disorder",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 217,
+      "slug": "plague-meningitis-a203",
+      "name": "Plague meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 33,
+      "slug": "plantar-fasciitis",
+      "name": "Plantar Fasciitis",
+      "specialist": "Podiatrist"
+    },
+    {
+      "id": 10123,
+      "slug": "pleural-effusion-not-elsewhere-classified-j90",
+      "name": "Pleural effusion",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 4673,
+      "slug": "pneumococcal-meningitis-g001",
+      "name": "Pneumococcal meningitis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 9918,
+      "slug": "pneumonia-due-to-streptococcus-pneumoniae-j13",
+      "name": "Pneumonia",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 9940,
+      "slug": "pneumonia-unspecified-organism-j189",
+      "name": "Pneumonia organism",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 71799,
+      "slug": "polycystic-kidney-disease",
+      "name": "Polycystic Kidney Disease",
+      "specialist": "Nephrology"
+    },
+    {
+      "id": 14204,
+      "slug": "polymyalgia-rheumatica-m353",
+      "name": "Polymyalgia rheumatica",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 10831,
+      "slug": "portal-hypertension-k766",
+      "name": "Portal hypertension",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 679,
+      "slug": "postherpetic-trigeminal-neuralgia-b0222",
+      "name": "Postherpetic trigeminal neuralgia",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 18162,
+      "slug": "postradiation-scoliosis-m965",
+      "name": "Postradiation scoliosis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 18542,
+      "slug": "postural-urinary-incontinence-n39492",
+      "name": "Postural  incontinence",
+      "specialist": "Urology"
+    },
+    {
+      "id": 22491,
+      "slug": "precordial-pain-r072",
+      "name": "Precordial pain",
+      "specialist": "General Medicine"
+    },
+    {
+      "id": 7619,
+      "slug": "presbyopia-h524",
+      "name": "Presbyopia",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 18880,
+      "slug": "primary-amenorrhea-n910",
+      "name": "Primary amenorrhea",
+      "specialist": "Urology"
+    },
+    {
+      "id": 4928,
+      "slug": "primary-cough-headache-g4483",
+      "name": "Primary cough headache",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 18904,
+      "slug": "primary-dysmenorrhea-n944",
+      "name": "Primary dysmenorrhea",
+      "specialist": "Urology"
+    },
+    {
+      "id": 4534,
+      "slug": "primary-insomnia-f5101",
+      "name": "Primary insomnia",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 13345,
+      "slug": "primary-osteoarthritis-unspecified-site-m1991",
+      "name": "Primary osteoarthritis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13304,
+      "slug": "primary-osteoarthritis-unspecified-elbow-m19029",
+      "name": "Primary osteoarthritis elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 13307,
+      "slug": "primary-osteoarthritis-unspecified-wrist-m19039",
+      "name": "Primary osteoarthritis wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 8647,
+      "slug": "primary-pulmonary-hypertension-i270",
+      "name": "Primary pulmonary hypertension",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 49,
+      "slug": "prostate-cancer",
+      "name": "Prostate Cancer",
+      "specialist": "Oncologist"
+    },
+    {
+      "id": 15768,
+      "slug": "psoas-tendinitis-unspecified-hip-m7610",
+      "name": "Psoas tendinitis hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12,
+      "slug": "psoriasis",
+      "name": "Psoriasis",
+      "specialist": "Dermatologist"
+    },
+    {
+      "id": 11230,
+      "slug": "psoriasis-vulgaris-l400",
+      "name": "Psoriasis vulgaris",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 72071,
+      "slug": "psoriatic-arthritis",
+      "name": "Psoriatic Arthritis",
+      "specialist": "Rheumatology"
+    },
+    {
+      "id": 60,
+      "slug": "ptsd",
+      "name": "PTSD",
+      "specialist": "Psychiatrist"
+    },
+    {
+      "id": 20926,
+      "slug": "puerperal-sepsis-o85",
+      "name": "Puerperal sepsis",
+      "specialist": "Obstetrics"
+    },
+    {
+      "id": 10098,
+      "slug": "pulmonary-fibrosis-unspecified-j8410",
+      "name": "Pulmonary fibrosis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 8649,
+      "slug": "pulmonary-hypertension-unspecified-i2720",
+      "name": "Pulmonary hypertension",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 21429,
+      "slug": "pulmonary-hypertension-of-newborn-p2930",
+      "name": "Pulmonary hypertension of newborn",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 8430,
+      "slug": "pulsatile-tinnitus-unspecified-ear-h93a9",
+      "name": "Pulsatile tinnitus ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 11927,
+      "slug": "pyogenic-arthritis-unspecified-m009",
+      "name": "Pyogenic arthritis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 567,
+      "slug": "q-fever-a78",
+      "name": "Q fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 592,
+      "slug": "rabies-unspecified-a829",
+      "name": "Rabies",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 247,
+      "slug": "rat-bite-fever-unspecified-a259",
+      "name": "Rat-bite fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 72080,
+      "slug": "reactive-arthritis",
+      "name": "Reactive Arthritis",
+      "specialist": "Rheumatology"
+    },
+    {
+      "id": 2739,
+      "slug": "refractory-anemia-unspecified-d464",
+      "name": "Refractory anemia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 535,
+      "slug": "relapsing-fever-unspecified-a689",
+      "name": "Relapsing fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8552,
+      "slug": "renovascular-hypertension-i150",
+      "name": "Renovascular hypertension",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 4381,
+      "slug": "residual-schizophrenia-f205",
+      "name": "Residual schizophrenia",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 21421,
+      "slug": "respiratory-failure-of-newborn-p285",
+      "name": "Respiratory failure of newborn",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 10181,
+      "slug": "respiratory-failure-unspecified-with-hypoxia-j9691",
+      "name": "Respiratory failure with hypoxia",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 169,
+      "slug": "respiratory-tuberculosis-unspecified-a159",
+      "name": "Respiratory tuberculosis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8540,
+      "slug": "rheumatic-heart-failure-i0981",
+      "name": "Rheumatic heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 12359,
+      "slug": "other-specified-rheumatoid-arthritis-unspecified-site-m0680",
+      "name": "Rheumatoid arthritis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12365,
+      "slug": "other-specified-rheumatoid-arthritis-unspecified-elbow-m06829",
+      "name": "Rheumatoid arthritis elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12374,
+      "slug": "other-specified-rheumatoid-arthritis-unspecified-hip-m06859",
+      "name": "Rheumatoid arthritis hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12377,
+      "slug": "other-specified-rheumatoid-arthritis-unspecified-knee-m06869",
+      "name": "Rheumatoid arthritis knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12362,
+      "slug": "other-specified-rheumatoid-arthritis-unspecified-shoulder-m06819",
+      "name": "Rheumatoid arthritis shoulder",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12368,
+      "slug": "other-specified-rheumatoid-arthritis-unspecified-wrist-m06839",
+      "name": "Rheumatoid arthritis wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12364,
+      "slug": "other-specified-rheumatoid-arthritis-left-elbow-m06822",
+      "name": "Rheumatoid arthritis, left elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12373,
+      "slug": "other-specified-rheumatoid-arthritis-left-hip-m06852",
+      "name": "Rheumatoid arthritis, left hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12376,
+      "slug": "other-specified-rheumatoid-arthritis-left-knee-m06862",
+      "name": "Rheumatoid arthritis, left knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12367,
+      "slug": "other-specified-rheumatoid-arthritis-left-wrist-m06832",
+      "name": "Rheumatoid arthritis, left wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12363,
+      "slug": "other-specified-rheumatoid-arthritis-right-elbow-m06821",
+      "name": "Rheumatoid arthritis, right elbow",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12372,
+      "slug": "other-specified-rheumatoid-arthritis-right-hip-m06851",
+      "name": "Rheumatoid arthritis, right hip",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12375,
+      "slug": "other-specified-rheumatoid-arthritis-right-knee-m06861",
+      "name": "Rheumatoid arthritis, right knee",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12366,
+      "slug": "other-specified-rheumatoid-arthritis-right-wrist-m06831",
+      "name": "Rheumatoid arthritis, right wrist",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12381,
+      "slug": "other-specified-rheumatoid-arthritis-vertebrae-m0688",
+      "name": "Rheumatoid arthritis, vertebrae",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 12310,
+      "slug": "rheumatoid-bursitis-unspecified-site-m0620",
+      "name": "Rheumatoid bursitis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 629,
+      "slug": "rift-valley-fever-a924",
+      "name": "Rift Valley fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8774,
+      "slug": "right-heart-failure-unspecified-i50810",
+      "name": "Right heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 54,
+      "slug": "rosacea",
+      "name": "Rosacea",
+      "specialist": "Dermatologist"
+    },
+    {
+      "id": 702,
+      "slug": "rubella-with-neurological-complication-unspecified-b0600",
+      "name": "Rubella",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 707,
+      "slug": "rubella-arthritis-b0682",
+      "name": "Rubella arthritis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 703,
+      "slug": "rubella-encephalitis-b0601",
+      "name": "Rubella encephalitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 704,
+      "slug": "rubella-meningitis-b0602",
+      "name": "Rubella meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 706,
+      "slug": "rubella-pneumonia-b0681",
+      "name": "Rubella pneumonia",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 103,
+      "slug": "salmonella-arthritis-a0223",
+      "name": "Salmonella arthritis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 108,
+      "slug": "salmonella-infection-unspecified-a029",
+      "name": "Salmonella infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 101,
+      "slug": "salmonella-meningitis-a0221",
+      "name": "Salmonella meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 102,
+      "slug": "salmonella-pneumonia-a0222",
+      "name": "Salmonella pneumonia",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 105,
+      "slug": "salmonella-pyelonephritis-a0225",
+      "name": "Salmonella pyelonephritis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 99,
+      "slug": "salmonella-sepsis-a021",
+      "name": "Salmonella sepsis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 634,
+      "slug": "sandfly-fever-a931",
+      "name": "Sandfly fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 3000,
+      "slug": "sarcoid-meningitis-d8681",
+      "name": "Sarcoid meningitis",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 3003,
+      "slug": "sarcoid-pyelonephritis-d8684",
+      "name": "Sarcoid pyelonephritis",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 307,
+      "slug": "scarlet-fever-with-other-complications-a388",
+      "name": "Scarlet fever s",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 59,
+      "slug": "schizophrenia",
+      "name": "Schizophrenia",
+      "specialist": "Psychiatrist"
+    },
+    {
+      "id": 6,
+      "slug": "sciatica",
+      "name": "Sciatica",
+      "specialist": "Orthopedic Surgeon"
+    },
+    {
+      "id": 14736,
+      "slug": "sciatica-unspecified-side-m5430",
+      "name": "Sciatica side",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 14738,
+      "slug": "sciatica-left-side-m5432",
+      "name": "Sciatica, left side",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 14737,
+      "slug": "sciatica-right-side-m5431",
+      "name": "Sciatica, right side",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 31,
+      "slug": "scoliosis",
+      "name": "Scoliosis",
+      "specialist": "Orthopedic Surgeon"
+    },
+    {
+      "id": 2794,
+      "slug": "scorbutic-anemia-d532",
+      "name": "Scorbutic anemia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 18641,
+      "slug": "scrotal-pain-n5082",
+      "name": "Scrotal pain",
+      "specialist": "Urology"
+    },
+    {
+      "id": 11175,
+      "slug": "seborrheic-dermatitis-unspecified-l219",
+      "name": "Seborrheic dermatitis",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 10754,
+      "slug": "second-degree-hemorrhoids-k641",
+      "name": "Second degree hemorrhoids",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 18881,
+      "slug": "secondary-amenorrhea-n911",
+      "name": "Secondary amenorrhea",
+      "specialist": "Urology"
+    },
+    {
+      "id": 6543,
+      "slug": "unspecified-secondary-cataract-h2640",
+      "name": "Secondary cataract",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 18905,
+      "slug": "secondary-dysmenorrhea-n945",
+      "name": "Secondary dysmenorrhea",
+      "specialist": "Urology"
+    },
+    {
+      "id": 8556,
+      "slug": "secondary-hypertension-unspecified-i159",
+      "name": "Secondary hypertension",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 13347,
+      "slug": "secondary-osteoarthritis-unspecified-site-m1993",
+      "name": "Secondary osteoarthritis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 71818,
+      "slug": "senile-osteoporosis",
+      "name": "Senile Osteoporosis",
+      "specialist": "Geriatrics"
+    },
+    {
+      "id": 8371,
+      "slug": "unspecified-sensorineural-hearing-loss-h905",
+      "name": "Sensorineural hearing loss",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 330,
+      "slug": "sepsis-due-to-methicillin-resistant-staphylococcus-aureus-a4102",
+      "name": "Sepsis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 21446,
+      "slug": "sepsis-of-newborn-due-to-other-staphylococci-p3639",
+      "name": "Sepsis of newborn",
+      "specialist": "Neonatology"
+    },
+    {
+      "id": 342,
+      "slug": "sepsis-unspecified-organism-a419",
+      "name": "Sepsis organism",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 5101,
+      "slug": "serum-neuropathy-g611",
+      "name": "Serum neuropathy",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 71966,
+      "slug": "shift-work-sleep-disorder",
+      "name": "Shift Work Sleep Disorder",
+      "specialist": "Occupational Medicine"
+    },
+    {
+      "id": 63594,
+      "slug": "skin-graft-allograft-autograft-infection-t86822",
+      "name": "Skin graft   infection",
+      "specialist": "Emergency Medicine"
+    },
+    {
+      "id": 4966,
+      "slug": "sleep-apnea-unspecified-g4730",
+      "name": "Sleep apnea",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 72061,
+      "slug": "sleep-apnea-ent",
+      "name": "Sleep Apnea (ENT)",
+      "specialist": "ENT"
+    },
+    {
+      "id": 4990,
+      "slug": "sleep-disorder-unspecified-g479",
+      "name": "Sleep disorder",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 4548,
+      "slug": "sleep-disorder-not-due-to-a-sub-or-known-physiol-cond-unsp-f519",
+      "name": "Sleep disorder not",
+      "specialist": "Psychiatry"
+    },
+    {
+      "id": 10709,
+      "slug": "slow-transit-constipation-k5901",
+      "name": "Slow transit constipation",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 11305,
+      "slug": "solar-urticaria-l563",
+      "name": "Solar urticaria",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 71900,
+      "slug": "spinal-stenosis-surgical",
+      "name": "Spinal Stenosis (Surgical)",
+      "specialist": "Neurosurgery"
+    },
+    {
+      "id": 14499,
+      "slug": "spinal-stenosis-site-unspecified-m4800",
+      "name": "Spinal stenosis, site",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 544,
+      "slug": "spirochetal-infection-unspecified-a699",
+      "name": "Spirochetal infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 14498,
+      "slug": "spondylosis-unspecified-m479",
+      "name": "Spondylosis",
+      "specialist": "Orthopedics"
+    },
+    {
+      "id": 558,
+      "slug": "spotted-fever-due-to-rickettsia-rickettsii-a770",
+      "name": "Spotted fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 1425,
+      "slug": "squamous-cell-carcinoma-of-anal-skin-c44520",
+      "name": "Squamous cell carcinoma of anal skin",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 1461,
+      "slug": "squamous-cell-carcinoma-of-skin-unspecified-c4492",
+      "name": "Squamous cell carcinoma of skin",
+      "specialist": "Oncology"
+    },
+    {
+      "id": 7586,
+      "slug": "other-specified-strabismus-h5089",
+      "name": "Strabismus",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 370,
+      "slug": "streptococcal-infection-unspecified-site-a491",
+      "name": "Streptococcal infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 4674,
+      "slug": "streptococcal-meningitis-g002",
+      "name": "Streptococcal meningitis",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 9870,
+      "slug": "streptococcal-pharyngitis-j020",
+      "name": "Streptococcal pharyngitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 328,
+      "slug": "streptococcal-sepsis-unspecified-a409",
+      "name": "Streptococcal sepsis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 18533,
+      "slug": "stress-incontinence-female-male-n393",
+      "name": "Stress incontinence",
+      "specialist": "Urology"
+    },
+    {
+      "id": 25,
+      "slug": "stroke",
+      "name": "Stroke",
+      "specialist": "Neurologist"
+    },
+    {
+      "id": 590,
+      "slug": "sylvatic-rabies-a820",
+      "name": "Sylvatic rabies",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 412,
+      "slug": "syphilitic-alopecia-a5132",
+      "name": "Syphilitic alopecia",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 426,
+      "slug": "syphilitic-endocarditis-a5203",
+      "name": "Syphilitic endocarditis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 8762,
+      "slug": "unspecified-systolic-congestive-heart-failure-i5020",
+      "name": "Systolic  heart failure",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 18640,
+      "slug": "testicular-pain-unspecified-n50819",
+      "name": "Testicular pain",
+      "specialist": "Urology"
+    },
+    {
+      "id": 282,
+      "slug": "tetanus-neonatorum-a33",
+      "name": "Tetanus neonatorum",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 2810,
+      "slug": "thalassemia-unspecified-d569",
+      "name": "Thalassemia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 2806,
+      "slug": "thalassemia-minor-d563",
+      "name": "Thalassemia minor",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 10755,
+      "slug": "third-degree-hemorrhoids-k642",
+      "name": "Third degree hemorrhoids",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 2897,
+      "slug": "thrombocytopenia-unspecified-d696",
+      "name": "Thrombocytopenia",
+      "specialist": "Hematology"
+    },
+    {
+      "id": 71980,
+      "slug": "thyroid-nodule-evaluation",
+      "name": "Thyroid Nodule Evaluation",
+      "specialist": "Nuclear Medicine"
+    },
+    {
+      "id": 68,
+      "slug": "tinnitus",
+      "name": "Tinnitus",
+      "specialist": "ENT Specialist"
+    },
+    {
+      "id": 8426,
+      "slug": "tinnitus-unspecified-ear-h9319",
+      "name": "Tinnitus ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 8424,
+      "slug": "tinnitus-left-ear-h9312",
+      "name": "Tinnitus, left ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 8423,
+      "slug": "tinnitus-right-ear-h9311",
+      "name": "Tinnitus, right ear",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 10797,
+      "slug": "toxic-liver-disease-unspecified-k719",
+      "name": "Toxic liver disease",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 7422,
+      "slug": "toxic-optic-neuropathy-h463",
+      "name": "Toxic optic neuropathy",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 958,
+      "slug": "toxoplasma-hepatitis-b581",
+      "name": "Toxoplasma hepatitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 568,
+      "slug": "trench-fever-a790",
+      "name": "Trench fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 4991,
+      "slug": "trigeminal-neuralgia-g500",
+      "name": "Trigeminal neuralgia",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 71902,
+      "slug": "trigeminal-neuralgia-surgical",
+      "name": "Trigeminal Neuralgia (Surgical)",
+      "specialist": "Neurosurgery"
+    },
+    {
+      "id": 42,
+      "slug": "tuberculosis",
+      "name": "Tuberculosis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 201,
+      "slug": "tuberculosis-of-inner-middle-ear-a186",
+      "name": "Tuberculosis of   ear",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 183,
+      "slug": "tuberculosis-of-bladder-a1812",
+      "name": "Tuberculosis of bladder",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 187,
+      "slug": "tuberculosis-of-cervix-a1816",
+      "name": "Tuberculosis of cervix",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 206,
+      "slug": "tuberculosis-of-heart-a1884",
+      "name": "Tuberculosis of heart",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 163,
+      "slug": "tuberculosis-of-lung-a150",
+      "name": "Tuberculosis of lung",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 185,
+      "slug": "tuberculosis-of-prostate-a1814",
+      "name": "Tuberculosis of prostate",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 177,
+      "slug": "tuberculosis-of-spine-a1801",
+      "name": "Tuberculosis of spine",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 207,
+      "slug": "tuberculosis-of-spleen-a1885",
+      "name": "Tuberculosis of spleen",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 197,
+      "slug": "tuberculous-keratitis-a1852",
+      "name": "Tuberculous keratitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 170,
+      "slug": "tuberculous-meningitis-a170",
+      "name": "Tuberculous meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 43,
+      "slug": "type-1-diabetes",
+      "name": "Type 1 Diabetes",
+      "specialist": "Endocrinologist"
+    },
+    {
+      "id": 3328,
+      "slug": "type-1-diabetes-mellitus-without-complications-e109",
+      "name": "Type 1 diabetes mellitus s",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 4,
+      "slug": "diabetes-type-2",
+      "name": "Type 2 Diabetes",
+      "specialist": "Endocrinologist"
+    },
+    {
+      "id": 3414,
+      "slug": "type-2-diabetes-mellitus-without-complications-e119",
+      "name": "Type 2 diabetes mellitus s",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 91,
+      "slug": "typhoid-arthritis-a0104",
+      "name": "Typhoid arthritis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 87,
+      "slug": "typhoid-fever-unspecified-a0100",
+      "name": "Typhoid fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 93,
+      "slug": "typhoid-fever-with-other-complications-a0109",
+      "name": "Typhoid fever s",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 88,
+      "slug": "typhoid-meningitis-a0101",
+      "name": "Typhoid meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 92,
+      "slug": "typhoid-osteomyelitis-a0105",
+      "name": "Typhoid osteomyelitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 90,
+      "slug": "typhoid-pneumonia-a0103",
+      "name": "Typhoid pneumonia",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 555,
+      "slug": "typhus-fever-due-to-rickettsia-typhi-a752",
+      "name": "Typhus fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 10620,
+      "slug": "ulcerative-colitis-unspecified-with-other-complication-k51918",
+      "name": "Ulcerative colitis",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 10619,
+      "slug": "ulcerative-colitis-unspecified-with-abscess-k51914",
+      "name": "Ulcerative colitis with abscess",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 10618,
+      "slug": "ulcerative-colitis-unspecified-with-fistula-k51913",
+      "name": "Ulcerative colitis with fistula",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 10615,
+      "slug": "ulcerative-colitis-unspecified-without-complications-k5190",
+      "name": "Ulcerative colitis, s",
+      "specialist": "Gastroenterology"
+    },
+    {
+      "id": 8560,
+      "slug": "unstable-angina-i200",
+      "name": "Unstable angina",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 591,
+      "slug": "urban-rabies-a821",
+      "name": "Urban rabies",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 639,
+      "slug": "urban-yellow-fever-a951",
+      "name": "Urban yellow fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 18534,
+      "slug": "urge-incontinence-n3941",
+      "name": "Urge incontinence",
+      "specialist": "Urology"
+    },
+    {
+      "id": 18543,
+      "slug": "other-specified-urinary-incontinence-n39498",
+      "name": "Urinary incontinence",
+      "specialist": "Urology"
+    },
+    {
+      "id": 71822,
+      "slug": "urinary-incontinence-elderly",
+      "name": "Urinary Incontinence in Elderly",
+      "specialist": "Geriatrics"
+    },
+    {
+      "id": 11283,
+      "slug": "urticaria-unspecified-l509",
+      "name": "Urticaria",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 66,
+      "slug": "fibroids",
+      "name": "Uterine Fibroids",
+      "specialist": "Gynecologist"
+    },
+    {
+      "id": 63,
+      "slug": "uti",
+      "name": "UTI",
+      "specialist": "Urologist"
+    },
+    {
+      "id": 673,
+      "slug": "varicella-keratitis-b0181",
+      "name": "Varicella keratitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 669,
+      "slug": "varicella-meningitis-b010",
+      "name": "Varicella meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 672,
+      "slug": "varicella-pneumonia-b012",
+      "name": "Varicella pneumonia",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 9753,
+      "slug": "varicose-veins-of-other-specified-sites-i868",
+      "name": "Varicose veins of  sites",
+      "specialist": "Cardiology"
+    },
+    {
+      "id": 4907,
+      "slug": "vascular-headache-not-elsewhere-classified-g441",
+      "name": "Vascular headache",
+      "specialist": "Neurology"
+    },
+    {
+      "id": 9956,
+      "slug": "vasomotor-rhinitis-j300",
+      "name": "Vasomotor rhinitis",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 5860,
+      "slug": "vernal-conjunctivitis-h1044",
+      "name": "Vernal conjunctivitis",
+      "specialist": "Ophthalmology"
+    },
+    {
+      "id": 69,
+      "slug": "vertigo",
+      "name": "Vertigo",
+      "specialist": "ENT Specialist"
+    },
+    {
+      "id": 11279,
+      "slug": "vibratory-urticaria-l504",
+      "name": "Vibratory urticaria",
+      "specialist": "Dermatology"
+    },
+    {
+      "id": 809,
+      "slug": "viral-cardiomyopathy-b3324",
+      "name": "Viral cardiomyopathy",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 802,
+      "slug": "viral-conjunctivitis-unspecified-b309",
+      "name": "Viral conjunctivitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 806,
+      "slug": "viral-endocarditis-b3321",
+      "name": "Viral endocarditis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 819,
+      "slug": "viral-infection-unspecified-b349",
+      "name": "Viral infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 615,
+      "slug": "viral-meningitis-unspecified-a879",
+      "name": "Viral meningitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 808,
+      "slug": "viral-pericarditis-b3323",
+      "name": "Viral pericarditis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 9917,
+      "slug": "viral-pneumonia-unspecified-j129",
+      "name": "Viral pneumonia",
+      "specialist": "Pulmonology"
+    },
+    {
+      "id": 3634,
+      "slug": "vitamin-deficiency-unspecified-e569",
+      "name": "Vitamin deficiency",
+      "specialist": "Endocrinology"
+    },
+    {
+      "id": 55,
+      "slug": "vitiligo",
+      "name": "Vitiligo",
+      "specialist": "Dermatologist"
+    },
+    {
+      "id": 297,
+      "slug": "whooping-cough-due-to-bordetella-pertussis-without-pneumonia-a3700",
+      "name": "Whooping cough",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 730,
+      "slug": "yatapoxvirus-infection-unspecified-b0870",
+      "name": "Yatapoxvirus infection",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 640,
+      "slug": "yellow-fever-unspecified-a959",
+      "name": "Yellow fever",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 684,
+      "slug": "zoster-conjunctivitis-b0231",
+      "name": "Zoster conjunctivitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 686,
+      "slug": "zoster-keratitis-b0233",
+      "name": "Zoster keratitis",
+      "specialist": "Infectious Disease"
+    },
+    {
+      "id": 677,
+      "slug": "zoster-meningitis-b021",
+      "name": "Zoster meningitis",
+      "specialist": "Infectious Disease"
+    }
+  ]
+}

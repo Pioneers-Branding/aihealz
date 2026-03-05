@@ -1,0 +1,204 @@
+{
+  "version": "WHO Safe Surgery Checklist - Second Edition",
+  "reference": "World Health Organization, 2009",
+  "phases": [
+    {
+      "id": "sign_in",
+      "name": "Sign In",
+      "timing": "Before induction of anesthesia",
+      "color": "amber",
+      "personnel": ["Nurse", "Anesthesiologist"],
+      "items": [
+        {
+          "id": "identity_confirmed",
+          "text": "Patient has confirmed identity, site, procedure, and consent",
+          "critical": true,
+          "details": "Verify patient name, date of birth, procedure, and surgical site. Ensure signed consent is present."
+        },
+        {
+          "id": "site_marked",
+          "text": "Site marked / not applicable",
+          "critical": true,
+          "details": "Surgical site must be marked by surgeon. Mark 'N/A' for midline procedures or when site is obvious."
+        },
+        {
+          "id": "anesthesia_check",
+          "text": "Anesthesia safety check completed",
+          "critical": true,
+          "details": "Anesthesia machine and medication check completed. Suction, monitors, and airway equipment ready."
+        },
+        {
+          "id": "pulse_oximeter",
+          "text": "Pulse oximeter on patient and functioning",
+          "critical": true,
+          "details": "SpO2 monitor attached with audible alarm enabled."
+        },
+        {
+          "id": "allergies",
+          "text": "Known allergies?",
+          "type": "question",
+          "options": ["Yes (specify)", "No known allergies"],
+          "critical": true,
+          "details": "Confirm all allergies are documented and communicated to the team."
+        },
+        {
+          "id": "airway_risk",
+          "text": "Difficult airway / aspiration risk?",
+          "type": "question",
+          "options": ["No", "Yes, equipment and assistance available"],
+          "critical": true,
+          "details": "If difficult airway anticipated, confirm equipment (video laryngoscope, surgical airway kit) and backup help available."
+        },
+        {
+          "id": "blood_loss",
+          "text": "Risk of >500ml blood loss (7ml/kg in children)?",
+          "type": "question",
+          "options": ["No", "Yes, adequate IV access and fluids planned"],
+          "critical": true,
+          "details": "If significant blood loss anticipated, confirm large-bore IV access, blood typed and available."
+        }
+      ]
+    },
+    {
+      "id": "time_out",
+      "name": "Time Out",
+      "timing": "Before skin incision",
+      "color": "red",
+      "personnel": ["Nurse", "Anesthesiologist", "Surgeon", "All Team Members"],
+      "items": [
+        {
+          "id": "team_intro",
+          "text": "All team members have introduced themselves by name and role",
+          "critical": true,
+          "details": "Each person states name and role. Critical for team communication and psychological safety."
+        },
+        {
+          "id": "confirm_patient",
+          "text": "Confirm patient name, procedure, and incision site",
+          "critical": true,
+          "details": "Surgeon, anesthesia, and nursing verbally confirm. Surgery does not proceed until unanimous agreement."
+        },
+        {
+          "id": "antibiotic_prophylaxis",
+          "text": "Has antibiotic prophylaxis been given within the last 60 minutes?",
+          "type": "question",
+          "options": ["Yes", "Not applicable"],
+          "critical": true,
+          "details": "Antibiotics must be given within 60 min of incision. Document time given."
+        },
+        {
+          "id": "critical_events_surgeon",
+          "text": "Anticipated Critical Events - Surgeon",
+          "type": "verbal",
+          "prompts": [
+            "What are the critical or unexpected steps?",
+            "How long will the case take?",
+            "What is the anticipated blood loss?"
+          ],
+          "critical": true
+        },
+        {
+          "id": "critical_events_anesthesia",
+          "text": "Anticipated Critical Events - Anesthesia",
+          "type": "verbal",
+          "prompts": [
+            "Are there any patient-specific concerns?"
+          ],
+          "critical": true
+        },
+        {
+          "id": "critical_events_nursing",
+          "text": "Anticipated Critical Events - Nursing",
+          "type": "verbal",
+          "prompts": [
+            "Has sterility been confirmed (including indicator results)?",
+            "Are there equipment issues or any concerns?"
+          ],
+          "critical": true
+        },
+        {
+          "id": "imaging",
+          "text": "Essential imaging displayed?",
+          "type": "question",
+          "options": ["Yes", "Not applicable"],
+          "critical": false,
+          "details": "Relevant imaging (X-ray, CT, MRI) displayed and visible to surgical team."
+        }
+      ]
+    },
+    {
+      "id": "sign_out",
+      "name": "Sign Out",
+      "timing": "Before patient leaves operating room",
+      "color": "green",
+      "personnel": ["Nurse", "Anesthesiologist", "Surgeon"],
+      "items": [
+        {
+          "id": "procedure_recorded",
+          "text": "Nurse verbally confirms: Name of procedure recorded",
+          "critical": true,
+          "details": "Confirm the procedure performed matches documentation."
+        },
+        {
+          "id": "instrument_count",
+          "text": "Instrument, sponge, and needle counts are correct (or not applicable)",
+          "critical": true,
+          "details": "Counts must be verified and documented before closure. If discrepancy, X-ray before leaving OR."
+        },
+        {
+          "id": "specimen_labeling",
+          "text": "Specimen labeling (read aloud, including patient name)",
+          "critical": true,
+          "details": "All specimens labeled with patient name, site, and specimen type. Confirm verbally."
+        },
+        {
+          "id": "equipment_problems",
+          "text": "Are there any equipment problems to be addressed?",
+          "type": "question",
+          "options": ["No", "Yes (specify)"],
+          "critical": false,
+          "details": "Document any equipment issues for follow-up and quality improvement."
+        },
+        {
+          "id": "key_concerns",
+          "text": "Surgeon, anesthesia, and nurse review key concerns for recovery and management",
+          "type": "verbal",
+          "prompts": [
+            "What are the key concerns for recovery?",
+            "Specific post-op orders or monitoring?",
+            "VTE prophylaxis plan?"
+          ],
+          "critical": true
+        }
+      ]
+    }
+  ],
+  "additional_checks": {
+    "fire_risk": {
+      "name": "Fire Risk Assessment",
+      "items": [
+        "High FiO2 (>30%) in use?",
+        "Alcohol-based prep used?",
+        "Laser or electrocautery near airway?",
+        "Fire suppression equipment available?"
+      ]
+    },
+    "dvt_prophylaxis": {
+      "name": "DVT Prophylaxis",
+      "items": [
+        "SCDs applied before induction",
+        "Pharmacologic prophylaxis ordered if indicated",
+        "Patient mobilization plan documented"
+      ]
+    },
+    "positioning": {
+      "name": "Patient Positioning",
+      "items": [
+        "Pressure points padded",
+        "Arms secured appropriately",
+        "Eyes protected",
+        "Temperature management plan"
+      ]
+    }
+  }
+}

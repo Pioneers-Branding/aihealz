@@ -1,0 +1,435 @@
+{
+  "surgeries": [
+    {
+      "id": "general",
+      "name": "General Surgery",
+      "icon": "🏥",
+      "description": "Standard preparation applicable to most surgical procedures",
+      "preOp": {
+        "weeks_before": [
+          { "task": "Schedule pre-operative appointment with surgeon", "important": true },
+          { "task": "Get all required blood tests and imaging done", "important": true },
+          { "task": "Inform surgeon of all medications and supplements", "important": true },
+          { "task": "Stop smoking (ideally 4-6 weeks before surgery)", "important": true },
+          { "task": "Arrange transportation home from hospital", "important": false },
+          { "task": "Arrange for help at home during recovery", "important": false },
+          { "task": "Fill prescriptions for post-op medications", "important": false }
+        ],
+        "days_before": [
+          { "task": "Confirm surgery date, time, and location", "important": true },
+          { "task": "Review and sign consent forms", "important": true },
+          { "task": "Stop blood thinners as directed by surgeon", "important": true },
+          { "task": "Stop herbal supplements (may affect bleeding)", "important": true },
+          { "task": "Prepare loose, comfortable clothing for hospital", "important": false },
+          { "task": "Remove nail polish (for oxygen monitoring)", "important": false },
+          { "task": "Pack hospital bag with essentials", "important": false }
+        ],
+        "night_before": [
+          { "task": "Do not eat or drink after midnight (or as directed)", "important": true },
+          { "task": "Take only approved medications with small sip of water", "important": true },
+          { "task": "Shower with antibacterial soap if instructed", "important": false },
+          { "task": "Get a good night's sleep", "important": false },
+          { "task": "Set alarm with extra time for arrival", "important": false }
+        ],
+        "day_of": [
+          { "task": "Arrive at hospital at specified time", "important": true },
+          { "task": "Bring ID, insurance cards, and advance directive", "important": true },
+          { "task": "Remove jewelry, piercings, and contacts", "important": true },
+          { "task": "Wear comfortable, loose-fitting clothes", "important": false },
+          { "task": "Leave valuables at home", "important": false },
+          { "task": "Inform nurse of any last-minute health changes", "important": true }
+        ]
+      },
+      "postOp": {
+        "hospital": [
+          { "task": "Follow nurse instructions for getting out of bed", "important": true },
+          { "task": "Use pain medication as prescribed", "important": true },
+          { "task": "Practice deep breathing exercises", "important": true },
+          { "task": "Start walking as soon as allowed", "important": true },
+          { "task": "Report severe pain, fever, or unusual symptoms", "important": true },
+          { "task": "Understand discharge instructions before leaving", "important": true }
+        ],
+        "first_week": [
+          { "task": "Take all medications as prescribed", "important": true },
+          { "task": "Keep surgical site clean and dry", "important": true },
+          { "task": "Watch for signs of infection (redness, swelling, fever)", "important": true },
+          { "task": "Avoid lifting heavy objects", "important": true },
+          { "task": "Get plenty of rest", "important": false },
+          { "task": "Eat light, nutritious meals", "important": false },
+          { "task": "Stay hydrated", "important": true },
+          { "task": "Avoid driving while on pain medication", "important": true }
+        ],
+        "followup": [
+          { "task": "Attend all follow-up appointments", "important": true },
+          { "task": "Report any complications to surgeon", "important": true },
+          { "task": "Gradually increase activity as approved", "important": false },
+          { "task": "Complete physical therapy if prescribed", "important": false },
+          { "task": "Resume normal diet as tolerated", "important": false }
+        ]
+      },
+      "warning_signs": [
+        "Fever over 101°F (38.3°C)",
+        "Increasing pain not relieved by medication",
+        "Redness, swelling, or drainage from incision",
+        "Difficulty breathing or chest pain",
+        "Blood clots in legs (pain, swelling in calf)",
+        "Inability to urinate or severe constipation"
+      ]
+    },
+    {
+      "id": "cardiac",
+      "name": "Heart Surgery",
+      "icon": "❤️",
+      "description": "Preparation for cardiac procedures including bypass, valve replacement",
+      "preOp": {
+        "weeks_before": [
+          { "task": "Complete cardiac catheterization if ordered", "important": true },
+          { "task": "Get dental clearance (infections can affect heart)", "important": true },
+          { "task": "Stop smoking immediately", "important": true },
+          { "task": "Attend cardiac rehabilitation education", "important": false },
+          { "task": "Discuss blood transfusion preferences", "important": false },
+          { "task": "Prepare advance directive", "important": true },
+          { "task": "Meet with anesthesiologist", "important": true }
+        ],
+        "days_before": [
+          { "task": "Stop aspirin/blood thinners as directed", "important": true },
+          { "task": "Take prescribed heart medications unless told otherwise", "important": true },
+          { "task": "Shower with chlorhexidine soap", "important": true },
+          { "task": "Arrange ICU visitation schedule with family", "important": false },
+          { "task": "Pack CPAP machine if you use one", "important": false }
+        ],
+        "night_before": [
+          { "task": "No food after midnight", "important": true },
+          { "task": "Shower again with antibacterial soap", "important": true },
+          { "task": "Sleep in clean sheets", "important": false },
+          { "task": "Take approved medications with sip of water in morning", "important": true }
+        ],
+        "day_of": [
+          { "task": "Arrive 2-3 hours before scheduled surgery", "important": true },
+          { "task": "Remove dentures and hearing aids before OR", "important": true },
+          { "task": "Family should plan to wait 4-8 hours", "important": false }
+        ]
+      },
+      "postOp": {
+        "hospital": [
+          { "task": "Expect 1-2 days in ICU with monitoring", "important": true },
+          { "task": "Breathing tube will be removed when ready", "important": true },
+          { "task": "Start walking within 1-2 days", "important": true },
+          { "task": "Do coughing and deep breathing exercises", "important": true },
+          { "task": "Hug pillow when coughing to protect sternum", "important": true },
+          { "task": "Monitor fluid intake and output", "important": false }
+        ],
+        "first_week": [
+          { "task": "Take all heart medications as prescribed", "important": true },
+          { "task": "Check incision daily for signs of infection", "important": true },
+          { "task": "Weigh yourself daily (report gain of 2+ lbs)", "important": true },
+          { "task": "No lifting over 5-10 pounds", "important": true },
+          { "task": "No driving for 4-6 weeks", "important": true },
+          { "task": "Sleep on back or side (not stomach)", "important": false },
+          { "task": "Wear compression stockings if prescribed", "important": false }
+        ],
+        "followup": [
+          { "task": "Attend cardiac rehabilitation program", "important": true },
+          { "task": "Follow low-sodium, heart-healthy diet", "important": true },
+          { "task": "Monitor blood pressure regularly", "important": true },
+          { "task": "Report any chest pain or shortness of breath", "important": true },
+          { "task": "Gradually increase walking distance", "important": false }
+        ]
+      },
+      "warning_signs": [
+        "Chest pain or pressure",
+        "Rapid or irregular heartbeat",
+        "Sudden shortness of breath",
+        "Fever over 100.4°F",
+        "Redness, drainage, or opening of incision",
+        "Sudden weight gain (fluid retention)",
+        "Dizziness or fainting"
+      ]
+    },
+    {
+      "id": "orthopedic",
+      "name": "Joint Replacement",
+      "icon": "🦴",
+      "description": "Hip, knee, or shoulder replacement surgery preparation",
+      "preOp": {
+        "weeks_before": [
+          { "task": "Attend joint replacement class", "important": true },
+          { "task": "Start pre-hab exercises to strengthen muscles", "important": true },
+          { "task": "Get dental work done before surgery", "important": true },
+          { "task": "Treat any skin infections completely", "important": true },
+          { "task": "Install grab bars and raised toilet seat at home", "important": true },
+          { "task": "Practice using walker or crutches", "important": false },
+          { "task": "Donate blood if autologous transfusion planned", "important": false }
+        ],
+        "days_before": [
+          { "task": "Stop anti-inflammatory medications", "important": true },
+          { "task": "Stop blood thinners as directed", "important": true },
+          { "task": "Prepare recovery area on main floor", "important": true },
+          { "task": "Stock up on easy-to-prepare foods", "important": false },
+          { "task": "Arrange for pet care if needed", "important": false }
+        ],
+        "night_before": [
+          { "task": "Use antibacterial soap/wipes on surgical leg/arm", "important": true },
+          { "task": "No food after midnight", "important": true },
+          { "task": "Do not shave the surgical area", "important": true }
+        ],
+        "day_of": [
+          { "task": "Wear loose shorts or pants (for hip/knee)", "important": true },
+          { "task": "Bring walker/crutches to hospital", "important": true },
+          { "task": "Bring list of all current medications", "important": true }
+        ]
+      },
+      "postOp": {
+        "hospital": [
+          { "task": "Start physical therapy day of or after surgery", "important": true },
+          { "task": "Use CPM machine if prescribed (knee)", "important": false },
+          { "task": "Keep leg elevated when sitting", "important": true },
+          { "task": "Use blood clot prevention measures", "important": true },
+          { "task": "Practice transfers and walking with PT", "important": true }
+        ],
+        "first_week": [
+          { "task": "Take blood thinner as prescribed", "important": true },
+          { "task": "Keep incision clean and dry", "important": true },
+          { "task": "Do prescribed exercises 3-4 times daily", "important": true },
+          { "task": "Use ice for swelling (20 min on, 20 off)", "important": false },
+          { "task": "No bending hip past 90 degrees (hip replacement)", "important": true },
+          { "task": "Sleep with pillow between legs (hip)", "important": false },
+          { "task": "Wear compression stockings", "important": true }
+        ],
+        "followup": [
+          { "task": "Continue physical therapy program", "important": true },
+          { "task": "X-rays at follow-up appointments", "important": false },
+          { "task": "Report clicking, popping, or instability", "important": true },
+          { "task": "Use assistive devices as instructed", "important": true },
+          { "task": "Inform dentists about joint replacement for antibiotics", "important": true }
+        ]
+      },
+      "warning_signs": [
+        "Increasing pain despite medication",
+        "Calf pain, redness, or swelling (blood clot)",
+        "Fever over 100.4°F",
+        "Drainage from incision",
+        "Sudden increase in swelling",
+        "Numbness or tingling in extremity",
+        "Joint feels unstable or gives way"
+      ]
+    },
+    {
+      "id": "abdominal",
+      "name": "Abdominal Surgery",
+      "icon": "🩻",
+      "description": "Laparoscopic or open abdominal procedures (gallbladder, hernia, etc.)",
+      "preOp": {
+        "weeks_before": [
+          { "task": "Complete bowel prep if required", "important": true },
+          { "task": "Lose weight if recommended by surgeon", "important": false },
+          { "task": "Stop smoking to improve healing", "important": true },
+          { "task": "Control diabetes with optimal blood sugars", "important": true }
+        ],
+        "days_before": [
+          { "task": "Follow special diet if instructed (low residue)", "important": true },
+          { "task": "Take bowel prep solution if ordered", "important": true },
+          { "task": "Stop blood thinners as directed", "important": true },
+          { "task": "Buy loose, comfortable clothing", "important": false }
+        ],
+        "night_before": [
+          { "task": "Complete bowel prep (if prescribed)", "important": true },
+          { "task": "No solid food after midnight", "important": true },
+          { "task": "Clear liquids only until cutoff time", "important": true }
+        ],
+        "day_of": [
+          { "task": "Wear loose pants with elastic waist", "important": true },
+          { "task": "Empty bladder before leaving for hospital", "important": false }
+        ]
+      },
+      "postOp": {
+        "hospital": [
+          { "task": "Walk as soon as cleared by surgeon", "important": true },
+          { "task": "Start with clear liquids, advance diet slowly", "important": true },
+          { "task": "Use incentive spirometer for lung health", "important": true },
+          { "task": "Report nausea or vomiting", "important": true }
+        ],
+        "first_week": [
+          { "task": "Start with soft, bland foods", "important": true },
+          { "task": "Avoid straining during bowel movements", "important": true },
+          { "task": "No heavy lifting (usually 10-15 lb limit)", "important": true },
+          { "task": "Support incision when coughing/laughing", "important": false },
+          { "task": "Take stool softeners to prevent constipation", "important": true },
+          { "task": "Slowly increase fiber in diet", "important": false }
+        ],
+        "followup": [
+          { "task": "Resume normal diet as tolerated", "important": false },
+          { "task": "Gradually return to normal activities", "important": false },
+          { "task": "Avoid core exercises until cleared", "important": true },
+          { "task": "Report persistent nausea or bowel changes", "important": true }
+        ]
+      },
+      "warning_signs": [
+        "Severe abdominal pain or bloating",
+        "No bowel movement for 3+ days",
+        "Vomiting or inability to keep fluids down",
+        "Fever over 101°F",
+        "Incision opening or drainage",
+        "Blood in stool or vomit"
+      ]
+    },
+    {
+      "id": "eye",
+      "name": "Eye Surgery",
+      "icon": "👁️",
+      "description": "Cataract, LASIK, or other ophthalmic procedures",
+      "preOp": {
+        "weeks_before": [
+          { "task": "Stop wearing contact lenses (1-4 weeks for LASIK)", "important": true },
+          { "task": "Get eye measurements and tests done", "important": true },
+          { "task": "Arrange transportation (cannot drive after)", "important": true },
+          { "task": "Fill antibiotic and anti-inflammatory eye drops", "important": true }
+        ],
+        "days_before": [
+          { "task": "Do not wear eye makeup for 1-2 days before", "important": true },
+          { "task": "Wash eyelids with baby shampoo if instructed", "important": false },
+          { "task": "Arrange for someone to stay with you", "important": false }
+        ],
+        "night_before": [
+          { "task": "Get good rest", "important": false },
+          { "task": "Do not eat heavy meal morning of surgery", "important": true },
+          { "task": "Wash face but avoid eye area", "important": false }
+        ],
+        "day_of": [
+          { "task": "Wear comfortable, loose clothing", "important": false },
+          { "task": "Do not wear makeup, lotions, or perfumes", "important": true },
+          { "task": "Bring sunglasses for after procedure", "important": true },
+          { "task": "Take medications as directed", "important": true }
+        ]
+      },
+      "postOp": {
+        "hospital": [
+          { "task": "Rest in recovery until cleared to leave", "important": true },
+          { "task": "Wear eye shield as instructed", "important": true },
+          { "task": "Have someone drive you home", "important": true }
+        ],
+        "first_week": [
+          { "task": "Use eye drops exactly as prescribed", "important": true },
+          { "task": "Wear eye shield while sleeping", "important": true },
+          { "task": "Do not rub or touch the eye", "important": true },
+          { "task": "Avoid getting water in eye (no swimming)", "important": true },
+          { "task": "Wear sunglasses outdoors", "important": true },
+          { "task": "No heavy lifting or straining", "important": true },
+          { "task": "Avoid bending at waist", "important": false },
+          { "task": "Limit screen time if comfortable", "important": false }
+        ],
+        "followup": [
+          { "task": "Attend all follow-up eye exams", "important": true },
+          { "task": "Report vision changes or increased pain", "important": true },
+          { "task": "Complete full course of eye drops", "important": true },
+          { "task": "Wait 1-2 weeks before driving", "important": true }
+        ]
+      },
+      "warning_signs": [
+        "Sudden decrease in vision",
+        "Severe eye pain",
+        "Increased redness or discharge",
+        "Flashes of light or new floaters",
+        "Bleeding in the eye",
+        "Nausea or vomiting"
+      ]
+    },
+    {
+      "id": "bariatric",
+      "name": "Weight Loss Surgery",
+      "icon": "⚖️",
+      "description": "Gastric bypass, sleeve gastrectomy, or lap band surgery",
+      "preOp": {
+        "weeks_before": [
+          { "task": "Complete required pre-op diet (liquid diet)", "important": true },
+          { "task": "Attend nutrition counseling sessions", "important": true },
+          { "task": "Complete psychological evaluation", "important": true },
+          { "task": "Stop smoking at least 6 weeks before", "important": true },
+          { "task": "Begin vitamin and protein supplement regimen", "important": true },
+          { "task": "Practice eating slowly and chewing thoroughly", "important": false },
+          { "task": "Start exercise program approved by surgeon", "important": false }
+        ],
+        "days_before": [
+          { "task": "Continue liquid diet strictly", "important": true },
+          { "task": "Stop blood thinners as directed", "important": true },
+          { "task": "Stay hydrated", "important": true },
+          { "task": "Prepare post-op liquid foods at home", "important": true }
+        ],
+        "night_before": [
+          { "task": "Nothing by mouth after midnight", "important": true },
+          { "task": "Shower with antibacterial soap", "important": true }
+        ],
+        "day_of": [
+          { "task": "Bring CPAP if you have sleep apnea", "important": true },
+          { "task": "Wear loose, comfortable clothing", "important": true }
+        ]
+      },
+      "postOp": {
+        "hospital": [
+          { "task": "Walk frequently to prevent blood clots", "important": true },
+          { "task": "Use incentive spirometer regularly", "important": true },
+          { "task": "Sip small amounts of clear liquids", "important": true },
+          { "task": "Report any nausea or pain immediately", "important": true }
+        ],
+        "first_week": [
+          { "task": "Follow liquid diet strictly", "important": true },
+          { "task": "Take small sips (1-2 oz at a time)", "important": true },
+          { "task": "Take all vitamins and supplements", "important": true },
+          { "task": "Walk daily, increasing duration", "important": true },
+          { "task": "Do not use straws (causes gas)", "important": true },
+          { "task": "Sleep elevated if needed", "important": false }
+        ],
+        "followup": [
+          { "task": "Progress diet phases as directed", "important": true },
+          { "task": "Attend all support group meetings", "important": true },
+          { "task": "Get regular blood work for vitamin levels", "important": true },
+          { "task": "Exercise 30+ minutes daily", "important": true },
+          { "task": "Track food intake and protein goals", "important": true },
+          { "task": "Lifelong vitamin supplementation required", "important": true }
+        ]
+      },
+      "warning_signs": [
+        "Severe abdominal pain",
+        "Persistent vomiting or inability to keep liquids down",
+        "Fever over 101°F",
+        "Rapid heartbeat",
+        "Shortness of breath",
+        "Shoulder pain (can indicate leak)",
+        "Dark or bloody stools"
+      ]
+    }
+  ],
+  "packing_list": {
+    "essentials": [
+      "Photo ID and insurance cards",
+      "List of current medications",
+      "Advance directive/living will",
+      "Emergency contact information",
+      "Comfortable, loose clothing",
+      "Non-slip socks or slippers"
+    ],
+    "comfort": [
+      "Phone and charger",
+      "Reading materials or tablet",
+      "Headphones",
+      "Lip balm",
+      "Hair ties",
+      "Glasses (no contacts)"
+    ],
+    "leave_home": [
+      "Jewelry and watches",
+      "Valuables",
+      "Large amounts of cash",
+      "Makeup",
+      "Perfume or cologne"
+    ]
+  },
+  "general_tips": [
+    "Always follow your surgeon's specific instructions over general guidelines",
+    "Ask questions if you don't understand something",
+    "Have a family member or friend present for discharge instructions",
+    "Keep all post-op appointment cards in one place",
+    "Write down any questions before appointments",
+    "Take photos of your incision to track healing"
+  ]
+}

@@ -1,0 +1,216 @@
+/**
+ * Cardiology Specialty Template
+ *
+ * Template patterns for cardiovascular conditions including heart disease,
+ * arrhythmias, vascular conditions, and cardiac procedures.
+ */
+
+import type { SpecialtyTemplate, RiskFactor, DiagnosticTest } from './base-template';
+
+export const cardiologyTemplate: SpecialtyTemplate = {
+  specialty: 'Cardiology',
+  specialistTitle: 'Cardiologist',
+  specialistTitlePlural: 'Cardiologists',
+  bodySystem: 'Heart & Cardiovascular System',
+
+  commonSymptomPatterns: [
+    'Chest pain or discomfort (angina)',
+    'Shortness of breath (dyspnea)',
+    'Irregular heartbeat or palpitations',
+    'Fatigue or weakness',
+    'Swelling in legs, ankles, or feet (edema)',
+    'Dizziness or lightheadedness',
+    'Rapid or slow heartbeat',
+    'Pain radiating to arm, jaw, neck, or back',
+    'Cold sweats or clammy skin',
+    'Nausea or indigestion',
+    'Fainting or near-fainting (syncope)',
+    'Difficulty lying flat (orthopnea)',
+    'Persistent cough or wheezing',
+    'Bluish skin color (cyanosis)',
+    'Reduced exercise tolerance',
+  ],
+
+  commonTreatmentTypes: [
+    {
+      type: 'medication',
+      examples: [
+        'Beta-blockers (Metoprolol, Atenolol)',
+        'ACE inhibitors (Lisinopril, Enalapril)',
+        'ARBs (Losartan, Valsartan)',
+        'Statins (Atorvastatin, Rosuvastatin)',
+        'Blood thinners (Warfarin, Apixaban)',
+        'Diuretics (Furosemide, Hydrochlorothiazide)',
+        'Calcium channel blockers (Amlodipine)',
+        'Antiplatelet drugs (Aspirin, Clopidogrel)',
+        'Nitrates (Nitroglycerin)',
+        'Antiarrhythmics (Amiodarone)',
+      ],
+    },
+    {
+      type: 'procedure',
+      examples: [
+        'Angioplasty (PTCA)',
+        'Stent placement',
+        'Cardiac catheterization',
+        'Cardioversion',
+        'Ablation therapy',
+        'Pacemaker implantation',
+        'ICD implantation',
+        'Balloon valvuloplasty',
+        'TAVR (Transcatheter Aortic Valve Replacement)',
+      ],
+    },
+    {
+      type: 'surgery',
+      examples: [
+        'Coronary artery bypass grafting (CABG)',
+        'Heart valve repair/replacement',
+        'Heart transplant',
+        'LVAD implantation',
+        'Aneurysm repair',
+        'Maze procedure',
+        'Myectomy',
+      ],
+    },
+    {
+      type: 'lifestyle',
+      examples: [
+        'Heart-healthy diet (DASH, Mediterranean)',
+        'Cardiac rehabilitation program',
+        'Smoking cessation',
+        'Regular aerobic exercise',
+        'Stress management',
+        'Weight management',
+        'Blood pressure monitoring',
+        'Cholesterol management',
+      ],
+    },
+  ],
+
+  commonRiskFactors: [
+    { factor: 'High blood pressure (Hypertension)', category: 'medical', description: 'Persistently elevated blood pressure damages arteries and strains the heart', modifiable: true },
+    { factor: 'High cholesterol (Hyperlipidemia)', category: 'medical', description: 'Elevated LDL cholesterol leads to plaque buildup in arteries', modifiable: true },
+    { factor: 'Diabetes mellitus', category: 'medical', description: 'High blood sugar damages blood vessels and nerves controlling the heart', modifiable: true },
+    { factor: 'Smoking and tobacco use', category: 'lifestyle', description: 'Damages blood vessel walls and reduces oxygen in blood', modifiable: true },
+    { factor: 'Obesity (BMI > 30)', category: 'lifestyle', description: 'Excess weight increases heart workload and metabolic strain', modifiable: true },
+    { factor: 'Family history of heart disease', category: 'genetic', description: 'First-degree relatives with early heart disease increase risk', modifiable: false },
+    { factor: 'Sedentary lifestyle', category: 'lifestyle', description: 'Physical inactivity weakens heart muscle and promotes obesity', modifiable: true },
+    { factor: 'Chronic stress', category: 'lifestyle', description: 'Prolonged stress elevates blood pressure and heart rate', modifiable: true },
+    { factor: 'Excessive alcohol consumption', category: 'lifestyle', description: 'Heavy drinking can lead to cardiomyopathy and arrhythmias', modifiable: true },
+    { factor: 'Age (Men >45, Women >55)', category: 'demographic', description: 'Risk increases with age as arteries stiffen', modifiable: false },
+    { factor: 'Sleep apnea', category: 'medical', description: 'Repeated oxygen drops strain the cardiovascular system', modifiable: true },
+    { factor: 'Chronic kidney disease', category: 'medical', description: 'Kidney dysfunction affects fluid balance and blood pressure', modifiable: true },
+  ],
+
+  commonDiagnosticTests: [
+    { test: 'Electrocardiogram (ECG/EKG)', purpose: 'Measure heart electrical activity and detect rhythm abnormalities', whatToExpect: 'Painless test with electrodes placed on chest, arms, and legs. Takes 5-10 minutes.' },
+    { test: 'Echocardiogram', purpose: 'Ultrasound imaging of heart structure and function', whatToExpect: 'Probe placed on chest creates images using sound waves. Takes 30-60 minutes.' },
+    { test: 'Stress test (TMT)', purpose: 'Evaluate heart function during exercise', whatToExpect: 'Walk/run on treadmill while heart is monitored. Takes 15-30 minutes of exercise.' },
+    { test: 'Cardiac catheterization / Angiography', purpose: 'Visualize coronary arteries and measure pressures', whatToExpect: 'Catheter inserted through arm or groin. Requires local anesthesia. Takes 30-60 minutes.' },
+    { test: 'CT Coronary Angiography', purpose: 'Non-invasive imaging of coronary arteries', whatToExpect: 'Lie in CT scanner with contrast dye injection. Takes 15-30 minutes.' },
+    { test: 'Cardiac MRI', purpose: 'Detailed imaging of heart muscle and blood flow', whatToExpect: 'Lie in MRI machine for 45-60 minutes. May receive contrast injection.' },
+    { test: 'Holter monitor', purpose: 'Record heart rhythm over 24-48 hours', whatToExpect: 'Wear portable ECG device during normal activities for 1-2 days.' },
+    { test: 'Blood tests (Lipid panel, Troponin, BNP)', purpose: 'Check cholesterol, heart damage markers, and heart failure indicators', whatToExpect: 'Simple blood draw from arm vein. Results in few hours to days.' },
+    { test: 'Nuclear stress test', purpose: 'Assess blood flow to heart muscle during rest and stress', whatToExpect: 'Radioactive tracer injected, images taken at rest and after exercise. Takes 3-4 hours.' },
+    { test: 'Electrophysiology (EP) study', purpose: 'Map electrical pathways and identify arrhythmia sources', whatToExpect: 'Catheters inserted to record heart electrical activity. Takes 2-4 hours.' },
+  ],
+
+  faqTemplates: [
+    'What are the warning signs of a heart attack?',
+    'Can heart disease be reversed?',
+    'What is the difference between a heart attack and cardiac arrest?',
+    'How often should I get my heart checked?',
+    'What foods are good for heart health?',
+    'Can stress really cause heart problems?',
+    'Is heart disease hereditary?',
+    'What is the survival rate after a heart attack?',
+    'How long is recovery after heart surgery?',
+    'Can I exercise with heart disease?',
+    'What is the difference between angina and a heart attack?',
+    'Are palpitations dangerous?',
+    'What blood pressure reading is dangerous?',
+    'Can blocked arteries be unblocked without surgery?',
+    'How do I reduce my risk of heart disease?',
+  ],
+
+  linkedTreatmentSlugs: [
+    'angioplasty',
+    'coronary-artery-bypass-surgery',
+    'pacemaker-implantation',
+    'heart-valve-surgery',
+    'cardiac-catheterization',
+    'stent-placement',
+    'cardiac-rehabilitation',
+    'icd-implantation',
+    'heart-transplant',
+    'tavr',
+  ],
+
+  costRanges: {
+    consultation: { min: 500, max: 2500, currency: 'INR' },
+    ecg: { min: 200, max: 600, currency: 'INR' },
+    echocardiogram: { min: 1500, max: 4000, currency: 'INR' },
+    stressTest: { min: 2000, max: 5000, currency: 'INR' },
+    angiography: { min: 15000, max: 40000, currency: 'INR' },
+    angioplasty: { min: 150000, max: 400000, currency: 'INR' },
+    bypassSurgery: { min: 250000, max: 700000, currency: 'INR' },
+    pacemaker: { min: 150000, max: 500000, currency: 'INR' },
+    valveSurgery: { min: 300000, max: 800000, currency: 'INR' },
+  },
+
+  emergencyIndicators: [
+    'Severe chest pain lasting more than 15 minutes',
+    'Chest pain with shortness of breath and sweating',
+    'Sudden loss of consciousness',
+    'Severe difficulty breathing at rest',
+    'Extremely rapid or irregular heartbeat with dizziness',
+    'Sudden severe leg pain with coldness (arterial blockage)',
+    'Chest pain radiating to jaw, arm, or back',
+    'Bluish lips or fingertips',
+    'Confusion with heart symptoms',
+    'Coughing up pink, frothy mucus',
+  ],
+
+  lifestyleRecommendations: [
+    'Engage in 150 minutes of moderate aerobic activity weekly',
+    'Maintain a healthy weight (BMI 18.5-24.9)',
+    'Quit smoking and avoid secondhand smoke',
+    'Limit alcohol to 1-2 drinks per day maximum',
+    'Practice stress reduction techniques (meditation, yoga)',
+    'Monitor blood pressure regularly at home',
+    'Get 7-9 hours of quality sleep nightly',
+    'Stay socially connected and mentally active',
+    'Take medications as prescribed without skipping doses',
+    'Attend regular cardiac checkups',
+  ],
+
+  dietPatterns: {
+    recommended: [
+      'Fatty fish (salmon, mackerel) 2-3 times weekly',
+      'Fresh fruits and vegetables (5+ servings daily)',
+      'Whole grains (oats, brown rice, quinoa)',
+      'Nuts and seeds (almonds, walnuts, flaxseeds)',
+      'Olive oil as primary cooking fat',
+      'Legumes and beans',
+      'Low-fat dairy products',
+      'Lean proteins (chicken, turkey)',
+      'Green leafy vegetables',
+      'Berries rich in antioxidants',
+    ],
+    avoid: [
+      'Trans fats and hydrogenated oils',
+      'Excessive sodium (limit to 2000mg daily)',
+      'Processed and red meats',
+      'Sugary beverages and sweets',
+      'Full-fat dairy products',
+      'Fried and fast foods',
+      'Refined carbohydrates',
+      'Excessive caffeine',
+      'High-cholesterol organ meats',
+      'Packaged snacks with added salt',
+    ],
+  },
+};
+
+export default cardiologyTemplate;

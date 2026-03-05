@@ -1,0 +1,274 @@
+{
+  "countries": {
+    "usa": {
+      "name": "United States",
+      "flag": "🇺🇸",
+      "universal_emergency": "911",
+      "services": [
+        { "name": "Emergency (Police, Fire, Medical)", "number": "911", "type": "all" },
+        { "name": "Poison Control", "number": "1-800-222-1222", "type": "poison" },
+        { "name": "National Suicide Prevention Lifeline", "number": "988", "type": "mental_health" },
+        { "name": "Crisis Text Line", "number": "Text HOME to 741741", "type": "mental_health" },
+        { "name": "Domestic Violence Hotline", "number": "1-800-799-7233", "type": "crisis" },
+        { "name": "Child Abuse Hotline", "number": "1-800-422-4453", "type": "crisis" },
+        { "name": "Veterans Crisis Line", "number": "988 (Press 1)", "type": "mental_health" },
+        { "name": "SAMHSA Helpline (Substance Abuse)", "number": "1-800-662-4357", "type": "mental_health" }
+      ],
+      "tips": [
+        "Stay calm and speak clearly when calling 911",
+        "Know your exact location - 911 may not automatically detect it",
+        "Don't hang up until the dispatcher tells you to",
+        "If calling from a cell phone, be prepared to give address"
+      ]
+    },
+    "uk": {
+      "name": "United Kingdom",
+      "flag": "🇬🇧",
+      "universal_emergency": "999",
+      "services": [
+        { "name": "Emergency (Police, Fire, Ambulance)", "number": "999", "type": "all" },
+        { "name": "Non-Emergency Police", "number": "101", "type": "police" },
+        { "name": "NHS Non-Emergency", "number": "111", "type": "medical" },
+        { "name": "Samaritans (24/7 Mental Health)", "number": "116 123", "type": "mental_health" },
+        { "name": "Childline", "number": "0800 1111", "type": "crisis" },
+        { "name": "National Domestic Violence Helpline", "number": "0808 2000 247", "type": "crisis" },
+        { "name": "FRANK Drug Helpline", "number": "0300 123 6600", "type": "substance" }
+      ],
+      "tips": [
+        "999 is for life-threatening emergencies only",
+        "Call 111 for urgent but non-life-threatening medical issues",
+        "European emergency number 112 also works in UK",
+        "Text emergency services by texting 999 if registered with emergencySMS"
+      ]
+    },
+    "india": {
+      "name": "India",
+      "flag": "🇮🇳",
+      "universal_emergency": "112",
+      "services": [
+        { "name": "National Emergency Number", "number": "112", "type": "all" },
+        { "name": "Police", "number": "100", "type": "police" },
+        { "name": "Fire", "number": "101", "type": "fire" },
+        { "name": "Ambulance", "number": "102 / 108", "type": "medical" },
+        { "name": "Women Helpline", "number": "181", "type": "crisis" },
+        { "name": "Child Helpline", "number": "1098", "type": "crisis" },
+        { "name": "Senior Citizen Helpline", "number": "14567", "type": "crisis" },
+        { "name": "Mental Health Helpline (iCall)", "number": "9152987821", "type": "mental_health" },
+        { "name": "NIMHANS Helpline", "number": "080-46110007", "type": "mental_health" },
+        { "name": "Road Accident Emergency", "number": "1073", "type": "accident" },
+        { "name": "Disaster Management", "number": "1070", "type": "disaster" }
+      ],
+      "tips": [
+        "112 connects to all emergency services from any phone",
+        "108 is free ambulance service in most states",
+        "Dial 100 from mobile even without balance",
+        "Keep local hospital numbers saved in your phone"
+      ]
+    },
+    "thailand": {
+      "name": "Thailand",
+      "flag": "🇹🇭",
+      "universal_emergency": "191",
+      "services": [
+        { "name": "Police Emergency", "number": "191", "type": "police" },
+        { "name": "Medical Emergency/Ambulance", "number": "1669", "type": "medical" },
+        { "name": "Fire", "number": "199", "type": "fire" },
+        { "name": "Tourist Police", "number": "1155", "type": "police" },
+        { "name": "Highway Police", "number": "1193", "type": "police" },
+        { "name": "Samaritans Thailand", "number": "02-713-6793", "type": "mental_health" }
+      ],
+      "tips": [
+        "Tourist Police (1155) have English-speaking operators",
+        "1669 connects to the Emergency Medical Institute of Thailand",
+        "Download 'EMS 1669' app for faster ambulance dispatch",
+        "Keep embassy contact numbers if you're a foreign visitor"
+      ]
+    },
+    "mexico": {
+      "name": "Mexico",
+      "flag": "🇲🇽",
+      "universal_emergency": "911",
+      "services": [
+        { "name": "Emergency (Police, Fire, Medical)", "number": "911", "type": "all" },
+        { "name": "Red Cross (Cruz Roja)", "number": "065", "type": "medical" },
+        { "name": "Fire Department", "number": "068", "type": "fire" },
+        { "name": "Federal Police", "number": "088", "type": "police" },
+        { "name": "LOCATEL (Missing Persons/Info)", "number": "56581111", "type": "crisis" },
+        { "name": "Women's Helpline", "number": "800-911-2000", "type": "crisis" },
+        { "name": "SAPTEL Mental Health", "number": "55 5259-8121", "type": "mental_health" }
+      ],
+      "tips": [
+        "911 was implemented nationwide in 2017",
+        "Cruz Roja (Red Cross) ambulances are often fastest",
+        "Tourist areas may have bilingual operators",
+        "Save local hospital and pharmacy numbers"
+      ]
+    },
+    "turkey": {
+      "name": "Turkey",
+      "flag": "🇹🇷",
+      "universal_emergency": "112",
+      "services": [
+        { "name": "Emergency (All Services)", "number": "112", "type": "all" },
+        { "name": "Police", "number": "155", "type": "police" },
+        { "name": "Fire", "number": "110", "type": "fire" },
+        { "name": "Ambulance", "number": "112", "type": "medical" },
+        { "name": "Gendarmerie (Rural Police)", "number": "156", "type": "police" },
+        { "name": "Coast Guard", "number": "158", "type": "rescue" },
+        { "name": "Forest Fire", "number": "177", "type": "fire" },
+        { "name": "Women's Helpline", "number": "183", "type": "crisis" }
+      ],
+      "tips": [
+        "112 is the universal emergency number with English support",
+        "Tourist areas have multilingual operators",
+        "European emergency number 112 works throughout Turkey",
+        "Major hospitals have 24/7 emergency departments"
+      ]
+    },
+    "uae": {
+      "name": "United Arab Emirates",
+      "flag": "🇦🇪",
+      "universal_emergency": "999",
+      "services": [
+        { "name": "Police Emergency", "number": "999", "type": "police" },
+        { "name": "Ambulance", "number": "998", "type": "medical" },
+        { "name": "Fire/Civil Defense", "number": "997", "type": "fire" },
+        { "name": "Coast Guard", "number": "996", "type": "rescue" },
+        { "name": "Electricity Emergency", "number": "991", "type": "utility" },
+        { "name": "Water Emergency", "number": "992", "type": "utility" },
+        { "name": "Dubai Health Authority", "number": "800342", "type": "medical" },
+        { "name": "Mental Health Support (Dubai)", "number": "800-HOPE (4673)", "type": "mental_health" },
+        { "name": "Child Protection", "number": "800988", "type": "crisis" }
+      ],
+      "tips": [
+        "All emergency numbers are toll-free",
+        "Dubai Police app allows reporting emergencies",
+        "Abu Dhabi uses same numbers as Dubai",
+        "English is widely spoken by operators"
+      ]
+    }
+  },
+  "emergency_types": [
+    {
+      "type": "cardiac",
+      "name": "Heart Attack / Cardiac Emergency",
+      "icon": "❤️",
+      "symptoms": ["Chest pain or pressure", "Pain radiating to arm, neck, or jaw", "Shortness of breath", "Cold sweats", "Nausea"],
+      "actions": ["Call emergency services immediately", "Have patient sit or lie down", "Loosen tight clothing", "If trained, perform CPR if needed", "Use AED if available"],
+      "warning": "Time is critical - call for help within first minutes"
+    },
+    {
+      "type": "stroke",
+      "name": "Stroke",
+      "icon": "🧠",
+      "symptoms": ["Sudden numbness or weakness (face, arm, leg)", "Confusion or trouble speaking", "Vision problems", "Severe headache", "Loss of balance"],
+      "actions": ["Call emergency services immediately", "Note the time symptoms started", "Keep patient still and calm", "Do not give food or water", "Perform FAST test"],
+      "warning": "Act F.A.S.T: Face drooping, Arm weakness, Speech difficulty, Time to call emergency"
+    },
+    {
+      "type": "breathing",
+      "name": "Breathing Emergency / Choking",
+      "icon": "💨",
+      "symptoms": ["Inability to breathe or speak", "Clutching throat", "Blue lips or face", "Wheezing or gasping", "Loss of consciousness"],
+      "actions": ["For choking: perform Heimlich maneuver", "Call emergency services", "If unconscious, begin CPR", "Check for obstructions", "For asthma: help with inhaler"],
+      "warning": "Brain damage can occur within 4 minutes without oxygen"
+    },
+    {
+      "type": "trauma",
+      "name": "Severe Injury / Trauma",
+      "icon": "🩹",
+      "symptoms": ["Heavy bleeding", "Broken bones", "Deep wounds", "Head injury", "Burns"],
+      "actions": ["Call emergency services", "Apply pressure to stop bleeding", "Don't move if spinal injury suspected", "Keep patient warm", "Monitor breathing"],
+      "warning": "Do not remove objects embedded in wounds"
+    },
+    {
+      "type": "allergic",
+      "name": "Severe Allergic Reaction (Anaphylaxis)",
+      "icon": "⚠️",
+      "symptoms": ["Difficulty breathing", "Swelling of face/throat", "Hives or rash", "Rapid heartbeat", "Dizziness or fainting"],
+      "actions": ["Call emergency services immediately", "Use epinephrine auto-injector if available", "Lay patient flat (unless breathing difficulty)", "Loosen tight clothing", "Be prepared to perform CPR"],
+      "warning": "Anaphylaxis can be fatal within minutes without treatment"
+    },
+    {
+      "type": "poisoning",
+      "name": "Poisoning / Overdose",
+      "icon": "☠️",
+      "symptoms": ["Nausea or vomiting", "Confusion", "Difficulty breathing", "Burns around mouth", "Unusual odor on breath"],
+      "actions": ["Call Poison Control or emergency services", "Do NOT induce vomiting unless directed", "Identify the substance if possible", "Keep patient conscious", "Bring poison container to hospital"],
+      "warning": "Never give anything by mouth to an unconscious person"
+    },
+    {
+      "type": "diabetic",
+      "name": "Diabetic Emergency",
+      "icon": "💉",
+      "symptoms": ["Confusion or unusual behavior", "Sweating", "Shakiness", "Extreme thirst", "Fruity breath odor"],
+      "actions": ["If conscious, give sugar (juice, candy)", "Call emergency if no improvement", "Do not give insulin unless directed", "Lay unconscious patient on side", "Check for medical ID bracelet"],
+      "warning": "Low blood sugar (hypoglycemia) requires fast-acting sugar immediately"
+    },
+    {
+      "type": "seizure",
+      "name": "Seizure",
+      "icon": "⚡",
+      "symptoms": ["Uncontrolled shaking", "Loss of consciousness", "Staring", "Confusion after", "Loss of bladder control"],
+      "actions": ["Clear area of dangerous objects", "Do NOT restrain the person", "Do NOT put anything in mouth", "Time the seizure", "Place on side after seizure ends"],
+      "warning": "Call emergency if seizure lasts over 5 minutes or person doesn't wake up"
+    },
+    {
+      "type": "mental_health",
+      "name": "Mental Health Crisis",
+      "icon": "🧠",
+      "symptoms": ["Suicidal thoughts or attempts", "Self-harm", "Severe anxiety or panic", "Psychotic episode", "Extreme distress"],
+      "actions": ["Stay calm and listen", "Remove access to harmful items", "Call mental health crisis line", "Don't leave person alone", "Call emergency if immediate danger"],
+      "warning": "Take all threats of self-harm seriously"
+    }
+  ],
+  "first_aid_kits": {
+    "basic": {
+      "name": "Basic First Aid Kit",
+      "items": [
+        "Adhesive bandages (various sizes)",
+        "Sterile gauze pads",
+        "Adhesive tape",
+        "Elastic bandage",
+        "Antiseptic wipes",
+        "Antibiotic ointment",
+        "Scissors",
+        "Tweezers",
+        "Disposable gloves",
+        "Instant cold pack",
+        "First aid manual"
+      ]
+    },
+    "travel": {
+      "name": "Travel First Aid Kit",
+      "items": [
+        "All basic kit items",
+        "Pain relievers (ibuprofen, acetaminophen)",
+        "Anti-diarrhea medication",
+        "Antihistamines",
+        "Motion sickness tablets",
+        "Oral rehydration salts",
+        "Sunscreen",
+        "Insect repellent",
+        "Blister pads",
+        "Prescription medications",
+        "Medical documents/insurance cards"
+      ]
+    },
+    "car": {
+      "name": "Car Emergency Kit",
+      "items": [
+        "First aid kit",
+        "Reflective triangles/flares",
+        "Flashlight with batteries",
+        "Jumper cables",
+        "Basic tools",
+        "Blanket",
+        "Water bottles",
+        "Non-perishable snacks",
+        "Phone charger",
+        "Rain poncho"
+      ]
+    }
+  }
+}

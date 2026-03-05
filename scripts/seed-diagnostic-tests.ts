@@ -1,0 +1,1207 @@
+/**
+ * Comprehensive Diagnostic Tests Seed
+ * 
+ * Includes:
+ * - Blood tests (CBC, metabolic panels, lipids, liver, kidney, thyroid, vitamins, hormones)
+ * - Urine tests
+ * - Imaging (X-ray, CT, MRI, Ultrasound, PET)
+ * - Cardiac tests (ECG, Echo, stress tests)
+ * - Genetic tests
+ * - Region-specific tests
+ * - Health packages
+ */
+
+import prisma from '../src/lib/db';
+
+// Color coding for test types
+export const TEST_TYPE_COLORS: Record<string, { bg: string; border: string; text: string; icon: string }> = {
+    lab_test: { bg: 'bg-blue-500/10', border: 'border-blue-500/20', text: 'text-blue-400', icon: '🧪' },
+    imaging: { bg: 'bg-purple-500/10', border: 'border-purple-500/20', text: 'text-purple-400', icon: '📷' },
+    pathology: { bg: 'bg-rose-500/10', border: 'border-rose-500/20', text: 'text-rose-400', icon: '🔬' },
+    genetic: { bg: 'bg-amber-500/10', border: 'border-amber-500/20', text: 'text-amber-400', icon: '🧬' },
+    cardiac: { bg: 'bg-red-500/10', border: 'border-red-500/20', text: 'text-red-400', icon: '❤️' },
+    pulmonary: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/20', text: 'text-cyan-400', icon: '🫁' },
+    endoscopy: { bg: 'bg-orange-500/10', border: 'border-orange-500/20', text: 'text-orange-400', icon: '🔎' },
+    other: { bg: 'bg-slate-500/10', border: 'border-slate-500/20', text: 'text-slate-400', icon: '📋' },
+};
+
+// Categories
+const CATEGORIES = [
+    { slug: 'blood-tests', name: 'Blood Tests', icon: '🩸', description: 'Complete range of blood testing including CBC, metabolic panels, and specialized markers' },
+    { slug: 'diabetes-tests', name: 'Diabetes & Sugar Tests', icon: '🍬', description: 'Blood sugar, HbA1c, insulin, and glucose tolerance tests', parentSlug: 'blood-tests' },
+    { slug: 'thyroid-tests', name: 'Thyroid Function Tests', icon: '🦋', description: 'TSH, T3, T4, and thyroid antibody tests', parentSlug: 'blood-tests' },
+    { slug: 'lipid-tests', name: 'Lipid Profile & Cholesterol', icon: '💧', description: 'Complete cholesterol, triglycerides, and cardiovascular risk markers', parentSlug: 'blood-tests' },
+    { slug: 'liver-tests', name: 'Liver Function Tests', icon: '🫀', description: 'LFT, liver enzymes, bilirubin, and hepatitis markers', parentSlug: 'blood-tests' },
+    { slug: 'kidney-tests', name: 'Kidney Function Tests', icon: '🫘', description: 'KFT, creatinine, urea, eGFR, and electrolytes', parentSlug: 'blood-tests' },
+    { slug: 'vitamin-tests', name: 'Vitamin & Mineral Tests', icon: '💊', description: 'Vitamin D, B12, iron, calcium, and other micronutrients', parentSlug: 'blood-tests' },
+    { slug: 'hormone-tests', name: 'Hormone Tests', icon: '⚗️', description: 'Sex hormones, cortisol, prolactin, and endocrine panels', parentSlug: 'blood-tests' },
+    { slug: 'infection-tests', name: 'Infection & Immunity Tests', icon: '🦠', description: 'HIV, hepatitis, dengue, malaria, and antibody tests', parentSlug: 'blood-tests' },
+    { slug: 'cancer-markers', name: 'Cancer Markers (Tumor Markers)', icon: '🎯', description: 'PSA, CEA, CA-125, AFP, and other cancer screening markers', parentSlug: 'blood-tests' },
+    { slug: 'allergy-tests', name: 'Allergy & Immunology Tests', icon: '🤧', description: 'IgE, food allergy panels, and autoimmune markers', parentSlug: 'blood-tests' },
+    { slug: 'urine-tests', name: 'Urine Tests', icon: '🧫', description: 'Urinalysis, urine culture, and kidney stone analysis' },
+    { slug: 'stool-tests', name: 'Stool Tests', icon: '💩', description: 'Stool routine, occult blood, and parasitology tests' },
+    { slug: 'imaging', name: 'Imaging & Radiology', icon: '📷', description: 'X-ray, CT scan, MRI, ultrasound, and other imaging' },
+    { slug: 'xray', name: 'X-Ray', icon: '☢️', description: 'Digital X-ray imaging for bones, chest, and abdomen', parentSlug: 'imaging' },
+    { slug: 'ct-scan', name: 'CT Scan', icon: '🔄', description: 'Computed tomography for detailed cross-sectional imaging', parentSlug: 'imaging' },
+    { slug: 'mri', name: 'MRI Scan', icon: '🧲', description: 'Magnetic resonance imaging for soft tissue detail', parentSlug: 'imaging' },
+    { slug: 'ultrasound', name: 'Ultrasound & Sonography', icon: '📡', description: 'Non-invasive imaging using sound waves', parentSlug: 'imaging' },
+    { slug: 'pet-scan', name: 'PET & Nuclear Medicine', icon: '☢️', description: 'Positron emission tomography and nuclear imaging', parentSlug: 'imaging' },
+    { slug: 'cardiac-tests', name: 'Cardiac Tests', icon: '❤️', description: 'ECG, echocardiogram, stress tests, and cardiac imaging' },
+    { slug: 'pulmonary-tests', name: 'Pulmonary Function Tests', icon: '🫁', description: 'Spirometry, lung capacity, and breathing tests' },
+    { slug: 'genetic-tests', name: 'Genetic & DNA Tests', icon: '🧬', description: 'Genetic screening, carrier testing, and ancestry' },
+    { slug: 'prenatal-tests', name: 'Prenatal & Fertility Tests', icon: '🤰', description: 'Pregnancy tests, hormone panels, and genetic screening' },
+    { slug: 'pathology', name: 'Pathology & Biopsy', icon: '🔬', description: 'Tissue examination, FNAC, and histopathology' },
+    { slug: 'health-packages', name: 'Health Check Packages', icon: '📦', description: 'Comprehensive health screening packages' },
+];
+
+interface TestSeed {
+    slug: string;
+    name: string;
+    shortName?: string;
+    aliases?: string[];
+    categorySlug: string;
+    testType: 'lab_test' | 'imaging' | 'pathology' | 'genetic' | 'cardiac' | 'pulmonary' | 'endoscopy' | 'other';
+    description: string;
+    sampleType?: string;
+    fastingRequired: boolean;
+    fastingHours?: number;
+    preparationInstructions?: string;
+    reportTimeHours: number;
+    normalRanges?: Record<string, string>;
+    relatedConditions?: string[];
+    keywords?: string[];
+    bodySystem?: string;
+    specialistType?: string;
+    homeCollectionPossible: boolean;
+    avgPriceInr: number;
+    // Region-specific availability
+    availableRegions?: string[]; // 'all' or specific country codes
+    // Detailed content fields
+    overview?: string;
+    whyTest?: string;
+    procedure?: string;
+    risks?: string;
+    interpretation?: string;
+}
+
+// Comprehensive test list
+const TESTS: TestSeed[] = [
+    // ===================== BLOOD TESTS - GENERAL =====================
+    {
+        slug: 'complete-blood-count',
+        name: 'Complete Blood Count',
+        shortName: 'CBC',
+        aliases: ['Full Blood Count', 'FBC', 'Hemogram', 'Blood CP'],
+        categorySlug: 'blood-tests',
+        testType: 'lab_test',
+        description: 'A complete blood count (CBC) is one of the most common blood tests. It measures several components and features of your blood including red blood cells, white blood cells, hemoglobin, hematocrit, and platelets.',
+        sampleType: 'Blood (EDTA)',
+        fastingRequired: false,
+        reportTimeHours: 4,
+        normalRanges: {
+            'Hemoglobin (Male)': '13.5-17.5 g/dL',
+            'Hemoglobin (Female)': '12.0-16.0 g/dL',
+            'RBC Count (Male)': '4.5-5.5 million/μL',
+            'RBC Count (Female)': '4.0-5.0 million/μL',
+            'WBC Count': '4,000-11,000 /μL',
+            'Platelet Count': '150,000-400,000 /μL',
+            'Hematocrit (Male)': '38-50%',
+            'Hematocrit (Female)': '36-44%',
+            'MCV': '80-100 fL',
+            'MCH': '27-33 pg',
+            'MCHC': '32-36 g/dL',
+        },
+        relatedConditions: ['anemia', 'infection', 'leukemia', 'bleeding-disorders'],
+        keywords: ['cbc', 'blood test', 'hemoglobin', 'wbc', 'rbc', 'platelet', 'anemia test'],
+        bodySystem: 'Hematological',
+        specialistType: 'Hematology',
+        homeCollectionPossible: true,
+        avgPriceInr: 350,
+        overview: 'The Complete Blood Count (CBC) is one of the most frequently ordered blood tests. It provides important information about the kinds and numbers of cells in the blood, especially red blood cells, white blood cells, and platelets.',
+        whyTest: 'Your doctor may order a CBC as part of a routine checkup, to monitor overall health, to diagnose conditions like anemia, infection, or leukemia, or to monitor existing conditions and treatment effectiveness.',
+        procedure: 'A healthcare professional will draw blood from a vein in your arm using a small needle. The blood sample is collected in a tube and sent to the laboratory for analysis.',
+        risks: 'There are very few risks associated with a blood draw. You may experience slight pain, bruising, or bleeding at the needle site.',
+        interpretation: 'Low hemoglobin may indicate anemia. High WBC count may suggest infection or inflammation. Low platelet count may indicate risk of bleeding. Your doctor will interpret results in the context of your symptoms and medical history.',
+    },
+    {
+        slug: 'hemoglobin-test',
+        name: 'Hemoglobin Test',
+        shortName: 'Hb',
+        aliases: ['Hgb', 'Hemoglobin Level'],
+        categorySlug: 'blood-tests',
+        testType: 'lab_test',
+        description: 'Measures the amount of hemoglobin in your blood. Hemoglobin is a protein in red blood cells that carries oxygen throughout the body.',
+        sampleType: 'Blood (EDTA)',
+        fastingRequired: false,
+        reportTimeHours: 2,
+        normalRanges: {
+            'Male': '13.5-17.5 g/dL',
+            'Female': '12.0-16.0 g/dL',
+            'Children': '11.0-16.0 g/dL',
+            'Pregnant Women': '11.0-14.0 g/dL',
+        },
+        relatedConditions: ['anemia', 'polycythemia', 'dehydration', 'blood-loss'],
+        keywords: ['hemoglobin', 'hb', 'anemia', 'blood oxygen'],
+        bodySystem: 'Hematological',
+        specialistType: 'General Medicine',
+        homeCollectionPossible: true,
+        avgPriceInr: 100,
+    },
+
+    // ===================== DIABETES TESTS =====================
+    {
+        slug: 'hba1c',
+        name: 'Glycated Hemoglobin',
+        shortName: 'HbA1c',
+        aliases: ['A1C', 'Hemoglobin A1c', 'Glycosylated Hemoglobin', 'Average Blood Sugar'],
+        categorySlug: 'diabetes-tests',
+        testType: 'lab_test',
+        description: 'HbA1c test measures your average blood sugar level over the past 2-3 months. It is the primary test used to diagnose diabetes and monitor blood sugar control in diabetics.',
+        sampleType: 'Blood (EDTA)',
+        fastingRequired: false,
+        reportTimeHours: 6,
+        normalRanges: {
+            'Normal': 'Below 5.7%',
+            'Prediabetes': '5.7% - 6.4%',
+            'Diabetes': '6.5% or higher',
+            'Target for Diabetics': 'Below 7%',
+        },
+        relatedConditions: ['diabetes', 'prediabetes', 'metabolic-syndrome'],
+        keywords: ['hba1c', 'a1c', 'diabetes test', 'sugar test', 'glycated hemoglobin', 'average sugar'],
+        bodySystem: 'Endocrine',
+        specialistType: 'Endocrinology',
+        homeCollectionPossible: true,
+        avgPriceInr: 450,
+        overview: 'The HbA1c test provides a picture of your average blood sugar control over the past 2-3 months. Unlike daily blood sugar tests, HbA1c is not affected by daily fluctuations.',
+        whyTest: 'Used to diagnose type 2 diabetes and prediabetes, and to monitor how well diabetes is being managed. Higher levels indicate poorer blood sugar control and higher risk of diabetes complications.',
+        interpretation: 'An HbA1c below 5.7% is considered normal. Between 5.7-6.4% indicates prediabetes. 6.5% or higher on two separate tests indicates diabetes.',
+    },
+    {
+        slug: 'fasting-blood-sugar',
+        name: 'Fasting Blood Sugar',
+        shortName: 'FBS',
+        aliases: ['Fasting Glucose', 'Fasting Plasma Glucose', 'FPG'],
+        categorySlug: 'diabetes-tests',
+        testType: 'lab_test',
+        description: 'Measures blood sugar level after fasting for at least 8 hours. It is used to screen for and diagnose diabetes and prediabetes.',
+        sampleType: 'Blood (Fluoride)',
+        fastingRequired: true,
+        fastingHours: 8,
+        preparationInstructions: 'Fast for 8-12 hours before the test. Water is allowed. Avoid alcohol for 24 hours before the test.',
+        reportTimeHours: 2,
+        normalRanges: {
+            'Normal': '70-100 mg/dL',
+            'Prediabetes': '100-125 mg/dL',
+            'Diabetes': '126 mg/dL or higher',
+        },
+        relatedConditions: ['diabetes', 'prediabetes', 'hypoglycemia'],
+        keywords: ['fasting sugar', 'fbs', 'blood sugar', 'glucose', 'diabetes'],
+        bodySystem: 'Endocrine',
+        specialistType: 'Endocrinology',
+        homeCollectionPossible: true,
+        avgPriceInr: 80,
+    },
+    {
+        slug: 'post-prandial-blood-sugar',
+        name: 'Post Prandial Blood Sugar',
+        shortName: 'PPBS',
+        aliases: ['PP Blood Sugar', 'After Meal Sugar', '2 Hour Glucose'],
+        categorySlug: 'diabetes-tests',
+        testType: 'lab_test',
+        description: 'Measures blood sugar levels 2 hours after eating a meal. Helps assess how well the body processes glucose after food intake.',
+        sampleType: 'Blood (Fluoride)',
+        fastingRequired: false,
+        preparationInstructions: 'Eat a normal meal. Blood sample is taken exactly 2 hours after starting the meal.',
+        reportTimeHours: 2,
+        normalRanges: {
+            'Normal': 'Below 140 mg/dL',
+            'Prediabetes': '140-199 mg/dL',
+            'Diabetes': '200 mg/dL or higher',
+        },
+        relatedConditions: ['diabetes', 'prediabetes', 'insulin-resistance'],
+        keywords: ['ppbs', 'after meal sugar', 'post meal glucose', 'pp sugar'],
+        bodySystem: 'Endocrine',
+        specialistType: 'Endocrinology',
+        homeCollectionPossible: true,
+        avgPriceInr: 80,
+    },
+    {
+        slug: 'glucose-tolerance-test',
+        name: 'Oral Glucose Tolerance Test',
+        shortName: 'OGTT',
+        aliases: ['GTT', 'Glucose Challenge Test', 'Sugar Loading Test'],
+        categorySlug: 'diabetes-tests',
+        testType: 'lab_test',
+        description: 'A comprehensive test that measures how your body processes glucose over time. Involves fasting blood sample, drinking glucose solution, and multiple blood samples over 2-3 hours.',
+        sampleType: 'Blood (Multiple Samples)',
+        fastingRequired: true,
+        fastingHours: 10,
+        preparationInstructions: 'Fast for 10-12 hours. Eat a normal carbohydrate diet for 3 days before the test. Avoid strenuous exercise before the test.',
+        reportTimeHours: 24,
+        normalRanges: {
+            'Fasting': 'Below 100 mg/dL',
+            'At 1 hour': 'Below 200 mg/dL',
+            'At 2 hours': 'Below 140 mg/dL',
+        },
+        relatedConditions: ['diabetes', 'gestational-diabetes', 'prediabetes'],
+        keywords: ['ogtt', 'glucose tolerance', 'gtt', 'gestational diabetes test'],
+        bodySystem: 'Endocrine',
+        specialistType: 'Endocrinology',
+        homeCollectionPossible: false,
+        avgPriceInr: 400,
+    },
+
+    // ===================== THYROID TESTS =====================
+    {
+        slug: 'thyroid-profile',
+        name: 'Thyroid Profile Total',
+        shortName: 'Thyroid Panel',
+        aliases: ['T3 T4 TSH', 'Thyroid Function Test', 'TFT'],
+        categorySlug: 'thyroid-tests',
+        testType: 'lab_test',
+        description: 'A comprehensive thyroid panel that includes TSH, T3, and T4 to evaluate thyroid function. Helps diagnose hypothyroidism, hyperthyroidism, and monitor thyroid treatment.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 6,
+        normalRanges: {
+            'TSH': '0.4-4.0 mIU/L',
+            'Free T4': '0.8-1.8 ng/dL',
+            'Free T3': '2.3-4.2 pg/mL',
+            'Total T4': '5.0-12.0 μg/dL',
+            'Total T3': '80-200 ng/dL',
+        },
+        relatedConditions: ['hypothyroidism', 'hyperthyroidism', 'goiter', 'thyroid-nodules'],
+        keywords: ['thyroid test', 'tsh', 't3', 't4', 'thyroid function', 'thyroid panel'],
+        bodySystem: 'Endocrine',
+        specialistType: 'Endocrinology',
+        homeCollectionPossible: true,
+        avgPriceInr: 650,
+    },
+    {
+        slug: 'tsh-test',
+        name: 'Thyroid Stimulating Hormone',
+        shortName: 'TSH',
+        aliases: ['Thyrotropin'],
+        categorySlug: 'thyroid-tests',
+        testType: 'lab_test',
+        description: 'TSH is the most sensitive marker for thyroid function. It helps screen for and monitor thyroid disorders.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 4,
+        normalRanges: {
+            'Normal': '0.4-4.0 mIU/L',
+            'Optimal': '0.5-2.5 mIU/L',
+        },
+        relatedConditions: ['hypothyroidism', 'hyperthyroidism'],
+        keywords: ['tsh', 'thyroid hormone', 'thyroid screening'],
+        bodySystem: 'Endocrine',
+        specialistType: 'Endocrinology',
+        homeCollectionPossible: true,
+        avgPriceInr: 300,
+    },
+
+    // ===================== LIPID TESTS =====================
+    {
+        slug: 'lipid-profile',
+        name: 'Lipid Profile',
+        shortName: 'Lipid Panel',
+        aliases: ['Cholesterol Test', 'Lipid Panel', 'Cardiovascular Risk Panel'],
+        categorySlug: 'lipid-tests',
+        testType: 'lab_test',
+        description: 'Measures blood fats including total cholesterol, LDL (bad) cholesterol, HDL (good) cholesterol, and triglycerides. Essential for assessing cardiovascular disease risk.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: true,
+        fastingHours: 12,
+        preparationInstructions: 'Fast for 10-12 hours. Only water is allowed. Avoid alcohol for 24 hours and fatty foods for 24 hours before the test.',
+        reportTimeHours: 6,
+        normalRanges: {
+            'Total Cholesterol': 'Below 200 mg/dL',
+            'LDL Cholesterol': 'Below 100 mg/dL',
+            'HDL Cholesterol (Male)': 'Above 40 mg/dL',
+            'HDL Cholesterol (Female)': 'Above 50 mg/dL',
+            'Triglycerides': 'Below 150 mg/dL',
+            'VLDL': '5-40 mg/dL',
+            'Total/HDL Ratio': 'Below 5',
+        },
+        relatedConditions: ['heart-disease', 'atherosclerosis', 'stroke', 'metabolic-syndrome'],
+        keywords: ['cholesterol', 'lipid profile', 'ldl', 'hdl', 'triglycerides', 'heart test'],
+        bodySystem: 'Cardiovascular',
+        specialistType: 'Cardiology',
+        homeCollectionPossible: true,
+        avgPriceInr: 450,
+    },
+
+    // ===================== LIVER TESTS =====================
+    {
+        slug: 'liver-function-test',
+        name: 'Liver Function Test',
+        shortName: 'LFT',
+        aliases: ['Hepatic Panel', 'Liver Panel', 'Liver Profile'],
+        categorySlug: 'liver-tests',
+        testType: 'lab_test',
+        description: 'Measures various enzymes and proteins to assess liver health and function. Includes SGOT, SGPT, ALP, bilirubin, albumin, and total protein.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: true,
+        fastingHours: 10,
+        preparationInstructions: 'Fast for 10-12 hours. Avoid alcohol for 24 hours before the test. Inform your doctor about any medications.',
+        reportTimeHours: 6,
+        normalRanges: {
+            'SGPT (ALT)': '7-56 U/L',
+            'SGOT (AST)': '10-40 U/L',
+            'ALP': '44-147 U/L',
+            'GGT': '9-48 U/L',
+            'Total Bilirubin': '0.1-1.2 mg/dL',
+            'Direct Bilirubin': '0-0.3 mg/dL',
+            'Total Protein': '6.0-8.3 g/dL',
+            'Albumin': '3.5-5.0 g/dL',
+            'Globulin': '2.0-3.5 g/dL',
+            'A/G Ratio': '1.2-2.2',
+        },
+        relatedConditions: ['hepatitis', 'cirrhosis', 'fatty-liver', 'jaundice', 'liver-cancer'],
+        keywords: ['lft', 'liver test', 'sgpt', 'sgot', 'bilirubin', 'liver function'],
+        bodySystem: 'Hepatic',
+        specialistType: 'Gastroenterology',
+        homeCollectionPossible: true,
+        avgPriceInr: 600,
+    },
+
+    // ===================== KIDNEY TESTS =====================
+    {
+        slug: 'kidney-function-test',
+        name: 'Kidney Function Test',
+        shortName: 'KFT',
+        aliases: ['Renal Panel', 'Renal Function Test', 'RFT'],
+        categorySlug: 'kidney-tests',
+        testType: 'lab_test',
+        description: 'Assesses kidney function by measuring creatinine, urea, BUN, uric acid, and electrolytes. Essential for diagnosing and monitoring kidney disease.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: true,
+        fastingHours: 8,
+        preparationInstructions: 'Fast for 8-10 hours. Stay hydrated with water. Avoid excessive protein intake before the test.',
+        reportTimeHours: 6,
+        normalRanges: {
+            'Creatinine (Male)': '0.7-1.3 mg/dL',
+            'Creatinine (Female)': '0.6-1.1 mg/dL',
+            'Blood Urea Nitrogen (BUN)': '7-20 mg/dL',
+            'Uric Acid (Male)': '3.5-7.2 mg/dL',
+            'Uric Acid (Female)': '2.5-6.0 mg/dL',
+            'eGFR': 'Above 90 mL/min/1.73m²',
+            'Sodium': '136-145 mEq/L',
+            'Potassium': '3.5-5.0 mEq/L',
+            'Chloride': '98-106 mEq/L',
+        },
+        relatedConditions: ['chronic-kidney-disease', 'kidney-stones', 'dialysis', 'gout'],
+        keywords: ['kft', 'kidney test', 'creatinine', 'renal function', 'kidney function'],
+        bodySystem: 'Renal',
+        specialistType: 'Nephrology',
+        homeCollectionPossible: true,
+        avgPriceInr: 650,
+    },
+
+    // ===================== VITAMIN TESTS =====================
+    {
+        slug: 'vitamin-d-test',
+        name: 'Vitamin D, 25-Hydroxy',
+        shortName: 'Vitamin D',
+        aliases: ['25-OH Vitamin D', 'Cholecalciferol', 'Calcidiol'],
+        categorySlug: 'vitamin-tests',
+        testType: 'lab_test',
+        description: 'Measures the level of vitamin D in your blood. Vitamin D is essential for bone health, immune function, and many other processes.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 24,
+        normalRanges: {
+            'Deficient': 'Below 20 ng/mL',
+            'Insufficient': '20-29 ng/mL',
+            'Sufficient': '30-100 ng/mL',
+            'Optimal': '40-60 ng/mL',
+            'Toxic': 'Above 100 ng/mL',
+        },
+        relatedConditions: ['osteoporosis', 'rickets', 'bone-pain', 'muscle-weakness'],
+        keywords: ['vitamin d', 'd3', 'bone health', 'calcium absorption', 'sunlight vitamin'],
+        bodySystem: 'Endocrine',
+        specialistType: 'General Medicine',
+        homeCollectionPossible: true,
+        avgPriceInr: 1200,
+    },
+    {
+        slug: 'vitamin-b12-test',
+        name: 'Vitamin B12',
+        shortName: 'B12',
+        aliases: ['Cobalamin', 'Cyanocobalamin'],
+        categorySlug: 'vitamin-tests',
+        testType: 'lab_test',
+        description: 'Measures vitamin B12 levels. B12 is essential for nerve function, red blood cell formation, and DNA synthesis.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 24,
+        normalRanges: {
+            'Deficient': 'Below 200 pg/mL',
+            'Low Normal': '200-300 pg/mL',
+            'Normal': '300-900 pg/mL',
+            'High': 'Above 900 pg/mL',
+        },
+        relatedConditions: ['anemia', 'neuropathy', 'fatigue', 'memory-problems'],
+        keywords: ['b12', 'vitamin b12', 'cobalamin', 'anemia', 'nerve health'],
+        bodySystem: 'Hematological',
+        specialistType: 'General Medicine',
+        homeCollectionPossible: true,
+        avgPriceInr: 800,
+    },
+    {
+        slug: 'iron-studies',
+        name: 'Iron Studies',
+        shortName: 'Iron Profile',
+        aliases: ['Serum Iron', 'TIBC', 'Ferritin Panel'],
+        categorySlug: 'vitamin-tests',
+        testType: 'lab_test',
+        description: 'Comprehensive iron panel including serum iron, ferritin, TIBC, and transferrin saturation. Helps diagnose iron deficiency or iron overload.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: true,
+        fastingHours: 12,
+        preparationInstructions: 'Fast for 10-12 hours. Stop iron supplements 24-48 hours before test (if advised by doctor).',
+        reportTimeHours: 6,
+        normalRanges: {
+            'Serum Iron': '60-170 μg/dL',
+            'Ferritin (Male)': '30-400 ng/mL',
+            'Ferritin (Female)': '15-150 ng/mL',
+            'TIBC': '250-400 μg/dL',
+            'Transferrin Saturation': '20-50%',
+        },
+        relatedConditions: ['iron-deficiency-anemia', 'hemochromatosis', 'thalassemia'],
+        keywords: ['iron', 'ferritin', 'anemia', 'iron deficiency', 'tibc'],
+        bodySystem: 'Hematological',
+        specialistType: 'Hematology',
+        homeCollectionPossible: true,
+        avgPriceInr: 950,
+    },
+
+    // ===================== INFECTION TESTS =====================
+    {
+        slug: 'hiv-test',
+        name: 'HIV 1 & 2 Antibody Test',
+        shortName: 'HIV Test',
+        aliases: ['AIDS Test', 'HIV Screening', 'HIV ELISA'],
+        categorySlug: 'infection-tests',
+        testType: 'lab_test',
+        description: 'Screens for HIV-1 and HIV-2 antibodies. Early detection allows for timely treatment and prevention of transmission.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 24,
+        normalRanges: {
+            'Result': 'Non-Reactive (Negative)',
+        },
+        relatedConditions: ['hiv', 'aids', 'immunodeficiency'],
+        keywords: ['hiv', 'aids', 'hiv test', 'std test', 'immunity'],
+        bodySystem: 'Immune',
+        specialistType: 'Infectious Disease',
+        homeCollectionPossible: true,
+        avgPriceInr: 500,
+    },
+    {
+        slug: 'hepatitis-b-surface-antigen',
+        name: 'Hepatitis B Surface Antigen',
+        shortName: 'HBsAg',
+        aliases: ['Hep B Test', 'Hepatitis B Screening'],
+        categorySlug: 'infection-tests',
+        testType: 'lab_test',
+        description: 'Detects current hepatitis B infection. HBsAg is the earliest indicator of hepatitis B virus in the blood.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 6,
+        normalRanges: {
+            'Result': 'Non-Reactive (Negative)',
+        },
+        relatedConditions: ['hepatitis-b', 'liver-disease', 'cirrhosis'],
+        keywords: ['hepatitis b', 'hbsag', 'liver infection', 'hep b'],
+        bodySystem: 'Hepatic',
+        specialistType: 'Gastroenterology',
+        homeCollectionPossible: true,
+        avgPriceInr: 400,
+    },
+    {
+        slug: 'dengue-ns1-antigen',
+        name: 'Dengue NS1 Antigen',
+        shortName: 'Dengue NS1',
+        aliases: ['Dengue Test', 'NS1 Antigen'],
+        categorySlug: 'infection-tests',
+        testType: 'lab_test',
+        description: 'Detects dengue virus NS1 antigen in early infection (day 1-7). Most useful in the first week of symptoms.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 4,
+        normalRanges: {
+            'Result': 'Negative',
+        },
+        relatedConditions: ['dengue', 'dengue-fever', 'viral-fever'],
+        keywords: ['dengue', 'ns1', 'dengue test', 'viral fever', 'mosquito'],
+        bodySystem: 'Immune',
+        specialistType: 'Infectious Disease',
+        homeCollectionPossible: true,
+        avgPriceInr: 600,
+        availableRegions: ['IN', 'BD', 'PK', 'LK', 'TH', 'VN', 'PH', 'MY', 'SG', 'ID'], // Endemic regions
+    },
+    {
+        slug: 'malaria-antigen-test',
+        name: 'Malaria Antigen Test',
+        shortName: 'Malaria RDT',
+        aliases: ['Malaria Card Test', 'MP Test', 'Plasmodium Test'],
+        categorySlug: 'infection-tests',
+        testType: 'lab_test',
+        description: 'Rapid diagnostic test for malaria. Detects P. falciparum and P. vivax antigens in blood.',
+        sampleType: 'Blood (Finger Prick)',
+        fastingRequired: false,
+        reportTimeHours: 1,
+        normalRanges: {
+            'Result': 'Negative',
+        },
+        relatedConditions: ['malaria', 'fever', 'chills'],
+        keywords: ['malaria', 'mp test', 'plasmodium', 'fever', 'mosquito'],
+        bodySystem: 'Immune',
+        specialistType: 'Infectious Disease',
+        homeCollectionPossible: true,
+        avgPriceInr: 350,
+        availableRegions: ['IN', 'BD', 'PK', 'NG', 'KE', 'TZ', 'GH', 'CM', 'CD', 'MZ'], // Endemic regions
+    },
+    {
+        slug: 'widal-test',
+        name: 'Widal Test',
+        shortName: 'Widal',
+        aliases: ['Typhoid Test', 'Typhoid Antibody'],
+        categorySlug: 'infection-tests',
+        testType: 'lab_test',
+        description: 'Tests for antibodies against Salmonella typhi. Used in diagnosis of typhoid fever, though not highly specific.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 4,
+        normalRanges: {
+            'O Antigen': 'Below 1:80',
+            'H Antigen': 'Below 1:80',
+        },
+        relatedConditions: ['typhoid', 'enteric-fever', 'salmonella'],
+        keywords: ['widal', 'typhoid', 'enteric fever', 'salmonella'],
+        bodySystem: 'Gastrointestinal',
+        specialistType: 'Infectious Disease',
+        homeCollectionPossible: true,
+        avgPriceInr: 400,
+        availableRegions: ['IN', 'BD', 'PK', 'NP', 'LK', 'NG', 'KE'], // Endemic regions
+    },
+
+    // ===================== CANCER MARKERS =====================
+    {
+        slug: 'psa-test',
+        name: 'Prostate Specific Antigen',
+        shortName: 'PSA',
+        aliases: ['PSA Total', 'Prostate Cancer Screening'],
+        categorySlug: 'cancer-markers',
+        testType: 'lab_test',
+        description: 'Measures PSA levels in blood. Elevated PSA may indicate prostate cancer, benign prostatic hyperplasia (BPH), or prostatitis.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        preparationInstructions: 'Avoid ejaculation for 48 hours before the test. Inform doctor about any recent prostate examination.',
+        reportTimeHours: 24,
+        normalRanges: {
+            'Age 40-49': '0-2.5 ng/mL',
+            'Age 50-59': '0-3.5 ng/mL',
+            'Age 60-69': '0-4.5 ng/mL',
+            'Age 70+': '0-6.5 ng/mL',
+        },
+        relatedConditions: ['prostate-cancer', 'bph', 'prostatitis'],
+        keywords: ['psa', 'prostate', 'prostate cancer', 'mens health'],
+        bodySystem: 'Reproductive',
+        specialistType: 'Urology',
+        homeCollectionPossible: true,
+        avgPriceInr: 700,
+    },
+    {
+        slug: 'ca-125',
+        name: 'Cancer Antigen 125',
+        shortName: 'CA-125',
+        aliases: ['CA125', 'Ovarian Cancer Marker'],
+        categorySlug: 'cancer-markers',
+        testType: 'lab_test',
+        description: 'Tumor marker primarily used to monitor ovarian cancer treatment. Also elevated in some benign conditions.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 24,
+        normalRanges: {
+            'Normal': 'Below 35 U/mL',
+        },
+        relatedConditions: ['ovarian-cancer', 'endometriosis', 'pelvic-inflammatory-disease'],
+        keywords: ['ca125', 'ovarian cancer', 'tumor marker', 'womens health'],
+        bodySystem: 'Reproductive',
+        specialistType: 'Oncology',
+        homeCollectionPossible: true,
+        avgPriceInr: 1200,
+    },
+
+    // ===================== URINE TESTS =====================
+    {
+        slug: 'urine-routine-microscopy',
+        name: 'Urine Routine & Microscopy',
+        shortName: 'Urine R/M',
+        aliases: ['Urinalysis', 'Urine Test', 'Urine Examination'],
+        categorySlug: 'urine-tests',
+        testType: 'lab_test',
+        description: 'Basic urine test that checks physical appearance, chemical composition, and microscopic examination for cells, crystals, and bacteria.',
+        sampleType: 'Midstream Urine',
+        fastingRequired: false,
+        preparationInstructions: 'Collect midstream urine sample in a sterile container. First morning sample is preferred. Avoid contamination.',
+        reportTimeHours: 4,
+        normalRanges: {
+            'Color': 'Pale to dark yellow',
+            'Appearance': 'Clear',
+            'pH': '4.5-8.0',
+            'Specific Gravity': '1.005-1.030',
+            'Protein': 'Negative',
+            'Glucose': 'Negative',
+            'Ketones': 'Negative',
+            'Blood': 'Negative',
+            'WBC': '0-5/HPF',
+            'RBC': '0-2/HPF',
+        },
+        relatedConditions: ['uti', 'kidney-disease', 'diabetes', 'kidney-stones'],
+        keywords: ['urine test', 'urinalysis', 'uti', 'urine routine'],
+        bodySystem: 'Renal',
+        specialistType: 'General Medicine',
+        homeCollectionPossible: true,
+        avgPriceInr: 150,
+    },
+    {
+        slug: 'urine-culture',
+        name: 'Urine Culture & Sensitivity',
+        shortName: 'Urine C/S',
+        aliases: ['Urine Culture', 'UTI Test'],
+        categorySlug: 'urine-tests',
+        testType: 'lab_test',
+        description: 'Identifies bacteria causing urinary tract infection and determines which antibiotics are effective against them.',
+        sampleType: 'Midstream Urine',
+        fastingRequired: false,
+        preparationInstructions: 'Collect midstream, clean-catch urine sample in sterile container. Avoid antibiotics before test if possible.',
+        reportTimeHours: 72,
+        normalRanges: {
+            'Result': 'No growth / Sterile',
+        },
+        relatedConditions: ['uti', 'cystitis', 'pyelonephritis', 'bladder-infection'],
+        keywords: ['urine culture', 'uti', 'urinary infection', 'bladder infection'],
+        bodySystem: 'Renal',
+        specialistType: 'Urology',
+        homeCollectionPossible: true,
+        avgPriceInr: 500,
+    },
+
+    // ===================== IMAGING TESTS =====================
+    {
+        slug: 'chest-xray',
+        name: 'Chest X-Ray',
+        shortName: 'Chest X-Ray',
+        aliases: ['CXR', 'Chest Radiograph', 'PA View Chest'],
+        categorySlug: 'xray',
+        testType: 'imaging',
+        description: 'Digital X-ray imaging of the chest to visualize lungs, heart, and chest wall. Used to diagnose pneumonia, TB, lung cancer, and heart conditions.',
+        sampleType: 'N/A',
+        fastingRequired: false,
+        preparationInstructions: 'Remove jewelry and metal objects. Wear comfortable clothing without metal buttons. Inform if pregnant.',
+        reportTimeHours: 2,
+        relatedConditions: ['pneumonia', 'tuberculosis', 'lung-cancer', 'heart-failure', 'copd'],
+        keywords: ['chest xray', 'lung xray', 'tb test', 'pneumonia', 'chest scan'],
+        bodySystem: 'Respiratory',
+        specialistType: 'Radiology',
+        homeCollectionPossible: false,
+        avgPriceInr: 400,
+    },
+    {
+        slug: 'ct-scan-brain',
+        name: 'CT Scan Brain',
+        shortName: 'CT Brain',
+        aliases: ['Head CT', 'Brain CT', 'Cranial CT'],
+        categorySlug: 'ct-scan',
+        testType: 'imaging',
+        description: 'Computed tomography of the brain providing detailed cross-sectional images. Used to diagnose stroke, tumors, bleeding, and head injuries.',
+        sampleType: 'N/A',
+        fastingRequired: false,
+        preparationInstructions: 'Remove jewelry, hearing aids, and glasses. Inform about contrast allergies. May require fasting for contrast CT.',
+        reportTimeHours: 4,
+        relatedConditions: ['stroke', 'brain-tumor', 'head-injury', 'hemorrhage', 'hydrocephalus'],
+        keywords: ['ct brain', 'brain scan', 'head ct', 'stroke diagnosis', 'brain imaging'],
+        bodySystem: 'Nervous',
+        specialistType: 'Radiology',
+        homeCollectionPossible: false,
+        avgPriceInr: 3500,
+    },
+    {
+        slug: 'mri-brain',
+        name: 'MRI Brain',
+        shortName: 'MRI Brain',
+        aliases: ['Brain MRI', 'Head MRI', 'Cranial MRI'],
+        categorySlug: 'mri',
+        testType: 'imaging',
+        description: 'Magnetic resonance imaging of the brain providing detailed soft tissue images. Superior to CT for many brain conditions.',
+        sampleType: 'N/A',
+        fastingRequired: false,
+        preparationInstructions: 'Remove all metal objects. Inform about pacemakers, implants, or claustrophobia. May last 30-60 minutes.',
+        reportTimeHours: 24,
+        relatedConditions: ['brain-tumor', 'multiple-sclerosis', 'stroke', 'epilepsy', 'dementia'],
+        keywords: ['mri brain', 'brain mri', 'brain scan', 'neuroimaging'],
+        bodySystem: 'Nervous',
+        specialistType: 'Radiology',
+        homeCollectionPossible: false,
+        avgPriceInr: 7000,
+    },
+    {
+        slug: 'ultrasound-abdomen',
+        name: 'Ultrasound Whole Abdomen',
+        shortName: 'USG Abdomen',
+        aliases: ['Abdominal Ultrasound', 'Abdominal Sonography', 'USG Whole Abdomen'],
+        categorySlug: 'ultrasound',
+        testType: 'imaging',
+        description: 'Non-invasive imaging of abdominal organs including liver, gallbladder, kidneys, spleen, pancreas, and bladder.',
+        sampleType: 'N/A',
+        fastingRequired: true,
+        fastingHours: 6,
+        preparationInstructions: 'Fast for 6 hours before the test. Drink water and avoid urinating 1 hour before (full bladder required).',
+        reportTimeHours: 1,
+        relatedConditions: ['gallstones', 'fatty-liver', 'kidney-stones', 'pancreatitis', 'appendicitis'],
+        keywords: ['ultrasound', 'usg', 'sonography', 'abdomen scan', 'liver scan'],
+        bodySystem: 'Gastrointestinal',
+        specialistType: 'Radiology',
+        homeCollectionPossible: false,
+        avgPriceInr: 1200,
+    },
+
+    // ===================== CARDIAC TESTS =====================
+    {
+        slug: 'ecg-12-lead',
+        name: 'Electrocardiogram 12 Lead',
+        shortName: 'ECG',
+        aliases: ['EKG', 'Electrocardiograph', '12 Lead ECG'],
+        categorySlug: 'cardiac-tests',
+        testType: 'cardiac',
+        description: 'Records electrical activity of the heart through 12 leads. Diagnoses arrhythmias, heart attacks, and other cardiac conditions.',
+        sampleType: 'N/A',
+        fastingRequired: false,
+        preparationInstructions: 'Wear loose clothing. Avoid exercise before test. Inform about all medications.',
+        reportTimeHours: 1,
+        relatedConditions: ['heart-attack', 'arrhythmia', 'heart-block', 'atrial-fibrillation'],
+        keywords: ['ecg', 'ekg', 'heart test', 'electrocardiogram', 'heart rhythm'],
+        bodySystem: 'Cardiovascular',
+        specialistType: 'Cardiology',
+        homeCollectionPossible: true,
+        avgPriceInr: 300,
+    },
+    {
+        slug: 'echocardiogram',
+        name: '2D Echocardiogram with Color Doppler',
+        shortName: 'Echo',
+        aliases: ['2D Echo', 'Cardiac Ultrasound', 'Heart Echo'],
+        categorySlug: 'cardiac-tests',
+        testType: 'cardiac',
+        description: 'Ultrasound imaging of the heart showing chambers, valves, and blood flow. Assesses heart function and structure.',
+        sampleType: 'N/A',
+        fastingRequired: false,
+        preparationInstructions: 'No special preparation needed. Wear comfortable clothing. Test takes about 30-45 minutes.',
+        reportTimeHours: 2,
+        relatedConditions: ['heart-failure', 'valve-disease', 'cardiomyopathy', 'congenital-heart-disease'],
+        keywords: ['echo', 'echocardiogram', '2d echo', 'heart ultrasound', 'cardiac echo'],
+        bodySystem: 'Cardiovascular',
+        specialistType: 'Cardiology',
+        homeCollectionPossible: false,
+        avgPriceInr: 2500,
+    },
+    {
+        slug: 'treadmill-test',
+        name: 'Treadmill Test',
+        shortName: 'TMT',
+        aliases: ['Stress Test', 'Exercise Stress Test', 'Cardiac Stress Test'],
+        categorySlug: 'cardiac-tests',
+        testType: 'cardiac',
+        description: 'Records heart activity while exercising on a treadmill. Detects coronary artery disease and assesses exercise tolerance.',
+        sampleType: 'N/A',
+        fastingRequired: true,
+        fastingHours: 4,
+        preparationInstructions: 'Light meal 2-4 hours before. Wear comfortable exercise clothes and shoes. Avoid caffeine and smoking.',
+        reportTimeHours: 2,
+        relatedConditions: ['coronary-artery-disease', 'angina', 'heart-disease', 'chest-pain'],
+        keywords: ['tmt', 'stress test', 'treadmill test', 'exercise test', 'cardiac stress'],
+        bodySystem: 'Cardiovascular',
+        specialistType: 'Cardiology',
+        homeCollectionPossible: false,
+        avgPriceInr: 2000,
+    },
+
+    // ===================== PULMONARY TESTS =====================
+    {
+        slug: 'pulmonary-function-test',
+        name: 'Pulmonary Function Test',
+        shortName: 'PFT',
+        aliases: ['Spirometry', 'Lung Function Test', 'Breathing Test'],
+        categorySlug: 'pulmonary-tests',
+        testType: 'pulmonary',
+        description: 'Measures lung capacity, volume, and gas exchange. Diagnoses asthma, COPD, and other respiratory conditions.',
+        sampleType: 'N/A',
+        fastingRequired: false,
+        preparationInstructions: 'Avoid smoking for 4 hours. Avoid heavy meals. Wear loose clothing. Stop bronchodilators if advised.',
+        reportTimeHours: 2,
+        normalRanges: {
+            'FEV1': 'Above 80% predicted',
+            'FVC': 'Above 80% predicted',
+            'FEV1/FVC Ratio': '0.7-0.8',
+        },
+        relatedConditions: ['asthma', 'copd', 'pulmonary-fibrosis', 'bronchitis'],
+        keywords: ['pft', 'spirometry', 'lung test', 'breathing test', 'asthma test'],
+        bodySystem: 'Respiratory',
+        specialistType: 'Pulmonology',
+        homeCollectionPossible: false,
+        avgPriceInr: 800,
+    },
+
+    // ===================== GENETIC TESTS =====================
+    {
+        slug: 'karyotyping',
+        name: 'Karyotyping (Chromosome Analysis)',
+        shortName: 'Karyotype',
+        aliases: ['Chromosome Test', 'Cytogenetic Analysis'],
+        categorySlug: 'genetic-tests',
+        testType: 'genetic',
+        description: 'Analyzes the number and structure of chromosomes. Detects chromosomal abnormalities like Down syndrome.',
+        sampleType: 'Blood (Heparinized)',
+        fastingRequired: false,
+        reportTimeHours: 336, // 14 days
+        relatedConditions: ['down-syndrome', 'turner-syndrome', 'klinefelter-syndrome', 'infertility'],
+        keywords: ['karyotype', 'chromosome test', 'genetic test', 'down syndrome'],
+        bodySystem: 'Genetic',
+        specialistType: 'Genetics',
+        homeCollectionPossible: true,
+        avgPriceInr: 4500,
+    },
+    {
+        slug: 'nipt',
+        name: 'Non-Invasive Prenatal Testing',
+        shortName: 'NIPT',
+        aliases: ['Cell-Free DNA Test', 'Prenatal Genetic Screen'],
+        categorySlug: 'prenatal-tests',
+        testType: 'genetic',
+        description: 'Blood test during pregnancy that screens for chromosomal abnormalities in the fetus using cell-free fetal DNA.',
+        sampleType: 'Blood (EDTA)',
+        fastingRequired: false,
+        preparationInstructions: 'Can be done from 10 weeks of pregnancy. No special preparation needed.',
+        reportTimeHours: 168, // 7 days
+        relatedConditions: ['down-syndrome', 'edwards-syndrome', 'patau-syndrome'],
+        keywords: ['nipt', 'prenatal test', 'pregnancy test', 'down syndrome screening'],
+        bodySystem: 'Reproductive',
+        specialistType: 'Obstetrics',
+        homeCollectionPossible: true,
+        avgPriceInr: 25000,
+    },
+
+    // ===================== ALLERGY TESTS =====================
+    {
+        slug: 'total-ige',
+        name: 'Total IgE',
+        shortName: 'IgE',
+        aliases: ['Immunoglobulin E', 'Allergy Antibody'],
+        categorySlug: 'allergy-tests',
+        testType: 'lab_test',
+        description: 'Measures total IgE antibodies in blood. Elevated levels may indicate allergies, asthma, or parasitic infections.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 24,
+        normalRanges: {
+            'Adults': '0-100 IU/mL',
+            'Children vary by age': 'Consult reference',
+        },
+        relatedConditions: ['allergies', 'asthma', 'eczema', 'parasitic-infections'],
+        keywords: ['ige', 'allergy test', 'immunoglobulin', 'allergy antibody'],
+        bodySystem: 'Immune',
+        specialistType: 'Allergy',
+        homeCollectionPossible: true,
+        avgPriceInr: 800,
+    },
+    {
+        slug: 'food-allergy-panel',
+        name: 'Food Allergy Panel (Vegetarian)',
+        shortName: 'Veg Food Panel',
+        aliases: ['Food Intolerance Test', 'Food IgE Panel'],
+        categorySlug: 'allergy-tests',
+        testType: 'lab_test',
+        description: 'Tests IgE antibodies against common vegetarian foods including wheat, milk, soy, nuts, and fruits.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 72,
+        relatedConditions: ['food-allergy', 'eczema', 'urticaria', 'digestive-issues'],
+        keywords: ['food allergy', 'food intolerance', 'allergy panel', 'veg allergy'],
+        bodySystem: 'Immune',
+        specialistType: 'Allergy',
+        homeCollectionPossible: true,
+        avgPriceInr: 5500,
+    },
+
+    // ===================== PATHOLOGY TESTS =====================
+    {
+        slug: 'fnac',
+        name: 'Fine Needle Aspiration Cytology',
+        shortName: 'FNAC',
+        aliases: ['Needle Biopsy', 'FNA'],
+        categorySlug: 'pathology',
+        testType: 'pathology',
+        description: 'Minimally invasive procedure to collect cells from a lump or mass using a fine needle. Used to diagnose tumors and infections.',
+        sampleType: 'Tissue/Cells',
+        fastingRequired: false,
+        preparationInstructions: 'Inform about blood thinners. No special preparation usually required.',
+        reportTimeHours: 72,
+        relatedConditions: ['thyroid-nodule', 'breast-lump', 'lymph-node-enlargement', 'cancer'],
+        keywords: ['fnac', 'biopsy', 'needle biopsy', 'cytology', 'cancer test'],
+        bodySystem: 'Various',
+        specialistType: 'Pathology',
+        homeCollectionPossible: false,
+        avgPriceInr: 1500,
+    },
+    {
+        slug: 'histopathology',
+        name: 'Histopathology Examination',
+        shortName: 'Histopath',
+        aliases: ['Biopsy', 'Tissue Examination'],
+        categorySlug: 'pathology',
+        testType: 'pathology',
+        description: 'Microscopic examination of tissue to diagnose diseases, especially cancer. Provides definitive diagnosis for tumors.',
+        sampleType: 'Tissue',
+        fastingRequired: false,
+        reportTimeHours: 168, // 7 days
+        relatedConditions: ['cancer', 'tumor', 'inflammatory-diseases'],
+        keywords: ['histopathology', 'biopsy', 'tissue examination', 'cancer diagnosis'],
+        bodySystem: 'Various',
+        specialistType: 'Pathology',
+        homeCollectionPossible: false,
+        avgPriceInr: 2500,
+    },
+
+    // ===================== REGION-SPECIFIC TESTS =====================
+    {
+        slug: 'g6pd-deficiency-test',
+        name: 'G6PD Enzyme Assay',
+        shortName: 'G6PD',
+        aliases: ['Glucose-6-Phosphate Dehydrogenase'],
+        categorySlug: 'blood-tests',
+        testType: 'lab_test',
+        description: 'Tests for G6PD enzyme deficiency, a genetic condition common in certain populations that can cause hemolytic anemia.',
+        sampleType: 'Blood (EDTA)',
+        fastingRequired: false,
+        reportTimeHours: 48,
+        normalRanges: {
+            'Normal': '4.6-13.5 U/g Hb',
+        },
+        relatedConditions: ['hemolytic-anemia', 'favism', 'jaundice'],
+        keywords: ['g6pd', 'enzyme deficiency', 'favism', 'hemolysis'],
+        bodySystem: 'Hematological',
+        specialistType: 'Hematology',
+        homeCollectionPossible: true,
+        avgPriceInr: 700,
+        availableRegions: ['IN', 'BD', 'PK', 'SA', 'AE', 'GR', 'IT', 'NG', 'GH'], // Mediterranean, Africa, Middle East, South Asia
+    },
+    {
+        slug: 'thalassemia-screening',
+        name: 'Thalassemia Screening',
+        shortName: 'Thalassemia',
+        aliases: ['Hb Electrophoresis', 'Hemoglobin HPLC'],
+        categorySlug: 'blood-tests',
+        testType: 'lab_test',
+        description: 'Screens for thalassemia trait and disease. Essential before marriage in endemic regions.',
+        sampleType: 'Blood (EDTA)',
+        fastingRequired: false,
+        reportTimeHours: 48,
+        normalRanges: {
+            'HbA': '96-98%',
+            'HbA2': '2.0-3.5%',
+            'HbF': '<1%',
+        },
+        relatedConditions: ['thalassemia', 'anemia', 'carrier-screening'],
+        keywords: ['thalassemia', 'hb electrophoresis', 'carrier', 'genetic anemia'],
+        bodySystem: 'Hematological',
+        specialistType: 'Hematology',
+        homeCollectionPossible: true,
+        avgPriceInr: 850,
+        availableRegions: ['IN', 'BD', 'PK', 'TH', 'MY', 'AE', 'SA', 'GR', 'IT', 'CY'], // Mediterranean, South Asia, Southeast Asia
+    },
+    {
+        slug: 'sickle-cell-screening',
+        name: 'Sickle Cell Screening',
+        shortName: 'Sickling Test',
+        aliases: ['Sickle Cell Test', 'HbS Screening'],
+        categorySlug: 'blood-tests',
+        testType: 'lab_test',
+        description: 'Screens for sickle cell trait and disease. Important for African and Indian tribal populations.',
+        sampleType: 'Blood (EDTA)',
+        fastingRequired: false,
+        reportTimeHours: 24,
+        normalRanges: {
+            'Result': 'Negative (No sickling)',
+        },
+        relatedConditions: ['sickle-cell-disease', 'sickle-cell-trait', 'anemia'],
+        keywords: ['sickle cell', 'sickling', 'hbs', 'genetic anemia'],
+        bodySystem: 'Hematological',
+        specialistType: 'Hematology',
+        homeCollectionPossible: true,
+        avgPriceInr: 300,
+        availableRegions: ['IN', 'NG', 'GH', 'KE', 'TZ', 'CD', 'US', 'GB', 'BR'], // Africa, African diaspora, Indian tribals
+    },
+    {
+        slug: 'leptospira-antibody',
+        name: 'Leptospira Antibody Test',
+        shortName: 'Leptospirosis',
+        aliases: ['Lepto IgM', "Weil's Disease Test"],
+        categorySlug: 'infection-tests',
+        testType: 'lab_test',
+        description: 'Tests for leptospirosis, a bacterial infection common during monsoon/floods in tropical regions.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 24,
+        normalRanges: {
+            'IgM': 'Negative',
+        },
+        relatedConditions: ['leptospirosis', 'fever', 'jaundice', 'kidney-failure'],
+        keywords: ['leptospira', 'leptospirosis', 'monsoon fever', 'weil disease'],
+        bodySystem: 'Immune',
+        specialistType: 'Infectious Disease',
+        homeCollectionPossible: true,
+        avgPriceInr: 800,
+        availableRegions: ['IN', 'BD', 'LK', 'TH', 'PH', 'MY', 'BR'], // Tropical monsoon regions
+    },
+    {
+        slug: 'scrub-typhus-test',
+        name: 'Scrub Typhus Antibody Test',
+        shortName: 'Scrub Typhus',
+        aliases: ['Orientia tsutsugamushi', 'Tsutsugamushi Disease'],
+        categorySlug: 'infection-tests',
+        testType: 'lab_test',
+        description: 'Tests for scrub typhus, a mite-borne infection common in rural areas of Asia.',
+        sampleType: 'Blood (Serum)',
+        fastingRequired: false,
+        reportTimeHours: 24,
+        normalRanges: {
+            'IgM': 'Negative',
+        },
+        relatedConditions: ['scrub-typhus', 'fever', 'eschar'],
+        keywords: ['scrub typhus', 'rickettsial', 'mite fever', 'rural fever'],
+        bodySystem: 'Immune',
+        specialistType: 'Infectious Disease',
+        homeCollectionPossible: true,
+        avgPriceInr: 900,
+        availableRegions: ['IN', 'BD', 'NP', 'TH', 'VN', 'JP', 'KR', 'CN', 'TW'], // Asia-Pacific
+    },
+];
+
+async function main() {
+    console.log('Seeding diagnostic tests and categories...\n');
+
+    // Create categories
+    console.log('Creating categories...');
+    const categoryMap: Record<string, number> = {};
+
+    // First pass: create parent categories
+    for (const cat of CATEGORIES.filter(c => !c.parentSlug)) {
+        const created = await prisma.diagnosticCategory.upsert({
+            where: { slug: cat.slug },
+            update: {
+                name: cat.name,
+                description: cat.description,
+                icon: cat.icon,
+            },
+            create: {
+                slug: cat.slug,
+                name: cat.name,
+                description: cat.description,
+                icon: cat.icon,
+            },
+        });
+        categoryMap[cat.slug] = created.id;
+        console.log('  Created category: ' + cat.name);
+    }
+
+    // Second pass: create child categories
+    for (const cat of CATEGORIES.filter(c => c.parentSlug)) {
+        const parentId = categoryMap[cat.parentSlug!];
+        const created = await prisma.diagnosticCategory.upsert({
+            where: { slug: cat.slug },
+            update: {
+                name: cat.name,
+                description: cat.description,
+                icon: cat.icon,
+                parentId,
+            },
+            create: {
+                slug: cat.slug,
+                name: cat.name,
+                description: cat.description,
+                icon: cat.icon,
+                parentId,
+            },
+        });
+        categoryMap[cat.slug] = created.id;
+        console.log('  Created subcategory: ' + cat.name);
+    }
+
+    // Create tests
+    console.log('\nCreating diagnostic tests...');
+    let created = 0;
+    let updated = 0;
+
+    for (const test of TESTS) {
+        const categoryId = categoryMap[test.categorySlug];
+        if (!categoryId) {
+            console.log('  Skipping ' + test.name + ' - category not found: ' + test.categorySlug);
+            continue;
+        }
+
+        const existing = await prisma.diagnosticTest.findUnique({
+            where: { slug: test.slug },
+        });
+
+        const data = {
+            name: test.name,
+            shortName: test.shortName,
+            aliases: test.aliases || [],
+            categoryId,
+            testType: test.testType,
+            description: test.description,
+            sampleType: test.sampleType,
+            fastingRequired: test.fastingRequired,
+            fastingHours: test.fastingHours,
+            preparationInstructions: test.preparationInstructions,
+            reportTimeHours: test.reportTimeHours,
+            normalRanges: test.normalRanges || {},
+            relatedConditions: test.relatedConditions || [],
+            keywords: test.keywords || [],
+            bodySystem: test.bodySystem,
+            specialistType: test.specialistType,
+            homeCollectionPossible: test.homeCollectionPossible,
+            avgPriceInr: test.avgPriceInr,
+            metaTitle: test.name + ' - Cost, Normal Range, Preparation | aihealz',
+            metaDescription: 'Get ' + test.name + ' (' + (test.shortName || '') + ') at certified labs. Compare prices from Rs.' + test.avgPriceInr + '. Book online with home collection.',
+        };
+
+        if (existing) {
+            await prisma.diagnosticTest.update({
+                where: { slug: test.slug },
+                data,
+            });
+            updated++;
+        } else {
+            await prisma.diagnosticTest.create({
+                data: {
+                    slug: test.slug,
+                    ...data,
+                },
+            });
+            created++;
+        }
+    }
+
+    console.log('\nSummary:');
+    console.log('  Categories: ' + CATEGORIES.length);
+    console.log('  Tests created: ' + created);
+    console.log('  Tests updated: ' + updated);
+}
+
+main()
+    .catch(console.error)
+    .finally(() => prisma.\$disconnect());

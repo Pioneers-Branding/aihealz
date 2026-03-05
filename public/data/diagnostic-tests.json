@@ -1,0 +1,962 @@
+{
+  "categories": [
+    { "id": "blood", "name": "Blood Tests", "icon": "droplet", "description": "Complete blood analysis and hematology tests" },
+    { "id": "metabolic", "name": "Metabolic Panel", "icon": "activity", "description": "Measure body chemistry and organ function" },
+    { "id": "lipid", "name": "Lipid Panel", "icon": "heart", "description": "Cholesterol and cardiovascular risk markers" },
+    { "id": "thyroid", "name": "Thyroid Tests", "icon": "zap", "description": "Thyroid hormone and function tests" },
+    { "id": "liver", "name": "Liver Function", "icon": "pill", "description": "Liver enzymes and hepatic health markers" },
+    { "id": "kidney", "name": "Kidney Function", "icon": "filter", "description": "Renal function and kidney health tests" },
+    { "id": "diabetes", "name": "Diabetes Tests", "icon": "thermometer", "description": "Blood sugar and diabetes monitoring" },
+    { "id": "hormones", "name": "Hormone Panel", "icon": "target", "description": "Endocrine and reproductive hormones" },
+    { "id": "vitamins", "name": "Vitamins & Minerals", "icon": "sun", "description": "Nutritional deficiency screening" },
+    { "id": "infection", "name": "Infection Markers", "icon": "shield", "description": "Inflammatory and infection indicators" },
+    { "id": "cardiac", "name": "Cardiac Markers", "icon": "heart-pulse", "description": "Heart health and cardiac enzymes" },
+    { "id": "cancer", "name": "Tumor Markers", "icon": "alert-circle", "description": "Cancer screening and monitoring" },
+    { "id": "urine", "name": "Urine Tests", "icon": "beaker", "description": "Urinalysis and kidney screening" },
+    { "id": "stool", "name": "Stool Tests", "icon": "clipboard", "description": "Gastrointestinal health markers" },
+    { "id": "allergy", "name": "Allergy Tests", "icon": "wind", "description": "Allergen sensitivity testing" },
+    { "id": "imaging", "name": "Imaging & Scans", "icon": "scan", "description": "X-ray, CT, MRI, and ultrasound" },
+    { "id": "genetic", "name": "Genetic Tests", "icon": "dna", "description": "DNA analysis and genetic screening" },
+    { "id": "autoimmune", "name": "Autoimmune Panel", "icon": "shield-alert", "description": "Autoimmune disease markers" },
+    { "id": "infectious", "name": "Infectious Disease", "icon": "virus", "description": "Viral, bacterial, and parasitic tests" },
+    { "id": "prenatal", "name": "Prenatal & Fertility", "icon": "baby", "description": "Pregnancy and fertility testing" },
+    { "id": "wellness", "name": "Wellness Packages", "icon": "sparkles", "description": "Comprehensive health checkup packages" }
+  ],
+  "tests": [
+    {
+      "id": "cbc",
+      "name": "Complete Blood Count (CBC)",
+      "slug": "complete-blood-count-cbc",
+      "category": "blood",
+      "type": "lab_test",
+      "description": "A complete blood count (CBC) is a blood test that measures your red blood cells, white blood cells, and platelets. It's one of the most common blood tests and helps detect a wide range of disorders including anemia, infection, and blood cancers.",
+      "seoDescription": "Get CBC test at best prices. Complete Blood Count measures hemoglobin, RBC, WBC, platelets. Book online with home collection. Results in 24 hours.",
+      "aliases": ["Full Blood Count", "FBC", "Blood Panel", "Hemogram"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "6-24 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation required", "Stay hydrated before the test"],
+      "components": [
+        { "name": "Hemoglobin (Hb)", "unit": "g/dL", "male": { "low": 13.5, "high": 17.5 }, "female": { "low": 12.0, "high": 16.0 } },
+        { "name": "Hematocrit (HCT)", "unit": "%", "male": { "low": 38.8, "high": 50.0 }, "female": { "low": 34.9, "high": 44.5 } },
+        { "name": "RBC Count", "unit": "million/uL", "male": { "low": 4.5, "high": 5.5 }, "female": { "low": 4.0, "high": 5.0 } },
+        { "name": "WBC Count", "unit": "cells/uL", "range": { "low": 4500, "high": 11000 } },
+        { "name": "Platelet Count", "unit": "/uL", "range": { "low": 150000, "high": 400000 } },
+        { "name": "MCV", "unit": "fL", "range": { "low": 80, "high": 100 } },
+        { "name": "MCH", "unit": "pg", "range": { "low": 27, "high": 33 } },
+        { "name": "MCHC", "unit": "g/dL", "range": { "low": 32, "high": 36 } },
+        { "name": "RDW", "unit": "%", "range": { "low": 11.5, "high": 14.5 } }
+      ],
+      "costs": {
+        "usa": { "min": 15, "max": 50, "currency": "USD" },
+        "uk": { "min": 35, "max": 80, "currency": "GBP" },
+        "india": { "min": 200, "max": 500, "currency": "INR" },
+        "thailand": { "min": 300, "max": 800, "currency": "THB" },
+        "uae": { "min": 50, "max": 150, "currency": "AED" },
+        "turkey": { "min": 100, "max": 300, "currency": "TRY" }
+      },
+      "relatedConditions": ["Anemia", "Infections", "Leukemia", "Thrombocytopenia"],
+      "relatedTests": ["iron-studies", "vitamin-b12", "reticulocyte-count"],
+      "faqs": [
+        { "question": "How often should I get a CBC test?", "answer": "For healthy adults, annually as part of routine checkup. More frequently if you have chronic conditions." },
+        { "question": "Can CBC detect cancer?", "answer": "CBC can show abnormalities that may suggest blood cancers like leukemia, but it's not a definitive cancer test." }
+      ]
+    },
+    {
+      "id": "lipid-profile",
+      "name": "Lipid Profile (Cholesterol Panel)",
+      "slug": "lipid-profile-cholesterol-panel",
+      "category": "lipid",
+      "type": "lab_test",
+      "description": "A lipid profile measures the levels of fats and fatty substances in your blood, including total cholesterol, LDL, HDL, and triglycerides. It's essential for assessing cardiovascular disease risk.",
+      "seoDescription": "Book Lipid Profile test online. Measures cholesterol, LDL, HDL, triglycerides. Essential for heart health. Fasting required. Home collection available.",
+      "aliases": ["Cholesterol Test", "Lipid Panel", "Cardiac Risk Panel"],
+      "fasting": true,
+      "fastingHours": 12,
+      "sampleType": "blood",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["Fast for 9-12 hours before test", "Water is allowed", "Avoid alcohol 24 hours before"],
+      "components": [
+        { "name": "Total Cholesterol", "unit": "mg/dL", "range": { "low": 0, "high": 200 }, "optimal": "<200" },
+        { "name": "LDL Cholesterol", "unit": "mg/dL", "range": { "low": 0, "high": 100 }, "optimal": "<100" },
+        { "name": "HDL Cholesterol", "unit": "mg/dL", "male": { "low": 40, "high": 999 }, "female": { "low": 50, "high": 999 }, "optimal": ">60" },
+        { "name": "Triglycerides", "unit": "mg/dL", "range": { "low": 0, "high": 150 }, "optimal": "<150" },
+        { "name": "VLDL", "unit": "mg/dL", "range": { "low": 5, "high": 40 } },
+        { "name": "Total/HDL Ratio", "unit": "ratio", "range": { "low": 0, "high": 5 }, "optimal": "<4.5" }
+      ],
+      "costs": {
+        "usa": { "min": 30, "max": 100, "currency": "USD" },
+        "uk": { "min": 40, "max": 100, "currency": "GBP" },
+        "india": { "min": 300, "max": 800, "currency": "INR" },
+        "thailand": { "min": 400, "max": 1000, "currency": "THB" },
+        "uae": { "min": 80, "max": 200, "currency": "AED" },
+        "turkey": { "min": 150, "max": 400, "currency": "TRY" }
+      },
+      "relatedConditions": ["Heart Disease", "Stroke", "Atherosclerosis", "Metabolic Syndrome"],
+      "relatedTests": ["hs-crp", "apolipoprotein-b", "lp-a"],
+      "faqs": [
+        { "question": "What is a good cholesterol level?", "answer": "Total cholesterol below 200 mg/dL, LDL below 100 mg/dL, HDL above 60 mg/dL, and triglycerides below 150 mg/dL are considered optimal." },
+        { "question": "How often should I check cholesterol?", "answer": "Every 4-6 years for healthy adults, more frequently if you have risk factors or are on cholesterol medication." }
+      ]
+    },
+    {
+      "id": "hba1c",
+      "name": "HbA1c (Glycated Hemoglobin)",
+      "slug": "hba1c-glycated-hemoglobin",
+      "category": "diabetes",
+      "type": "lab_test",
+      "description": "HbA1c measures your average blood sugar levels over the past 2-3 months. It's the gold standard test for diagnosing diabetes and monitoring blood sugar control in diabetics.",
+      "seoDescription": "Book HbA1c test online. Measures 3-month average blood sugar. Essential for diabetes diagnosis & monitoring. No fasting required. Home collection available.",
+      "aliases": ["A1C", "Glycosylated Hemoglobin", "Hemoglobin A1c"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["No fasting required", "Can be done any time of day"],
+      "components": [
+        { "name": "HbA1c", "unit": "%", "range": { "low": 4.0, "high": 5.6 }, "prediabetes": { "low": 5.7, "high": 6.4 }, "diabetes": ">6.5" }
+      ],
+      "costs": {
+        "usa": { "min": 20, "max": 60, "currency": "USD" },
+        "uk": { "min": 30, "max": 70, "currency": "GBP" },
+        "india": { "min": 300, "max": 600, "currency": "INR" },
+        "thailand": { "min": 400, "max": 900, "currency": "THB" },
+        "uae": { "min": 60, "max": 150, "currency": "AED" },
+        "turkey": { "min": 100, "max": 300, "currency": "TRY" }
+      },
+      "relatedConditions": ["Type 2 Diabetes", "Type 1 Diabetes", "Prediabetes", "Gestational Diabetes"],
+      "relatedTests": ["fasting-glucose", "ogtt", "fasting-insulin"],
+      "faqs": [
+        { "question": "What HbA1c level indicates diabetes?", "answer": "HbA1c of 6.5% or higher indicates diabetes. 5.7-6.4% indicates prediabetes." },
+        { "question": "How often should diabetics test HbA1c?", "answer": "Every 3 months if not at goal, every 6 months if stable and well-controlled." }
+      ]
+    },
+    {
+      "id": "thyroid-profile",
+      "name": "Thyroid Profile (T3, T4, TSH)",
+      "slug": "thyroid-profile-t3-t4-tsh",
+      "category": "thyroid",
+      "type": "lab_test",
+      "description": "A complete thyroid panel measures TSH, T3, and T4 hormones to evaluate thyroid function. It helps diagnose hypothyroidism, hyperthyroidism, and other thyroid disorders.",
+      "seoDescription": "Book Thyroid Profile test. Includes TSH, T3, T4. Diagnose thyroid disorders. No fasting needed. Home collection available. Results in 24 hours.",
+      "aliases": ["Thyroid Function Test", "TFT", "Thyroid Panel"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["No fasting required", "Take test in morning if on thyroid medication", "Inform about biotin supplements"],
+      "components": [
+        { "name": "TSH", "unit": "mIU/L", "range": { "low": 0.4, "high": 4.0 } },
+        { "name": "Free T4 (FT4)", "unit": "ng/dL", "range": { "low": 0.8, "high": 1.8 } },
+        { "name": "Free T3 (FT3)", "unit": "pg/mL", "range": { "low": 2.3, "high": 4.2 } },
+        { "name": "Total T4", "unit": "ug/dL", "range": { "low": 4.5, "high": 12.0 } },
+        { "name": "Total T3", "unit": "ng/dL", "range": { "low": 80, "high": 200 } }
+      ],
+      "costs": {
+        "usa": { "min": 50, "max": 150, "currency": "USD" },
+        "uk": { "min": 60, "max": 120, "currency": "GBP" },
+        "india": { "min": 400, "max": 1000, "currency": "INR" },
+        "thailand": { "min": 600, "max": 1500, "currency": "THB" },
+        "uae": { "min": 100, "max": 250, "currency": "AED" },
+        "turkey": { "min": 200, "max": 500, "currency": "TRY" }
+      },
+      "relatedConditions": ["Hypothyroidism", "Hyperthyroidism", "Hashimoto's Thyroiditis", "Graves Disease"],
+      "relatedTests": ["tpo-antibodies", "thyroglobulin", "thyroid-ultrasound"]
+    },
+    {
+      "id": "liver-function-test",
+      "name": "Liver Function Test (LFT)",
+      "slug": "liver-function-test-lft",
+      "category": "liver",
+      "type": "lab_test",
+      "description": "Liver function tests measure various enzymes and proteins in your blood to assess liver health. They help detect liver damage, hepatitis, cirrhosis, and monitor liver disease.",
+      "seoDescription": "Book Liver Function Test (LFT) online. Measures liver enzymes ALT, AST, ALP, bilirubin, albumin. Detect liver disease early. Home collection available.",
+      "aliases": ["LFT", "Hepatic Panel", "Liver Panel"],
+      "fasting": true,
+      "fastingHours": 8,
+      "sampleType": "blood",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["Fast for 8-12 hours", "Avoid alcohol 24 hours before", "Inform about medications"],
+      "components": [
+        { "name": "ALT (SGPT)", "unit": "U/L", "range": { "low": 7, "high": 56 } },
+        { "name": "AST (SGOT)", "unit": "U/L", "range": { "low": 10, "high": 40 } },
+        { "name": "ALP", "unit": "U/L", "range": { "low": 44, "high": 147 } },
+        { "name": "GGT", "unit": "U/L", "male": { "low": 8, "high": 61 }, "female": { "low": 5, "high": 36 } },
+        { "name": "Total Bilirubin", "unit": "mg/dL", "range": { "low": 0.1, "high": 1.2 } },
+        { "name": "Direct Bilirubin", "unit": "mg/dL", "range": { "low": 0.0, "high": 0.3 } },
+        { "name": "Albumin", "unit": "g/dL", "range": { "low": 3.5, "high": 5.0 } },
+        { "name": "Total Protein", "unit": "g/dL", "range": { "low": 6.0, "high": 8.3 } }
+      ],
+      "costs": {
+        "usa": { "min": 40, "max": 120, "currency": "USD" },
+        "uk": { "min": 50, "max": 100, "currency": "GBP" },
+        "india": { "min": 400, "max": 900, "currency": "INR" },
+        "thailand": { "min": 500, "max": 1200, "currency": "THB" },
+        "uae": { "min": 100, "max": 250, "currency": "AED" },
+        "turkey": { "min": 150, "max": 400, "currency": "TRY" }
+      },
+      "relatedConditions": ["Hepatitis", "Fatty Liver", "Cirrhosis", "Liver Cancer"],
+      "relatedTests": ["hepatitis-panel", "fibroscan", "liver-ultrasound"]
+    },
+    {
+      "id": "kidney-function-test",
+      "name": "Kidney Function Test (KFT/RFT)",
+      "slug": "kidney-function-test-kft-rft",
+      "category": "kidney",
+      "type": "lab_test",
+      "description": "Kidney function tests measure creatinine, BUN, and other markers to evaluate how well your kidneys are filtering waste from your blood. Essential for detecting kidney disease early.",
+      "seoDescription": "Book Kidney Function Test (KFT) online. Measures creatinine, BUN, uric acid, eGFR. Detect kidney disease early. Home collection available.",
+      "aliases": ["KFT", "RFT", "Renal Function Test", "Renal Panel"],
+      "fasting": true,
+      "fastingHours": 8,
+      "sampleType": "blood",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["Fast for 8-12 hours", "Stay hydrated", "Avoid excessive protein before test"],
+      "components": [
+        { "name": "Creatinine", "unit": "mg/dL", "male": { "low": 0.7, "high": 1.3 }, "female": { "low": 0.6, "high": 1.1 } },
+        { "name": "BUN", "unit": "mg/dL", "range": { "low": 7, "high": 20 } },
+        { "name": "Uric Acid", "unit": "mg/dL", "male": { "low": 3.4, "high": 7.0 }, "female": { "low": 2.4, "high": 6.0 } },
+        { "name": "eGFR", "unit": "mL/min/1.73m2", "range": { "low": 90, "high": 999 } },
+        { "name": "BUN/Creatinine Ratio", "unit": "ratio", "range": { "low": 10, "high": 20 } }
+      ],
+      "costs": {
+        "usa": { "min": 30, "max": 90, "currency": "USD" },
+        "uk": { "min": 40, "max": 90, "currency": "GBP" },
+        "india": { "min": 350, "max": 800, "currency": "INR" },
+        "thailand": { "min": 450, "max": 1000, "currency": "THB" },
+        "uae": { "min": 80, "max": 200, "currency": "AED" },
+        "turkey": { "min": 120, "max": 350, "currency": "TRY" }
+      },
+      "relatedConditions": ["Chronic Kidney Disease", "Kidney Stones", "Diabetic Nephropathy", "Gout"],
+      "relatedTests": ["urine-routine", "kidney-ultrasound", "microalbumin"]
+    },
+    {
+      "id": "vitamin-d",
+      "name": "Vitamin D (25-Hydroxy)",
+      "slug": "vitamin-d-25-hydroxy",
+      "category": "vitamins",
+      "type": "lab_test",
+      "description": "Vitamin D test measures the level of 25-hydroxyvitamin D in your blood. Vitamin D deficiency is extremely common and linked to bone problems, fatigue, and weakened immunity.",
+      "seoDescription": "Book Vitamin D test online. Check 25-OH Vitamin D levels. Detect deficiency causing fatigue, bone pain. No fasting required. Home collection available.",
+      "aliases": ["25-OH Vitamin D", "Vitamin D3", "Cholecalciferol"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24-48 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation", "Best taken in morning"],
+      "components": [
+        { "name": "25-OH Vitamin D", "unit": "ng/mL", "deficient": "<20", "insufficient": "20-29", "sufficient": "30-100", "toxic": ">100" }
+      ],
+      "costs": {
+        "usa": { "min": 40, "max": 100, "currency": "USD" },
+        "uk": { "min": 30, "max": 80, "currency": "GBP" },
+        "india": { "min": 500, "max": 1200, "currency": "INR" },
+        "thailand": { "min": 600, "max": 1500, "currency": "THB" },
+        "uae": { "min": 80, "max": 200, "currency": "AED" },
+        "turkey": { "min": 150, "max": 400, "currency": "TRY" }
+      },
+      "relatedConditions": ["Osteoporosis", "Rickets", "Fatigue", "Depression", "Weakened Immunity"],
+      "relatedTests": ["calcium", "pth", "bone-density"]
+    },
+    {
+      "id": "vitamin-b12",
+      "name": "Vitamin B12",
+      "slug": "vitamin-b12",
+      "category": "vitamins",
+      "type": "lab_test",
+      "description": "Vitamin B12 test measures the level of this essential vitamin in your blood. B12 deficiency can cause anemia, nerve damage, fatigue, and cognitive problems.",
+      "seoDescription": "Book Vitamin B12 test online. Detect B12 deficiency causing fatigue, numbness, anemia. Essential for vegetarians. No fasting required.",
+      "aliases": ["Cobalamin", "B12 Level"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24-48 hours",
+      "homeCollection": true,
+      "preparation": ["No fasting required", "Inform about B12 supplements"],
+      "components": [
+        { "name": "Vitamin B12", "unit": "pg/mL", "range": { "low": 200, "high": 900 }, "deficient": "<200", "borderline": "200-300" }
+      ],
+      "costs": {
+        "usa": { "min": 30, "max": 80, "currency": "USD" },
+        "uk": { "min": 25, "max": 60, "currency": "GBP" },
+        "india": { "min": 400, "max": 900, "currency": "INR" },
+        "thailand": { "min": 500, "max": 1200, "currency": "THB" },
+        "uae": { "min": 70, "max": 180, "currency": "AED" },
+        "turkey": { "min": 120, "max": 350, "currency": "TRY" }
+      },
+      "relatedConditions": ["Pernicious Anemia", "Neuropathy", "Cognitive Decline", "Fatigue"],
+      "relatedTests": ["folate", "cbc", "homocysteine", "mma"]
+    },
+    {
+      "id": "iron-studies",
+      "name": "Iron Studies (Iron Profile)",
+      "slug": "iron-studies-profile",
+      "category": "blood",
+      "type": "lab_test",
+      "description": "Iron studies measure serum iron, ferritin, TIBC, and transferrin saturation to evaluate iron status. It helps diagnose iron deficiency anemia and iron overload conditions.",
+      "seoDescription": "Book Iron Studies test online. Measures serum iron, ferritin, TIBC. Detect iron deficiency or overload. Fasting required. Home collection available.",
+      "aliases": ["Iron Profile", "Serum Iron", "Iron Panel"],
+      "fasting": true,
+      "fastingHours": 12,
+      "sampleType": "blood",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["Fast for 12 hours", "Best tested in morning", "Avoid iron supplements 24 hours before"],
+      "components": [
+        { "name": "Serum Iron", "unit": "ug/dL", "male": { "low": 65, "high": 175 }, "female": { "low": 50, "high": 170 } },
+        { "name": "Ferritin", "unit": "ng/mL", "male": { "low": 20, "high": 250 }, "female": { "low": 10, "high": 120 } },
+        { "name": "TIBC", "unit": "ug/dL", "range": { "low": 250, "high": 400 } },
+        { "name": "Transferrin Saturation", "unit": "%", "range": { "low": 20, "high": 50 } }
+      ],
+      "costs": {
+        "usa": { "min": 40, "max": 120, "currency": "USD" },
+        "uk": { "min": 45, "max": 100, "currency": "GBP" },
+        "india": { "min": 500, "max": 1200, "currency": "INR" },
+        "thailand": { "min": 700, "max": 1500, "currency": "THB" },
+        "uae": { "min": 100, "max": 250, "currency": "AED" },
+        "turkey": { "min": 180, "max": 450, "currency": "TRY" }
+      },
+      "relatedConditions": ["Iron Deficiency Anemia", "Hemochromatosis", "Chronic Disease Anemia"],
+      "relatedTests": ["cbc", "vitamin-b12", "reticulocyte-count"]
+    },
+    {
+      "id": "urine-routine",
+      "name": "Urine Routine & Microscopy",
+      "slug": "urine-routine-microscopy",
+      "category": "urine",
+      "type": "lab_test",
+      "description": "Urine routine examination analyzes the physical, chemical, and microscopic properties of urine. It screens for urinary tract infections, kidney disease, and diabetes.",
+      "seoDescription": "Book Urine Routine test online. Detects UTI, kidney problems, diabetes. No fasting required. Results in 24 hours. Affordable prices.",
+      "aliases": ["Urinalysis", "Urine R/M", "Complete Urine Examination"],
+      "fasting": false,
+      "sampleType": "urine",
+      "turnaround": "6-24 hours",
+      "homeCollection": true,
+      "preparation": ["Collect midstream urine", "First morning sample preferred", "Avoid contamination"],
+      "components": [
+        { "name": "Color", "unit": "", "normal": "Pale to dark yellow" },
+        { "name": "pH", "unit": "", "range": { "low": 4.5, "high": 8.0 } },
+        { "name": "Specific Gravity", "unit": "", "range": { "low": 1.005, "high": 1.030 } },
+        { "name": "Protein", "unit": "", "normal": "Negative" },
+        { "name": "Glucose", "unit": "", "normal": "Negative" },
+        { "name": "Ketones", "unit": "", "normal": "Negative" },
+        { "name": "Blood", "unit": "", "normal": "Negative" },
+        { "name": "WBC", "unit": "/HPF", "range": { "low": 0, "high": 5 } },
+        { "name": "RBC", "unit": "/HPF", "range": { "low": 0, "high": 3 } }
+      ],
+      "costs": {
+        "usa": { "min": 10, "max": 40, "currency": "USD" },
+        "uk": { "min": 20, "max": 50, "currency": "GBP" },
+        "india": { "min": 100, "max": 300, "currency": "INR" },
+        "thailand": { "min": 150, "max": 400, "currency": "THB" },
+        "uae": { "min": 30, "max": 80, "currency": "AED" },
+        "turkey": { "min": 50, "max": 150, "currency": "TRY" }
+      },
+      "relatedConditions": ["UTI", "Kidney Disease", "Diabetes", "Kidney Stones"],
+      "relatedTests": ["urine-culture", "kidney-function-test", "microalbumin"]
+    },
+    {
+      "id": "crp-hs",
+      "name": "High-Sensitivity CRP (hs-CRP)",
+      "slug": "hs-crp-high-sensitivity-crp",
+      "category": "cardiac",
+      "type": "lab_test",
+      "description": "High-sensitivity C-reactive protein (hs-CRP) measures low levels of inflammation in the body. It's an important marker for cardiovascular disease risk assessment.",
+      "seoDescription": "Book hs-CRP test online. Measures inflammation and heart disease risk. Important cardiac marker. No fasting required. Home collection available.",
+      "aliases": ["hs-CRP", "High Sensitivity C-Reactive Protein", "Cardiac CRP"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation", "Avoid testing during acute illness"],
+      "components": [
+        { "name": "hs-CRP", "unit": "mg/L", "lowRisk": "<1.0", "averageRisk": "1.0-3.0", "highRisk": ">3.0" }
+      ],
+      "costs": {
+        "usa": { "min": 25, "max": 70, "currency": "USD" },
+        "uk": { "min": 30, "max": 70, "currency": "GBP" },
+        "india": { "min": 400, "max": 900, "currency": "INR" },
+        "thailand": { "min": 500, "max": 1200, "currency": "THB" },
+        "uae": { "min": 80, "max": 180, "currency": "AED" },
+        "turkey": { "min": 120, "max": 350, "currency": "TRY" }
+      },
+      "relatedConditions": ["Heart Disease", "Inflammation", "Autoimmune Disorders"],
+      "relatedTests": ["lipid-profile", "homocysteine", "lp-pla2"]
+    },
+    {
+      "id": "psa",
+      "name": "PSA (Prostate Specific Antigen)",
+      "slug": "psa-prostate-specific-antigen",
+      "category": "cancer",
+      "type": "lab_test",
+      "description": "PSA test measures the level of prostate-specific antigen in blood. It's used to screen for prostate cancer and monitor treatment in men with prostate conditions.",
+      "seoDescription": "Book PSA test online. Screen for prostate cancer. Important for men over 50. No fasting required. Home collection available. Results in 24 hours.",
+      "aliases": ["Prostate Specific Antigen", "Total PSA", "Prostate Test"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["No ejaculation 48 hours before", "No prostate examination before", "No cycling before test"],
+      "components": [
+        { "name": "Total PSA", "unit": "ng/mL", "ageAdjusted": { "40-49": "<2.5", "50-59": "<3.5", "60-69": "<4.5", "70+": "<6.5" } }
+      ],
+      "costs": {
+        "usa": { "min": 30, "max": 80, "currency": "USD" },
+        "uk": { "min": 40, "max": 90, "currency": "GBP" },
+        "india": { "min": 400, "max": 1000, "currency": "INR" },
+        "thailand": { "min": 600, "max": 1400, "currency": "THB" },
+        "uae": { "min": 100, "max": 220, "currency": "AED" },
+        "turkey": { "min": 150, "max": 400, "currency": "TRY" }
+      },
+      "relatedConditions": ["Prostate Cancer", "BPH", "Prostatitis"],
+      "relatedTests": ["free-psa", "psa-ratio", "prostate-ultrasound"]
+    },
+    {
+      "id": "tsh",
+      "name": "TSH (Thyroid Stimulating Hormone)",
+      "slug": "tsh-thyroid-stimulating-hormone",
+      "category": "thyroid",
+      "type": "lab_test",
+      "description": "TSH test measures the level of thyroid-stimulating hormone in blood. It's the first-line test for thyroid function and helps diagnose hypo or hyperthyroidism.",
+      "seoDescription": "Book TSH test online. First-line thyroid screening. Detect hypothyroidism or hyperthyroidism. No fasting required. Home collection available.",
+      "aliases": ["Thyroid Stimulating Hormone", "Thyrotropin"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["No fasting required", "Best taken in morning", "Inform about thyroid medications"],
+      "components": [
+        { "name": "TSH", "unit": "mIU/L", "range": { "low": 0.4, "high": 4.0 }, "hypothyroid": ">4.0", "hyperthyroid": "<0.4" }
+      ],
+      "costs": {
+        "usa": { "min": 20, "max": 60, "currency": "USD" },
+        "uk": { "min": 25, "max": 60, "currency": "GBP" },
+        "india": { "min": 200, "max": 500, "currency": "INR" },
+        "thailand": { "min": 300, "max": 700, "currency": "THB" },
+        "uae": { "min": 50, "max": 120, "currency": "AED" },
+        "turkey": { "min": 80, "max": 250, "currency": "TRY" }
+      },
+      "relatedConditions": ["Hypothyroidism", "Hyperthyroidism", "Thyroid Nodules"],
+      "relatedTests": ["thyroid-profile", "tpo-antibodies", "thyroid-ultrasound"]
+    },
+    {
+      "id": "fasting-glucose",
+      "name": "Fasting Blood Glucose",
+      "slug": "fasting-blood-glucose",
+      "category": "diabetes",
+      "type": "lab_test",
+      "description": "Fasting blood glucose measures blood sugar levels after an overnight fast. It's used to screen for diabetes and prediabetes.",
+      "seoDescription": "Book Fasting Blood Glucose test online. Screen for diabetes. 8-12 hour fasting required. Results same day. Home collection available.",
+      "aliases": ["FBS", "Fasting Blood Sugar", "FPG"],
+      "fasting": true,
+      "fastingHours": 8,
+      "sampleType": "blood",
+      "turnaround": "6-24 hours",
+      "homeCollection": true,
+      "preparation": ["Fast for 8-12 hours", "Water allowed", "Take medications as advised"],
+      "components": [
+        { "name": "Fasting Glucose", "unit": "mg/dL", "normal": "<100", "prediabetes": "100-125", "diabetes": ">126" }
+      ],
+      "costs": {
+        "usa": { "min": 10, "max": 30, "currency": "USD" },
+        "uk": { "min": 15, "max": 40, "currency": "GBP" },
+        "india": { "min": 50, "max": 150, "currency": "INR" },
+        "thailand": { "min": 100, "max": 300, "currency": "THB" },
+        "uae": { "min": 20, "max": 60, "currency": "AED" },
+        "turkey": { "min": 40, "max": 120, "currency": "TRY" }
+      },
+      "relatedConditions": ["Diabetes", "Prediabetes", "Hypoglycemia"],
+      "relatedTests": ["hba1c", "ogtt", "pp-glucose"]
+    },
+    {
+      "id": "esr",
+      "name": "ESR (Erythrocyte Sedimentation Rate)",
+      "slug": "esr-erythrocyte-sedimentation-rate",
+      "category": "infection",
+      "type": "lab_test",
+      "description": "ESR measures how quickly red blood cells settle at the bottom of a test tube. It's a non-specific marker of inflammation in the body.",
+      "seoDescription": "Book ESR test online. Measures inflammation levels. Non-specific marker for infections. No fasting required. Results same day.",
+      "aliases": ["Sed Rate", "Sedimentation Rate"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "6-24 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation required"],
+      "components": [
+        { "name": "ESR", "unit": "mm/hr", "male": { "low": 0, "high": 15 }, "female": { "low": 0, "high": 20 } }
+      ],
+      "costs": {
+        "usa": { "min": 10, "max": 30, "currency": "USD" },
+        "uk": { "min": 15, "max": 35, "currency": "GBP" },
+        "india": { "min": 80, "max": 200, "currency": "INR" },
+        "thailand": { "min": 100, "max": 300, "currency": "THB" },
+        "uae": { "min": 25, "max": 60, "currency": "AED" },
+        "turkey": { "min": 40, "max": 120, "currency": "TRY" }
+      },
+      "relatedConditions": ["Infections", "Autoimmune Disorders", "Cancer", "Inflammatory Diseases"],
+      "relatedTests": ["crp", "cbc", "ana"]
+    },
+    {
+      "id": "mri-brain",
+      "name": "MRI Brain",
+      "slug": "mri-brain",
+      "category": "imaging",
+      "type": "imaging",
+      "description": "Brain MRI uses magnetic fields and radio waves to create detailed images of the brain. It helps diagnose tumors, strokes, infections, and other brain conditions without radiation.",
+      "seoDescription": "Book MRI Brain scan online. Detailed brain imaging without radiation. Diagnose tumors, strokes, MS. Compare prices from top centers.",
+      "aliases": ["Brain MRI", "Head MRI", "Cranial MRI"],
+      "fasting": false,
+      "sampleType": "imaging",
+      "turnaround": "24-48 hours",
+      "homeCollection": false,
+      "preparation": ["Remove all metal objects", "Inform about pacemakers or implants", "May require contrast dye", "Claustrophobic patients may need sedation"],
+      "components": [
+        { "name": "Brain MRI", "type": "imaging", "technique": "1.5T or 3T MRI" }
+      ],
+      "costs": {
+        "usa": { "min": 400, "max": 2500, "currency": "USD" },
+        "uk": { "min": 250, "max": 700, "currency": "GBP" },
+        "india": { "min": 3000, "max": 8000, "currency": "INR" },
+        "thailand": { "min": 6000, "max": 15000, "currency": "THB" },
+        "uae": { "min": 800, "max": 2000, "currency": "AED" },
+        "turkey": { "min": 1500, "max": 4000, "currency": "TRY" }
+      },
+      "relatedConditions": ["Brain Tumor", "Stroke", "Multiple Sclerosis", "Epilepsy", "Alzheimer's"],
+      "relatedTests": ["ct-brain", "mra-brain", "eeg"]
+    },
+    {
+      "id": "ct-chest",
+      "name": "CT Scan Chest",
+      "slug": "ct-scan-chest",
+      "category": "imaging",
+      "type": "imaging",
+      "description": "CT chest scan creates detailed cross-sectional images of the chest including lungs, heart, and blood vessels. Used to diagnose lung cancer, infections, and pulmonary conditions.",
+      "seoDescription": "Book CT Chest scan online. Detailed lung and chest imaging. Diagnose lung cancer, pneumonia, COVID. Compare prices from certified centers.",
+      "aliases": ["Chest CT", "HRCT Chest", "Thoracic CT"],
+      "fasting": false,
+      "sampleType": "imaging",
+      "turnaround": "24-48 hours",
+      "homeCollection": false,
+      "preparation": ["May require contrast dye", "Inform about allergies", "Wear comfortable clothing", "Avoid eating 4 hours before if contrast used"],
+      "components": [
+        { "name": "CT Chest", "type": "imaging", "slices": "16-256 slice" }
+      ],
+      "costs": {
+        "usa": { "min": 300, "max": 1500, "currency": "USD" },
+        "uk": { "min": 200, "max": 500, "currency": "GBP" },
+        "india": { "min": 2000, "max": 5000, "currency": "INR" },
+        "thailand": { "min": 4000, "max": 10000, "currency": "THB" },
+        "uae": { "min": 500, "max": 1500, "currency": "AED" },
+        "turkey": { "min": 1000, "max": 3000, "currency": "TRY" }
+      },
+      "relatedConditions": ["Lung Cancer", "Pneumonia", "Pulmonary Embolism", "COVID-19"],
+      "relatedTests": ["chest-xray", "pulmonary-function-test", "pet-ct"]
+    },
+    {
+      "id": "ultrasound-abdomen",
+      "name": "Ultrasound Abdomen",
+      "slug": "ultrasound-abdomen",
+      "category": "imaging",
+      "type": "imaging",
+      "description": "Abdominal ultrasound uses sound waves to visualize organs in the abdomen including liver, kidneys, gallbladder, pancreas, and spleen. It's safe, non-invasive, and radiation-free.",
+      "seoDescription": "Book Abdominal Ultrasound online. Visualize liver, kidney, gallbladder. No radiation. Fasting may be required. Home visit available in select areas.",
+      "aliases": ["USG Abdomen", "Abdominal Sonography", "Whole Abdomen Ultrasound"],
+      "fasting": true,
+      "fastingHours": 6,
+      "sampleType": "imaging",
+      "turnaround": "Same day",
+      "homeCollection": false,
+      "preparation": ["Fast for 6-8 hours for upper abdomen", "Full bladder for lower abdomen", "Wear loose clothing"],
+      "components": [
+        { "name": "Ultrasound Abdomen", "type": "imaging", "areas": ["Liver", "Gallbladder", "Kidneys", "Pancreas", "Spleen"] }
+      ],
+      "costs": {
+        "usa": { "min": 100, "max": 500, "currency": "USD" },
+        "uk": { "min": 80, "max": 250, "currency": "GBP" },
+        "india": { "min": 500, "max": 1500, "currency": "INR" },
+        "thailand": { "min": 1000, "max": 3000, "currency": "THB" },
+        "uae": { "min": 200, "max": 600, "currency": "AED" },
+        "turkey": { "min": 300, "max": 900, "currency": "TRY" }
+      },
+      "relatedConditions": ["Gallstones", "Fatty Liver", "Kidney Stones", "Abdominal Pain"],
+      "relatedTests": ["liver-function-test", "kidney-function-test", "ct-abdomen"]
+    },
+    {
+      "id": "pet-ct",
+      "name": "PET-CT Scan",
+      "slug": "pet-ct-scan",
+      "category": "imaging",
+      "type": "imaging",
+      "description": "PET-CT combines PET and CT scans to show both metabolic activity and detailed anatomy. It's the gold standard for cancer staging, detecting metastases, and monitoring treatment response.",
+      "seoDescription": "Book PET-CT scan online. Gold standard for cancer staging. Detect metastases. Compare prices from accredited PET-CT centers.",
+      "aliases": ["PET Scan", "FDG PET-CT", "Whole Body PET"],
+      "fasting": true,
+      "fastingHours": 6,
+      "sampleType": "imaging",
+      "turnaround": "24-72 hours",
+      "homeCollection": false,
+      "preparation": ["Fast for 6 hours", "Diabetics need glucose control", "Avoid strenuous exercise 24 hours before", "Stay hydrated", "Wear comfortable clothing"],
+      "components": [
+        { "name": "PET-CT", "type": "imaging", "tracer": "FDG (F-18 fluorodeoxyglucose)" }
+      ],
+      "costs": {
+        "usa": { "min": 1500, "max": 6000, "currency": "USD" },
+        "uk": { "min": 800, "max": 2000, "currency": "GBP" },
+        "india": { "min": 15000, "max": 35000, "currency": "INR" },
+        "thailand": { "min": 30000, "max": 70000, "currency": "THB" },
+        "uae": { "min": 3000, "max": 8000, "currency": "AED" },
+        "turkey": { "min": 4000, "max": 12000, "currency": "TRY" }
+      },
+      "relatedConditions": ["Cancer Staging", "Lymphoma", "Lung Cancer", "Colorectal Cancer"],
+      "relatedTests": ["tumor-markers", "biopsy", "ct-scan"]
+    },
+    {
+      "id": "echocardiogram",
+      "name": "Echocardiogram (2D Echo)",
+      "slug": "echocardiogram-2d-echo",
+      "category": "cardiac",
+      "type": "imaging",
+      "description": "Echocardiogram uses ultrasound to create images of the heart. It shows heart structure, valve function, and pumping efficiency. Essential for diagnosing heart conditions.",
+      "seoDescription": "Book Echocardiogram (2D Echo) online. Visualize heart function. Diagnose valve problems, heart failure. Non-invasive. Compare prices.",
+      "aliases": ["2D Echo", "Echo", "Cardiac Ultrasound", "Heart Ultrasound"],
+      "fasting": false,
+      "sampleType": "imaging",
+      "turnaround": "Same day",
+      "homeCollection": false,
+      "preparation": ["No special preparation", "Wear comfortable upper clothing"],
+      "components": [
+        { "name": "2D Echo", "type": "imaging", "measures": ["Ejection Fraction", "Valve Function", "Chamber Size", "Wall Motion"] }
+      ],
+      "costs": {
+        "usa": { "min": 200, "max": 1000, "currency": "USD" },
+        "uk": { "min": 150, "max": 400, "currency": "GBP" },
+        "india": { "min": 1000, "max": 3000, "currency": "INR" },
+        "thailand": { "min": 2000, "max": 5000, "currency": "THB" },
+        "uae": { "min": 400, "max": 1000, "currency": "AED" },
+        "turkey": { "min": 500, "max": 1500, "currency": "TRY" }
+      },
+      "relatedConditions": ["Heart Failure", "Valve Disease", "Cardiomyopathy", "Congenital Heart Disease"],
+      "relatedTests": ["ecg", "tmt", "coronary-angiography"]
+    },
+    {
+      "id": "ecg",
+      "name": "ECG (Electrocardiogram)",
+      "slug": "ecg-electrocardiogram",
+      "category": "cardiac",
+      "type": "lab_test",
+      "description": "ECG records the electrical activity of the heart. It's a quick, painless test that helps detect heart rhythm problems, heart attacks, and other cardiac conditions.",
+      "seoDescription": "Book ECG test online. Quick heart rhythm check. Detect arrhythmias, heart attack signs. Results in minutes. Home ECG available.",
+      "aliases": ["EKG", "Electrocardiogram", "Heart Trace"],
+      "fasting": false,
+      "sampleType": "cardiac",
+      "turnaround": "Immediate",
+      "homeCollection": true,
+      "preparation": ["No special preparation", "Avoid creams on chest", "Wear comfortable clothing"],
+      "components": [
+        { "name": "12-Lead ECG", "type": "cardiac", "measures": ["Heart Rate", "Rhythm", "PR Interval", "QRS Duration", "QT Interval"] }
+      ],
+      "costs": {
+        "usa": { "min": 20, "max": 100, "currency": "USD" },
+        "uk": { "min": 30, "max": 80, "currency": "GBP" },
+        "india": { "min": 100, "max": 400, "currency": "INR" },
+        "thailand": { "min": 200, "max": 600, "currency": "THB" },
+        "uae": { "min": 50, "max": 150, "currency": "AED" },
+        "turkey": { "min": 80, "max": 250, "currency": "TRY" }
+      },
+      "relatedConditions": ["Arrhythmia", "Heart Attack", "Heart Block", "Atrial Fibrillation"],
+      "relatedTests": ["echocardiogram", "tmt", "holter-monitor"]
+    },
+    {
+      "id": "hepatitis-b-panel",
+      "name": "Hepatitis B Panel",
+      "slug": "hepatitis-b-panel",
+      "category": "infectious",
+      "type": "lab_test",
+      "description": "Hepatitis B panel tests for HBsAg, anti-HBs, anti-HBc to determine hepatitis B infection status, immunity, and whether vaccination is needed.",
+      "seoDescription": "Book Hepatitis B Panel online. Check HBsAg, antibodies. Detect active infection or immunity. Essential before vaccination. Home collection available.",
+      "aliases": ["HBV Panel", "Hep B Profile", "Hepatitis B Serology"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24-48 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation required"],
+      "components": [
+        { "name": "HBsAg", "unit": "", "normal": "Negative" },
+        { "name": "Anti-HBs", "unit": "mIU/mL", "immune": ">10" },
+        { "name": "Anti-HBc Total", "unit": "", "normal": "Negative" },
+        { "name": "HBeAg", "unit": "", "normal": "Negative" }
+      ],
+      "costs": {
+        "usa": { "min": 80, "max": 200, "currency": "USD" },
+        "uk": { "min": 60, "max": 150, "currency": "GBP" },
+        "india": { "min": 800, "max": 2000, "currency": "INR" },
+        "thailand": { "min": 1000, "max": 2500, "currency": "THB" },
+        "uae": { "min": 150, "max": 400, "currency": "AED" },
+        "turkey": { "min": 200, "max": 600, "currency": "TRY" }
+      },
+      "relatedConditions": ["Hepatitis B", "Chronic Hepatitis", "Liver Cirrhosis"],
+      "relatedTests": ["hepatitis-c", "liver-function-test", "hbv-dna"]
+    },
+    {
+      "id": "hiv-test",
+      "name": "HIV 1 & 2 Test",
+      "slug": "hiv-1-2-test",
+      "category": "infectious",
+      "type": "lab_test",
+      "description": "HIV test detects antibodies and/or antigens of HIV-1 and HIV-2. Modern 4th generation tests can detect infection as early as 2-4 weeks after exposure.",
+      "seoDescription": "Book confidential HIV test online. 4th generation HIV 1/2 test. Early detection within 2-4 weeks. Confidential results. Home collection available.",
+      "aliases": ["HIV Antibody Test", "HIV Combo Test", "AIDS Test"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24-48 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation", "Window period: test 4 weeks after exposure"],
+      "components": [
+        { "name": "HIV 1/2 Antibody", "unit": "", "normal": "Non-reactive" },
+        { "name": "p24 Antigen", "unit": "", "normal": "Non-reactive" }
+      ],
+      "costs": {
+        "usa": { "min": 40, "max": 150, "currency": "USD" },
+        "uk": { "min": 30, "max": 100, "currency": "GBP" },
+        "india": { "min": 300, "max": 800, "currency": "INR" },
+        "thailand": { "min": 400, "max": 1000, "currency": "THB" },
+        "uae": { "min": 80, "max": 200, "currency": "AED" },
+        "turkey": { "min": 150, "max": 400, "currency": "TRY" }
+      },
+      "relatedConditions": ["HIV/AIDS"],
+      "relatedTests": ["cd4-count", "hiv-viral-load", "std-panel"]
+    },
+    {
+      "id": "ana-test",
+      "name": "ANA (Antinuclear Antibody) Test",
+      "slug": "ana-antinuclear-antibody-test",
+      "category": "autoimmune",
+      "type": "lab_test",
+      "description": "ANA test detects antibodies that attack the body's own tissues. It's used to screen for autoimmune disorders like lupus, rheumatoid arthritis, and Sjogren's syndrome.",
+      "seoDescription": "Book ANA test online. Screen for autoimmune disorders like lupus. Detects antinuclear antibodies. No fasting required. Home collection available.",
+      "aliases": ["Antinuclear Antibodies", "FANA", "ANA Screen"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "48-72 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation required"],
+      "components": [
+        { "name": "ANA", "unit": "", "normal": "Negative", "patterns": ["Homogeneous", "Speckled", "Nucleolar", "Centromere"] }
+      ],
+      "costs": {
+        "usa": { "min": 50, "max": 150, "currency": "USD" },
+        "uk": { "min": 40, "max": 120, "currency": "GBP" },
+        "india": { "min": 600, "max": 1500, "currency": "INR" },
+        "thailand": { "min": 800, "max": 2000, "currency": "THB" },
+        "uae": { "min": 120, "max": 300, "currency": "AED" },
+        "turkey": { "min": 200, "max": 500, "currency": "TRY" }
+      },
+      "relatedConditions": ["Lupus (SLE)", "Rheumatoid Arthritis", "Sjogren's Syndrome", "Scleroderma"],
+      "relatedTests": ["anti-dsdna", "ena-panel", "rf-factor"]
+    },
+    {
+      "id": "allergy-panel",
+      "name": "Allergy Panel (IgE)",
+      "slug": "allergy-panel-ige",
+      "category": "allergy",
+      "type": "lab_test",
+      "description": "Allergy panel measures IgE antibodies to specific allergens including food, dust, pollen, and pet dander. Helps identify allergy triggers for proper management.",
+      "seoDescription": "Book Allergy Panel test online. Identify food, dust, pollen allergies. Measures specific IgE. No fasting required. Home collection available.",
+      "aliases": ["IgE Panel", "Allergen Screen", "Allergy Blood Test"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "48-72 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation", "Do not stop antihistamines unless advised"],
+      "components": [
+        { "name": "Total IgE", "unit": "IU/mL", "range": { "low": 0, "high": 100 } },
+        { "name": "Food Allergens", "type": "panel", "items": ["Milk", "Egg", "Wheat", "Peanut", "Soy", "Fish", "Shellfish"] },
+        { "name": "Inhalant Allergens", "type": "panel", "items": ["Dust Mite", "Cat", "Dog", "Cockroach", "Mold", "Grass Pollen"] }
+      ],
+      "costs": {
+        "usa": { "min": 150, "max": 500, "currency": "USD" },
+        "uk": { "min": 100, "max": 350, "currency": "GBP" },
+        "india": { "min": 2000, "max": 6000, "currency": "INR" },
+        "thailand": { "min": 3000, "max": 8000, "currency": "THB" },
+        "uae": { "min": 400, "max": 1200, "currency": "AED" },
+        "turkey": { "min": 600, "max": 2000, "currency": "TRY" }
+      },
+      "relatedConditions": ["Allergic Rhinitis", "Food Allergies", "Asthma", "Eczema"],
+      "relatedTests": ["total-ige", "skin-prick-test", "patch-test"]
+    },
+    {
+      "id": "ca-125",
+      "name": "CA-125 (Ovarian Cancer Marker)",
+      "slug": "ca-125-ovarian-cancer-marker",
+      "category": "cancer",
+      "type": "lab_test",
+      "description": "CA-125 is a tumor marker primarily used to monitor ovarian cancer. It may also be elevated in other conditions including endometriosis and pelvic inflammatory disease.",
+      "seoDescription": "Book CA-125 test online. Ovarian cancer marker. Monitor treatment response. Important for women's health. No fasting required.",
+      "aliases": ["Cancer Antigen 125", "Ovarian Cancer Marker"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24-48 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation", "Avoid testing during menstruation"],
+      "components": [
+        { "name": "CA-125", "unit": "U/mL", "range": { "low": 0, "high": 35 } }
+      ],
+      "costs": {
+        "usa": { "min": 50, "max": 150, "currency": "USD" },
+        "uk": { "min": 40, "max": 120, "currency": "GBP" },
+        "india": { "min": 600, "max": 1500, "currency": "INR" },
+        "thailand": { "min": 800, "max": 2000, "currency": "THB" },
+        "uae": { "min": 120, "max": 300, "currency": "AED" },
+        "turkey": { "min": 180, "max": 500, "currency": "TRY" }
+      },
+      "relatedConditions": ["Ovarian Cancer", "Endometriosis", "Ovarian Cysts"],
+      "relatedTests": ["he4", "roma-index", "pelvic-ultrasound"]
+    },
+    {
+      "id": "beta-hcg",
+      "name": "Beta hCG (Pregnancy Test)",
+      "slug": "beta-hcg-pregnancy-test",
+      "category": "prenatal",
+      "type": "lab_test",
+      "description": "Beta hCG blood test measures human chorionic gonadotropin hormone levels. It confirms pregnancy, monitors early pregnancy health, and is used in some cancer screenings.",
+      "seoDescription": "Book Beta hCG test online. Confirm pregnancy. More accurate than home tests. Monitor early pregnancy. Results same day. Home collection available.",
+      "aliases": ["hCG", "Pregnancy Blood Test", "Quantitative hCG"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "6-24 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation required"],
+      "components": [
+        { "name": "Beta hCG", "unit": "mIU/mL", "interpretation": "Varies by gestational age" }
+      ],
+      "costs": {
+        "usa": { "min": 30, "max": 80, "currency": "USD" },
+        "uk": { "min": 25, "max": 60, "currency": "GBP" },
+        "india": { "min": 300, "max": 700, "currency": "INR" },
+        "thailand": { "min": 400, "max": 1000, "currency": "THB" },
+        "uae": { "min": 60, "max": 150, "currency": "AED" },
+        "turkey": { "min": 100, "max": 300, "currency": "TRY" }
+      },
+      "relatedConditions": ["Pregnancy", "Ectopic Pregnancy", "Miscarriage", "Gestational Trophoblastic Disease"],
+      "relatedTests": ["progesterone", "prenatal-panel", "ultrasound-pregnancy"]
+    },
+    {
+      "id": "stool-routine",
+      "name": "Stool Routine & Microscopy",
+      "slug": "stool-routine-microscopy",
+      "category": "stool",
+      "type": "lab_test",
+      "description": "Stool examination checks for blood, parasites, bacteria, and digestive problems. It helps diagnose infections, malabsorption, and gastrointestinal bleeding.",
+      "seoDescription": "Book Stool Routine test online. Detect parasites, blood, infections. Essential for digestive health. Results in 24 hours. Home collection available.",
+      "aliases": ["Stool Examination", "Stool R/M", "Fecal Examination"],
+      "fasting": false,
+      "sampleType": "stool",
+      "turnaround": "24 hours",
+      "homeCollection": true,
+      "preparation": ["Collect fresh sample", "Use clean container", "Avoid contamination with urine", "Submit within 2 hours"],
+      "components": [
+        { "name": "Color", "unit": "", "normal": "Brown" },
+        { "name": "Consistency", "unit": "", "normal": "Soft" },
+        { "name": "Occult Blood", "unit": "", "normal": "Negative" },
+        { "name": "Parasites", "unit": "", "normal": "Not seen" },
+        { "name": "WBC", "unit": "/HPF", "normal": "0-5" },
+        { "name": "RBC", "unit": "/HPF", "normal": "0-3" }
+      ],
+      "costs": {
+        "usa": { "min": 15, "max": 50, "currency": "USD" },
+        "uk": { "min": 20, "max": 50, "currency": "GBP" },
+        "india": { "min": 100, "max": 300, "currency": "INR" },
+        "thailand": { "min": 150, "max": 400, "currency": "THB" },
+        "uae": { "min": 40, "max": 100, "currency": "AED" },
+        "turkey": { "min": 60, "max": 180, "currency": "TRY" }
+      },
+      "relatedConditions": ["Diarrhea", "Parasitic Infections", "GI Bleeding", "Malabsorption"],
+      "relatedTests": ["stool-culture", "h-pylori-test", "colonoscopy"]
+    },
+    {
+      "id": "testosterone",
+      "name": "Testosterone (Total)",
+      "slug": "testosterone-total",
+      "category": "hormones",
+      "type": "lab_test",
+      "description": "Testosterone test measures the main male sex hormone. It's important for evaluating sexual function, fertility, and conditions like hypogonadism in men, and PCOS in women.",
+      "seoDescription": "Book Testosterone test online. Check hormone levels. Important for men's health, fertility, PCOS. Morning sample preferred. Home collection available.",
+      "aliases": ["Total Testosterone", "Serum Testosterone"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "24-48 hours",
+      "homeCollection": true,
+      "preparation": ["Test in morning (7-10 AM)", "Levels highest in morning"],
+      "components": [
+        { "name": "Total Testosterone", "unit": "ng/dL", "male": { "low": 300, "high": 1000 }, "female": { "low": 15, "high": 70 } }
+      ],
+      "costs": {
+        "usa": { "min": 40, "max": 120, "currency": "USD" },
+        "uk": { "min": 35, "max": 90, "currency": "GBP" },
+        "india": { "min": 400, "max": 1000, "currency": "INR" },
+        "thailand": { "min": 500, "max": 1300, "currency": "THB" },
+        "uae": { "min": 80, "max": 200, "currency": "AED" },
+        "turkey": { "min": 150, "max": 400, "currency": "TRY" }
+      },
+      "relatedConditions": ["Low Testosterone", "PCOS", "Infertility", "Erectile Dysfunction"],
+      "relatedTests": ["free-testosterone", "shbg", "lh-fsh"]
+    },
+    {
+      "id": "d-dimer",
+      "name": "D-Dimer",
+      "slug": "d-dimer",
+      "category": "blood",
+      "type": "lab_test",
+      "description": "D-Dimer measures a protein fragment produced when blood clots dissolve. It's used to help rule out blood clots (DVT, pulmonary embolism) and monitor clotting disorders.",
+      "seoDescription": "Book D-Dimer test online. Rule out blood clots (DVT, PE). Important emergency marker. No fasting required. Results same day.",
+      "aliases": ["D-Dimer Assay", "Fibrin Degradation Products"],
+      "fasting": false,
+      "sampleType": "blood",
+      "turnaround": "6-24 hours",
+      "homeCollection": true,
+      "preparation": ["No special preparation required"],
+      "components": [
+        { "name": "D-Dimer", "unit": "ng/mL FEU", "range": { "low": 0, "high": 500 } }
+      ],
+      "costs": {
+        "usa": { "min": 50, "max": 150, "currency": "USD" },
+        "uk": { "min": 40, "max": 100, "currency": "GBP" },
+        "india": { "min": 500, "max": 1200, "currency": "INR" },
+        "thailand": { "min": 700, "max": 1500, "currency": "THB" },
+        "uae": { "min": 100, "max": 250, "currency": "AED" },
+        "turkey": { "min": 150, "max": 400, "currency": "TRY" }
+      },
+      "relatedConditions": ["DVT", "Pulmonary Embolism", "DIC", "COVID-19"],
+      "relatedTests": ["pt-inr", "aptt", "fibrinogen"]
+    },
+    {
+      "id": "full-body-checkup",
+      "name": "Full Body Health Checkup",
+      "slug": "full-body-health-checkup",
+      "category": "wellness",
+      "type": "package",
+      "description": "Comprehensive health screening package including blood tests, imaging, and physical examination. Covers heart, liver, kidney, thyroid, diabetes, and more.",
+      "seoDescription": "Book Full Body Health Checkup online. 50+ tests including CBC, lipid, sugar, thyroid, liver, kidney. Best prices. Home collection available.",
+      "aliases": ["Master Health Checkup", "Annual Health Checkup", "Executive Health Package"],
+      "fasting": true,
+      "fastingHours": 12,
+      "sampleType": "multiple",
+      "turnaround": "24-48 hours",
+      "homeCollection": true,
+      "preparation": ["12 hour fasting", "Avoid alcohol 48 hours before", "Carry previous reports", "Wear comfortable clothing"],
+      "includes": ["CBC", "Lipid Profile", "LFT", "KFT", "Thyroid Profile", "HbA1c", "Fasting Glucose", "Urine Routine", "Vitamin D", "Vitamin B12", "Iron Studies", "ESR", "CRP", "ECG", "Chest X-ray", "Ultrasound Abdomen"],
+      "costs": {
+        "usa": { "min": 300, "max": 1500, "currency": "USD" },
+        "uk": { "min": 200, "max": 800, "currency": "GBP" },
+        "india": { "min": 2500, "max": 8000, "currency": "INR" },
+        "thailand": { "min": 5000, "max": 15000, "currency": "THB" },
+        "uae": { "min": 600, "max": 2000, "currency": "AED" },
+        "turkey": { "min": 1000, "max": 4000, "currency": "TRY" }
+      },
+      "relatedTests": ["cardiac-checkup", "cancer-screening", "diabetes-panel"]
+    }
+  ]
+}
