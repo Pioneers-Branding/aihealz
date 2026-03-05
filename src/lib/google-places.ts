@@ -1,7 +1,8 @@
 /**
- * Google Places API Integration
+ * Google Places API (New) Integration
  *
- * Fetches real hospitals, clinics, and diagnostic labs from Google Places
+ * Fetches real hospitals, clinics, and diagnostic labs from Google Places API (New)
+ * Uses the new Places API endpoint: https://places.googleapis.com/v1/places:searchText
  */
 
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || 'AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8';
@@ -34,7 +35,7 @@ export async function searchHospitals(
     country: string,
     pageToken?: string
 ): Promise<PlacesSearchResult> {
-    return searchPlaces(`hospitals in ${city}, ${country}`, 'hospital', pageToken);
+    return searchPlacesNew(`hospitals in ${city}, ${country}`, 'hospital', pageToken);
 }
 
 /**
@@ -45,7 +46,7 @@ export async function searchDiagnosticLabs(
     country: string,
     pageToken?: string
 ): Promise<PlacesSearchResult> {
-    return searchPlaces(`diagnostic center OR pathology lab in ${city}, ${country}`, 'health', pageToken);
+    return searchPlacesNew(`diagnostic labs in ${city}, ${country}`, 'medical_lab', pageToken);
 }
 
 /**
@@ -56,114 +57,104 @@ export async function searchClinics(
     country: string,
     pageToken?: string
 ): Promise<PlacesSearchResult> {
-    return searchPlaces(`medical clinic OR doctor clinic in ${city}, ${country}`, 'doctor', pageToken);
+    return searchPlacesNew(`medical clinics in ${city}, ${country}`, 'doctor', pageToken);
 }
 
 /**
- * Generic place search
+ * Search using the new Places API (v1)
  */
-async function searchPlaces(
-    query: string,
-    type: string,
+async function searchPlacesNew(
+    textQuery: string,
+    includedType: string,
     pageToken?: string
 ): Promise<PlacesSearchResult> {
     try {
-        const params = new URLSearchParams({
-            query,
-            type,
-            key: GOOGLE_MAPS_API_KEY,
-        });
+        const fieldMask = [
+            'places.id',
+            'places.displayName',
+            'places.formattedAddress',
+            'places.location',
+            'places.rating',
+            'places.userRatingCount',
+            'places.nationalPhoneNumber',
+            'places.websiteUri',
+            'places.photos',
+            'places.types',
+            'places.currentOpeningHours',
+        ].join(',');
+
+        const requestBody: any = {
+            textQuery,
+            maxResultCount: 20,
+            languageCode: 'en',
+        };
+
+        // Add type filter if specified
+        if (includedType && includedType !== 'health') {
+            requestBody.includedType = includedType;
+        }
 
         if (pageToken) {
-            params.append('pagetoken', pageToken);
+            requestBody.pageToken = pageToken;
         }
 
         const response = await fetch(
-            `https://maps.googleapis.com/maps/api/place/textsearch/json?${params}`
+            'https://places.googleapis.com/v1/places:searchText',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
+                    'X-Goog-FieldMask': fieldMask,
+                },
+                body: JSON.stringify(requestBody),
+            }
         );
 
         if (!response.ok) {
-            throw new Error(`Google Places API error: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
-            console.error('Google Places API error:', data.status, data.error_message);
+            const errorData = await response.json().catch(() => ({}));
+            console.error('Google Places API (New) error:', response.status, errorData);
             return { places: [], nextPageToken: null };
         }
 
-        const places: PlaceResult[] = await Promise.all(
-            (data.results || []).map(async (place: any) => {
-                // Get additional details for each place
-                const details = await getPlaceDetails(place.place_id);
+        const data = await response.json();
 
-                return {
-                    placeId: place.place_id,
-                    name: place.name,
-                    address: place.formatted_address,
-                    latitude: place.geometry?.location?.lat || 0,
-                    longitude: place.geometry?.location?.lng || 0,
-                    rating: place.rating || null,
-                    reviewCount: place.user_ratings_total || 0,
-                    phoneNumber: details?.phoneNumber || null,
-                    website: details?.website || null,
-                    photos: getPhotoUrls(place.photos || []),
-                    types: place.types || [],
-                    openNow: place.opening_hours?.open_now ?? null,
-                };
-            })
-        );
+        if (!data.places || data.places.length === 0) {
+            return { places: [], nextPageToken: null };
+        }
+
+        const places: PlaceResult[] = data.places.map((place: any) => {
+            // Extract photo URLs from the new format
+            const photos = (place.photos || []).slice(0, 5).map((photo: any) => {
+                if (!photo.name) return '';
+                // New API photo URL format
+                return `https://places.googleapis.com/v1/${photo.name}/media?maxHeightPx=800&maxWidthPx=800&key=${GOOGLE_MAPS_API_KEY}`;
+            }).filter(Boolean);
+
+            return {
+                placeId: place.id || '',
+                name: place.displayName?.text || '',
+                address: place.formattedAddress || '',
+                latitude: place.location?.latitude || 0,
+                longitude: place.location?.longitude || 0,
+                rating: place.rating || null,
+                reviewCount: place.userRatingCount || 0,
+                phoneNumber: place.nationalPhoneNumber || null,
+                website: place.websiteUri || null,
+                photos,
+                types: place.types || [],
+                openNow: place.currentOpeningHours?.openNow ?? null,
+            };
+        });
 
         return {
             places,
-            nextPageToken: data.next_page_token || null,
+            nextPageToken: data.nextPageToken || null,
         };
     } catch (error) {
-        console.error('Error searching places:', error);
+        console.error('Error searching places (New API):', error);
         return { places: [], nextPageToken: null };
     }
-}
-
-/**
- * Get detailed information about a place
- */
-async function getPlaceDetails(placeId: string): Promise<{
-    phoneNumber: string | null;
-    website: string | null;
-} | null> {
-    try {
-        const params = new URLSearchParams({
-            place_id: placeId,
-            fields: 'formatted_phone_number,website',
-            key: GOOGLE_MAPS_API_KEY,
-        });
-
-        const response = await fetch(
-            `https://maps.googleapis.com/maps/api/place/details/json?${params}`
-        );
-
-        if (!response.ok) return null;
-
-        const data = await response.json();
-
-        return {
-            phoneNumber: data.result?.formatted_phone_number || null,
-            website: data.result?.website || null,
-        };
-    } catch {
-        return null;
-    }
-}
-
-/**
- * Convert photo references to URLs
- */
-function getPhotoUrls(photos: any[], maxPhotos: number = 5): string[] {
-    return photos.slice(0, maxPhotos).map((photo: any) => {
-        if (!photo.photo_reference) return '';
-        return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${photo.photo_reference}&key=${GOOGLE_MAPS_API_KEY}`;
-    }).filter(Boolean);
 }
 
 /**
