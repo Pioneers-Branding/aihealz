@@ -62,8 +62,6 @@ export async function POST(request: NextRequest) {
                                     address: place.address,
                                     latitude: place.latitude,
                                     longitude: place.longitude,
-                                    rating: place.rating,
-                                    reviewCount: place.reviewCount,
                                     phone: place.phoneNumber,
                                     website: place.website,
                                     coverImage: place.photos[0] || null,
@@ -72,12 +70,8 @@ export async function POST(request: NextRequest) {
                                     geographyId: city.id,
                                     isActive: true,
                                     isVerified: true, // Google data is reliable
-                                    hospitalType: 'general',
-                                    bedCount: null,
+                                    hospitalType: 'private',
                                     accreditations: [],
-                                    specialties: [],
-                                    amenities: [],
-                                    emergencyServices: true,
                                 },
                             });
                             added++;
