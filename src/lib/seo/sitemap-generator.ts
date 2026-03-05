@@ -41,6 +41,7 @@ export async function generateAllSitemaps(): Promise<SitemapFile[]> {
     const staticSitemap: SitemapFile = {
         name: 'sitemap-static.xml',
         urls: [
+            // Main pages
             { loc: SITE_URL, changefreq: 'daily', priority: 1.0 },
             { loc: `${SITE_URL}/analyze`, changefreq: 'weekly', priority: 0.9 },
             { loc: `${SITE_URL}/conditions`, changefreq: 'daily', priority: 0.95 },
@@ -52,12 +53,57 @@ export async function generateAllSitemaps(): Promise<SitemapFile[]> {
             { loc: `${SITE_URL}/tests`, changefreq: 'weekly', priority: 0.85 },
             { loc: `${SITE_URL}/symptoms`, changefreq: 'weekly', priority: 0.9 },
             { loc: `${SITE_URL}/medical-travel`, changefreq: 'weekly', priority: 0.8 },
+            { loc: `${SITE_URL}/remedies`, changefreq: 'weekly', priority: 0.7 },
+            { loc: `${SITE_URL}/clinical-reference`, changefreq: 'weekly', priority: 0.8 },
+            { loc: `${SITE_URL}/healz-ai`, changefreq: 'weekly', priority: 0.9 },
+
+            // Health Tools
             { loc: `${SITE_URL}/tools`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/bmi-calculator`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/bmr-calculator`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/body-fat-calculator`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/diabetes-risk-calculator`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/heart-risk-calculator`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/kidney-function-calculator`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/pregnancy-due-date-calculator`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/water-intake-calculator`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/drug-interactions`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/lab-tests`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/glossary`, changefreq: 'monthly', priority: 0.6 },
+            { loc: `${SITE_URL}/tools/emergency`, changefreq: 'monthly', priority: 0.8 },
+            { loc: `${SITE_URL}/tools/vaccinations`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/tools/surgery-checklist`, changefreq: 'monthly', priority: 0.7 },
+
+            // For Doctors
+            { loc: `${SITE_URL}/for-doctors`, changefreq: 'weekly', priority: 0.8 },
+            { loc: `${SITE_URL}/for-doctors/pricing`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/for-doctors/clinical-scores`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/for-doctors/drug-dosing`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/for-doctors/quick-reference`, changefreq: 'monthly', priority: 0.7 },
+            { loc: `${SITE_URL}/for-doctors/surgical-checklist`, changefreq: 'monthly', priority: 0.7 },
+
+            // Provider pages
+            { loc: `${SITE_URL}/provider`, changefreq: 'weekly', priority: 0.7 },
+            { loc: `${SITE_URL}/provider/login`, changefreq: 'monthly', priority: 0.5 },
+            { loc: `${SITE_URL}/provider/hospital/register`, changefreq: 'monthly', priority: 0.6 },
+            { loc: `${SITE_URL}/provider/lab/register`, changefreq: 'monthly', priority: 0.6 },
+
+            // Advertising
+            { loc: `${SITE_URL}/advertise`, changefreq: 'monthly', priority: 0.6 },
+            { loc: `${SITE_URL}/advertise/pricing`, changefreq: 'monthly', priority: 0.5 },
+
+            // Pricing
+            { loc: `${SITE_URL}/pricing`, changefreq: 'monthly', priority: 0.7 },
+
+            // Chat/AI features
+            { loc: `${SITE_URL}/chat/consult`, changefreq: 'weekly', priority: 0.8 },
+            { loc: `${SITE_URL}/chat/diagnostic`, changefreq: 'weekly', priority: 0.8 },
+
+            // Static/Legal pages
             { loc: `${SITE_URL}/about`, changefreq: 'monthly', priority: 0.5 },
             { loc: `${SITE_URL}/contact`, changefreq: 'monthly', priority: 0.5 },
             { loc: `${SITE_URL}/privacy`, changefreq: 'yearly', priority: 0.3 },
             { loc: `${SITE_URL}/terms`, changefreq: 'yearly', priority: 0.3 },
-            { loc: `${SITE_URL}/provider/dashboard`, changefreq: 'weekly', priority: 0.7 },
         ],
     };
     sitemaps.push(staticSitemap);

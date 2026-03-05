@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitHeaders } from '@/lib/rate-limit';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
+import { sendWelcomeEmail } from '@/lib/email';
 
 // Input validation schema - now includes password for direct signup
 const doctorJoinSchema = z.object({
@@ -186,6 +187,10 @@ export async function POST(req: NextRequest) {
             VALUES (${doctor.id}, ${sessionHash}, ${expiresAt}, NOW())
             ON CONFLICT DO NOTHING
         `;
+
+        // Send welcome email (non-blocking)
+        sendWelcomeEmail(email, name)
+            .catch(err => console.error('[Doctor Join] Welcome email failed:', err));
 
         return NextResponse.json({
             success: true,

@@ -674,12 +674,31 @@ async function main() {
             continue;
         }
 
+        // Attempt to determine gender for placeholder (basic heuristic)
+        const isFemale = /Firuza|Sneha|Nisha|Kavita|Priya|Uma|Saroj/.test(doctor.name);
+        const genderPath = isFemale ? 'women' : 'men';
+        const imgIndex = Math.floor(Math.random() * 80) + 10;
+
+        let profileImage = `https://randomuser.me/api/portraits/${genderPath}/${imgIndex}.jpg`;
+        const coverImage = 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=2000&q=80';
+
+        // Few real overrides
+        if (doctor.slug.includes('naresh-trehan')) {
+            profileImage = 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Naresh_Trehan_at_the_World_Economic_Forum_on_India_2012.jpg';
+        } else if (doctor.slug.includes('devi-shetty')) {
+            profileImage = 'https://upload.wikimedia.org/wikipedia/commons/4/4c/Dr._Devi_Prasad_Shetty_in_2015.jpg';
+        } else if (doctor.slug.includes('randeep-guleria')) {
+            profileImage = 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Dr._Randeep_Guleria.jpg';
+        }
+
         // Create doctor profile
         const createdDoctor = await prisma.doctorProvider.create({
             data: {
                 slug: doctor.slug,
                 name: doctor.name,
                 email: doctor.email,
+                profileImage: profileImage,
+                coverImage: coverImage,
                 licenseNumber: doctor.licenseNumber,
                 licensingBody: doctor.licensingBody,
                 bio: doctor.bio,
@@ -735,4 +754,4 @@ async function main() {
 
 main()
     .catch(console.error)
-    .finally(() => prisma.\$disconnect());
+    .finally(() => prisma.$disconnect());

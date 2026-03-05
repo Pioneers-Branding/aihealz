@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitHeaders } from '@/lib/rate-limit';
 import { z } from 'zod';
 import prisma from '@/lib/db';
+import { sendContactFormNotification } from '@/lib/email';
 
 // Input validation schema with better email validation
 const contactSchema = z.object({
@@ -66,6 +67,10 @@ export async function POST(req: NextRequest) {
             messageLength: message.length,
             timestamp: submission.createdAt.toISOString(),
         });
+
+        // Send email notification to support team (non-blocking)
+        sendContactFormNotification(name, email, 'Contact Form Inquiry', message)
+            .catch(err => console.error('[Contact Form] Email notification failed:', err));
 
         return NextResponse.json(
             {

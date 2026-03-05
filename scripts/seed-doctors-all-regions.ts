@@ -240,6 +240,8 @@ async function main() {
             schemaMarkup: object;
             specialty: string;
             conditions: string[];
+            profileImage: string;
+            coverImage: string;
         }[] = [];
 
         // For each city, create doctors for each specialty
@@ -286,6 +288,19 @@ async function main() {
                 // Create bio
                 const bio = `${doctorName} is a highly experienced ${specialty.title} practicing in ${city.name}. With over ${experience} years of experience, Dr. ${lastName} specializes in treating ${specialty.conditions.slice(0, 3).join(', ')} and other ${specialty.name.toLowerCase()} conditions. Currently associated with ${hospital}, ${city.name}.`;
 
+                const genderPath = Math.random() > 0.4 ? 'men' : 'women'; // Basic randomization
+                const imgIndex = getRandomInt(1, 99);
+                const profileImage = `https://randomuser.me/api/portraits/${genderPath}/${imgIndex}.jpg`;
+
+                const coverImages = [
+                    'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=2000&q=80',
+                    'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=2000&q=80',
+                    'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=2000&q=80',
+                    'https://images.unsplash.com/photo-1551076805-e1869043e560?auto=format&fit=crop&w=2000&q=80',
+                    'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=2000&q=80'
+                ];
+                const coverImage = getRandomElement(coverImages);
+
                 batch.push({
                     slug: doctorSlug,
                     name: doctorName,
@@ -310,9 +325,12 @@ async function main() {
                         "name": doctorName,
                         "medicalSpecialty": specialty.name,
                         "hospitalAffiliation": hospital,
+                        "image": profileImage
                     },
                     specialty: specialty.name,
                     conditions: specialty.conditions,
+                    profileImage,
+                    coverImage
                 });
 
                 // Insert in batches
@@ -362,6 +380,8 @@ async function insertBatch(
         schemaMarkup: object;
         specialty: string;
         conditions: string[];
+        profileImage: string;
+        coverImage: string;
     }[],
     conditionMap: Map<string, number>
 ) {
@@ -372,9 +392,9 @@ async function insertBatch(
                 slug, name, bio, qualifications, experience_years,
                 consultation_fee, fee_currency, available_online, geography_id,
                 licensing_body, is_verified, verification_date, rating, review_count,
-                subscription_tier, contact_info, schema_markup, created_at, updated_at
+                subscription_tier, contact_info, schema_markup, profile_image, cover_image, created_at, updated_at
             ) VALUES (
-                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW(), $12, $13, $14, $15, $16, NOW(), NOW()
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW(), $12, $13, $14, $15, $16, $17, $18, NOW(), NOW()
             )
             ON CONFLICT (slug) DO NOTHING
             RETURNING id
@@ -395,6 +415,8 @@ async function insertBatch(
             doctor.subscriptionTier,
             JSON.stringify(doctor.contactInfo),
             JSON.stringify(doctor.schemaMarkup),
+            doctor.profileImage,
+            doctor.coverImage
         ]);
 
         // Link to conditions if doctor was inserted
