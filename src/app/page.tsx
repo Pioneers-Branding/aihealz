@@ -30,63 +30,73 @@ export default async function Home() {
   const geo = await getGeoContext();
   const countryName = geo.countrySlug ? COUNTRY_NAMES[geo.countrySlug] || geo.countrySlug : null;
   const cityDisplay = geo.citySlug ? geo.citySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : null;
-  /* ── Lightweight aggregation: only fetch distinct specialties + top conditions ── */
-  // Step 1: Get all distinct specialist_type values with counts
-  const rawSpecialties = await prisma.medicalCondition.groupBy({
-    by: ['specialistType'],
-    where: { isActive: true },
-    _count: { _all: true },
-  });
 
-  // Normalize and merge counts
-  const specCountMap: Record<string, number> = {};
-  rawSpecialties.forEach(r => {
-    const canon = normalizeSpecialty(r.specialistType);
-    specCountMap[canon] = (specCountMap[canon] || 0) + r._count._all;
-  });
+  // Gracefully handle DB unavailability during local dev
+  let specCountMap: Record<string, number> = {};
+  let specialties: string[] = [];
+  let grouped: Record<string, { slug: string; commonName: string; specialistType: string | null; description: string | null }[]> = {};
 
-  const specialties = Object.keys(specCountMap).sort();
+  try {
+    /* ── Lightweight aggregation: only fetch distinct specialties + top conditions ── */
+    // Step 1: Get all distinct specialist_type values with counts
+    const rawSpecialties = await prisma.medicalCondition.groupBy({
+      by: ['specialistType'],
+      where: { isActive: true },
+      _count: { _all: true },
+    });
 
-  // Step 2: For each specialty, fetch top 12 curated conditions (with description first)
-  // We batch this to avoid N+1 — get raw specialist types per normalized specialty
-  const rawSpecMap: Record<string, string[]> = {};
-  rawSpecialties.forEach(r => {
-    const canon = normalizeSpecialty(r.specialistType);
-    if (!rawSpecMap[canon]) rawSpecMap[canon] = [];
-    rawSpecMap[canon].push(r.specialistType);
-  });
+    // Normalize and merge counts
+    rawSpecialties.forEach(r => {
+      const canon = normalizeSpecialty(r.specialistType);
+      specCountMap[canon] = (specCountMap[canon] || 0) + r._count._all;
+    });
 
-  // Fetch top conditions for each specialty (limited, not all 70k)
-  const grouped: Record<string, { slug: string; commonName: string; specialistType: string | null; description: string | null }[]> = {};
-  const seenNames = new Set<string>();
+    specialties = Object.keys(specCountMap).sort();
 
-  await Promise.all(
-    specialties.map(async (specName) => {
-      const rawTypes = rawSpecMap[specName] || [];
-      const conditions = await prisma.medicalCondition.findMany({
-        where: {
-          isActive: true,
-          specialistType: { in: rawTypes },
-        },
-        select: { slug: true, commonName: true, specialistType: true, description: true },
-        orderBy: [{ description: 'asc' }, { commonName: 'asc' }],
-        take: 30, // Fetch extra to allow for dedup, we'll trim to 12
-      });
+    // Step 2: For each specialty, fetch top 12 curated conditions (with description first)
+    // We batch this to avoid N+1 — get raw specialist types per normalized specialty
+    const rawSpecMap: Record<string, string[]> = {};
+    rawSpecialties.forEach(r => {
+      const canon = normalizeSpecialty(r.specialistType);
+      if (!rawSpecMap[canon]) rawSpecMap[canon] = [];
+      rawSpecMap[canon].push(r.specialistType);
+    });
 
-      // Deduplicate by commonName
-      const deduped = conditions.filter(c => {
-        const key = c.commonName.toLowerCase().trim();
-        if (seenNames.has(key)) return false;
-        seenNames.add(key);
-        return true;
-      });
+    // Fetch top conditions for each specialty (limited, not all 70k)
+    const seenNames = new Set<string>();
 
-      // Curated first (with description), then others
-      const curated = deduped.filter(c => c.description && c.description.length > 0);
-      const others = deduped.filter(c => !c.description || c.description.length === 0);
-      grouped[specName] = [...curated, ...others].slice(0, 12);
-    })
-  );
+    await Promise.all(
+      specialties.map(async (specName) => {
+        const rawTypes = rawSpecMap[specName] || [];
+        const conditions = await prisma.medicalCondition.findMany({
+          where: {
+            isActive: true,
+            specialistType: { in: rawTypes },
+          },
+          select: { slug: true, commonName: true, specialistType: true, description: true },
+          orderBy: [{ description: 'asc' }, { commonName: 'asc' }],
+          take: 30, // Fetch extra to allow for dedup, we'll trim to 12
+        });
+
+        // Deduplicate by commonName
+        const deduped = conditions.filter(c => {
+          const key = c.commonName.toLowerCase().trim();
+          if (seenNames.has(key)) return false;
+          seenNames.add(key);
+          return true;
+        });
+
+        // Curated first (with description), then others
+        const curated = deduped.filter(c => c.description && c.description.length > 0);
+        const others = deduped.filter(c => !c.description || c.description.length === 0);
+        grouped[specName] = [...curated, ...others].slice(0, 12);
+      })
+    );
+  } catch (err) {
+    // DB not available in local dev — page will still render with empty specialties
+    console.warn('[page.tsx] Database unavailable, rendering without specialties:', (err as Error).message);
+  }
+
 
   // Homepage structured data for AI/Voice/Search
   const homepageSchema = {

@@ -31,7 +31,18 @@ async function getFormData() {
         prisma.geography.findMany({
             where: { isActive: true },
             orderBy: { name: 'asc' },
-            select: { id: true, name: true, slug: true }
+            select: {
+                id: true,
+                name: true,
+                slug: true,
+                level: true,
+                parent: {
+                    select: {
+                        name: true,
+                        parent: { select: { name: true } } // country for cities
+                    }
+                }
+            }
         }),
         prisma.medicalCondition.findMany({
             where: { isActive: true },
@@ -53,7 +64,25 @@ async function getFormData() {
         label: p.planName,
     }));
 
-    return { geographies, conditions, tierOptions };
+    // Transform geographies to include display name with full path
+    const transformedGeographies = geographies.map(geo => {
+        let displayName = geo.name;
+        if (geo.parent) {
+            if (geo.parent.parent) {
+                displayName = `${geo.name}, ${geo.parent.name}, ${geo.parent.parent.name}`;
+            } else {
+                displayName = `${geo.name}, ${geo.parent.name}`;
+            }
+        }
+        return {
+            id: geo.id,
+            name: geo.name,
+            slug: geo.slug,
+            displayName,
+        };
+    });
+
+    return { geographies: transformedGeographies, conditions, tierOptions };
 }
 
 export default async function DoctorEditPage({ params }: PageProps) {

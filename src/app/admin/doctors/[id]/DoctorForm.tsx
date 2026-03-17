@@ -37,6 +37,7 @@ interface Geography {
     id: number;
     name: string;
     slug: string;
+    displayName?: string;
 }
 
 interface Condition {
@@ -404,7 +405,7 @@ export default function DoctorForm({
                         >
                             <option value="">Select location...</option>
                             {geographies.map(geo => (
-                                <option key={geo.id} value={geo.id}>{geo.name}</option>
+                                <option key={geo.id} value={geo.id}>{geo.displayName || geo.name}</option>
                             ))}
                         </select>
                     </div>

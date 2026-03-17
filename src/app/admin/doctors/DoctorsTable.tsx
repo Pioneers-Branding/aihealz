@@ -153,30 +153,43 @@ export default function DoctorsTable({ doctors }: DoctorsTableProps) {
     };
 
 
-    const handleImpersonate = (doctorId: number) => {
-        // Find the doctor to get their info
-        const doctor = filteredDoctors.find(d => d.id === doctorId);
-        if (!doctor) return;
+    const [impersonating, setImpersonating] = useState<number | null>(null);
 
-        // Store admin session to restore later
-        localStorage.setItem('admin_impersonating', 'true');
-        localStorage.setItem('admin_original_session', localStorage.getItem('admin_session') || '');
+    const handleImpersonate = async (doctorId: number) => {
+        setImpersonating(doctorId);
+        try {
+            // Call admin API to create a valid provider session
+            const res = await fetch('/api/admin/impersonate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ doctorId }),
+            });
 
-        // Create a proper provider session that matches ProviderSession interface
-        const impersonateSession = {
-            doctorId: doctorId.toString(),
-            doctorName: doctor.name,
-            email: (doctor.contactInfo as { email?: string })?.email || 'impersonated@admin.local',
-            token: `admin_impersonate_${doctorId}_${Date.now()}`,
-            expiresAt: Date.now() + (2 * 60 * 60 * 1000), // 2 hours for impersonation
-            impersonated: true,
-        };
+            if (!res.ok) {
+                const data = await res.json();
+                setErrorMessage(data.error || 'Failed to impersonate');
+                setTimeout(() => setErrorMessage(null), 3000);
+                return;
+            }
 
-        localStorage.setItem('provider_doctor_id', doctorId.toString());
-        localStorage.setItem('provider_session', JSON.stringify(impersonateSession));
+            const data = await res.json();
 
-        // Redirect to provider dashboard
-        window.open('/provider/dashboard', '_blank');
+            // Store admin session to restore later
+            localStorage.setItem('admin_impersonating', 'true');
+            localStorage.setItem('admin_original_session', localStorage.getItem('admin_session') || '');
+
+            // Store the valid provider session from the API
+            localStorage.setItem('provider_doctor_id', data.session.doctorId);
+            localStorage.setItem('provider_session', JSON.stringify(data.session));
+
+            // Redirect to provider dashboard
+            window.open('/provider/dashboard', '_blank');
+        } catch {
+            setErrorMessage('Failed to impersonate doctor');
+            setTimeout(() => setErrorMessage(null), 3000);
+        } finally {
+            setImpersonating(null);
+        }
     };
 
     return (
@@ -292,10 +305,11 @@ export default function DoctorsTable({ doctors }: DoctorsTableProps) {
                                     <div className="flex items-center justify-end gap-2">
                                         <button
                                             onClick={() => handleImpersonate(doctor.id)}
-                                            className="px-3 py-1 text-sm text-purple-600 hover:text-purple-700 font-medium"
+                                            disabled={impersonating === doctor.id}
+                                            className="px-3 py-1 text-sm text-purple-600 hover:text-purple-700 font-medium disabled:opacity-50"
                                             title="Login as this doctor"
                                         >
-                                            Impersonate
+                                            {impersonating === doctor.id ? '...' : 'Impersonate'}
                                         </button>
                                         <Link
                                             href={`/admin/doctors/${doctor.id}`}

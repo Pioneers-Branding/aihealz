@@ -182,3 +182,10 @@ export function unauthorizedResponse(message?: string): NextResponse {
         { status: 401 }
     );
 }
+
+/**
+ * Verify admin authentication (alias for checkAdminAuth for API routes)
+ */
+export async function verifyAdminAuth(request: NextRequest): Promise<AuthResult> {
+    return checkAdminAuth(request);
+}

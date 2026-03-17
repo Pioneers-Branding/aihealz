@@ -76,8 +76,7 @@ const SKIP_PATHS = [
 ];
 
 // Routes that start with these are NOT geo-prefixed (they use standard routing)
-// NOTE: treatments, conditions, tests, hospitals are REMOVED because they ARE location-based
-// for programmatic SEO (e.g., "chemotherapy in Delhi", "diabetes treatment in Mumbai")
+// Geo-prefixed routes are at /{country}/{lang}/{content-slug}
 const NON_GEO_ROUTES = [
     'doctor',
     'doctors',
@@ -102,7 +101,23 @@ const NON_GEO_ROUTES = [
     'reference',
     'pricing',
     'remedies',
+    'conditions',    // /conditions/[specialty] is non-geo, individual conditions are at /{country}/{lang}/{slug}
+    'treatments',    // /treatments listing page
+    'tests',         // /tests listing page
+    'hospitals',     // /hospitals listing page
 ];
+
+// Valid country slugs (must match for geo URL detection)
+const VALID_COUNTRY_SLUGS = new Set([
+    'india', 'usa', 'uk', 'uae', 'thailand', 'mexico', 'turkey', 'singapore',
+    'australia', 'canada', 'germany', 'france', 'brazil', 'saudi-arabia', 'egypt',
+    'nigeria', 'south-africa', 'kenya', 'malaysia', 'spain', 'japan', 'south-korea',
+    'indonesia', 'philippines', 'pakistan', 'bangladesh', 'vietnam', 'russia',
+    'italy', 'netherlands', 'poland', 'new-zealand', 'ireland', 'israel', 'sweden',
+    'switzerland', 'austria', 'belgium', 'portugal', 'greece', 'argentina', 'colombia',
+    'chile', 'peru', 'morocco', 'ghana', 'tanzania', 'ethiopia', 'sri-lanka', 'nepal',
+    'qatar', 'kuwait', 'oman', 'bahrain',
+]);
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
@@ -133,8 +148,13 @@ export function middleware(request: NextRequest) {
         }
     }
 
-    // Only treat as geo URL if NOT a standard route AND has at least 2 segments
-    const hasGeoInUrl = !isNonGeoRoute && urlSegments.length >= 2; // e.g. /india/en/...
+    // Only treat as geo URL if:
+    // 1. NOT a standard route
+    // 2. Has at least 2 segments
+    // 3. First segment is a VALID country slug (prevents /conditions/diabetes being misinterpreted)
+    const hasGeoInUrl = !isNonGeoRoute &&
+        urlSegments.length >= 2 &&
+        VALID_COUNTRY_SLUGS.has(firstSegment); // e.g. /india/en/...
 
     // ── 2. Detect country from headers ────────────────
     const cfCountry = request.headers.get('cf-ipcountry');
@@ -327,39 +347,9 @@ export function middleware(request: NextRequest) {
         });
     }
 
-    // ── 7. Auto-redirect for geo-specific routes ──────
-    // Routes that benefit from localization (conditions, treatments, etc.)
-    const GEO_ROUTES = ['/conditions', '/treatments', '/tests', '/hospitals'];
-
-    // Check if current path is a geo-route that should be localized
-    const isGeoRoute = GEO_ROUTES.some((route) => pathname === route || pathname.startsWith(route + '/'));
-
-    // Only redirect if:
-    // 1. We have detected country info
-    // 2. This is a geo-specific route
-    // 3. User hasn't explicitly selected a different preference
-    // 4. Not already on a country-prefixed URL
-    if (countrySlug && isGeoRoute && !hasGeoInUrl && !hasExplicitSelection && !cookieGeoRedirect) {
-        // Check if this is just the base route (e.g., /conditions, not /conditions/diabetes)
-        const pathParts = pathname.split('/').filter(Boolean);
-        const baseRoute = '/' + pathParts[0];
-
-        // For base geo routes, redirect to localized version
-        if (GEO_ROUTES.includes(baseRoute) && pathParts.length === 1) {
-            const redirectUrl = new URL(`/${countrySlug}/${lang}${pathname}`, request.url);
-            redirectUrl.search = request.nextUrl.search;
-
-            // Set a cookie to prevent redirect loop
-            const redirectResponse = NextResponse.redirect(redirectUrl, 307);
-            redirectResponse.cookies.set('aihealz-geo-redirect', '1', {
-                maxAge: 60, // Short-lived to allow re-detection
-                path: '/',
-                sameSite: 'lax',
-                httpOnly: false,
-            });
-            return redirectResponse;
-        }
-    }
+    // NOTE: Auto-redirect for geo routes removed - these pages now use standard routing
+    // Individual conditions/treatments are at /{country}/{lang}/{slug} but listing pages
+    // like /conditions, /conditions/cardiology use standard routing with geo context headers
 
     // Homepage: just set context headers (no redirect)
     if (pathname === '/' && countrySlug && !hasGeoInUrl) {

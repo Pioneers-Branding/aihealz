@@ -20,11 +20,11 @@ export async function GET(): Promise<Response> {
     const totalUrls = await prisma.sitemapEntry.count();
     const totalSitemaps = Math.max(1, Math.ceil(totalUrls / URLS_PER_SITEMAP));
 
-    // Generate sitemap index
+    // Generate sitemap index - using /sitemap/{index} route format
     const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${Array.from({ length: totalSitemaps }, (_, i) => `  <sitemap>
-    <loc>${SITE_URL}/sitemap-${i}.xml</loc>
+    <loc>${SITE_URL}/sitemap/${i}</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
   </sitemap>`).join('\n')}
 </sitemapindex>`;

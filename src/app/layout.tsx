@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import ContextualFooter from '@/components/contextual-footer';
 import GeoAutoDetect from '@/components/geo-auto-detect';
 import AIGuide from '@/components/ui/ai-guide';
@@ -18,6 +19,9 @@ export const metadata: Metadata = {
   description:
     'Find verified doctors, understand medical conditions, and get AI-powered report analysis. Trusted by millions across the globe.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://aihealz.com'),
+  verification: {
+    google: 't79pGq0m5lWEyNC3b8Vto1z6YVgRTDAt9AV55i1ez1g',
+  },
   openGraph: {
     type: 'website',
     siteName: 'aihealz',
@@ -50,6 +54,25 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Google Tag Manager */}
+        <Script id="gtm-script" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-N698KG2Z');`}
+        </Script>
+        {/* Google Analytics (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-NGENLNWQL1"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-NGENLNWQL1');`}
+        </Script>
         <link
           rel="preconnect"
           href="https://fonts.googleapis.com"
@@ -62,6 +85,15 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-N698KG2Z"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
         {/* ── Skip Link for Accessibility ──────────── */}
         <a
           href="#main-content"
