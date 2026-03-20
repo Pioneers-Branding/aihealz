@@ -121,7 +121,18 @@ const additionalSpecialties = [
 /**
  * Get a specialty template by name
  */
-export async function getSpecialtyTemplate(specialty: string): Promise<SpecialtyTemplate | null> {
+export async function getSpecialtyTemplate(specialty: string, language: string = 'en'): Promise<SpecialtyTemplate | null> {
+  // Try localized template first
+  if (language !== 'en') {
+    const normalizedSpecialty = normalizeSpecialty(specialty);
+    if (normalizedSpecialty === 'Cardiology') {
+      if (language === 'hi') return (await import('./cardiology_hi')).cardiologyTemplateHi;
+      if (language === 'es') return (await import('./cardiology_es')).cardiologyTemplateEs;
+      if (language === 'ta') return (await import('./cardiology_ta')).cardiologyTemplateTa;
+      if (language === 'te') return (await import('./cardiology_te')).cardiologyTemplateTe;
+    }
+  }
+
   // First try direct lookup
   const loader = templateRegistry.get(specialty);
   if (loader) {
@@ -305,7 +316,6 @@ export function normalizeSpecialty(specialistType: string): string {
     'General Surgery': 'General Medicine',
     'General Surgeon': 'General Medicine',
     // Pain Management
-    'Pain Medicine & Palliative Care': 'General Medicine',
     'Pain Specialist': 'General Medicine',
     // Other mappings
     'Tropical Medicine': 'Infectious Disease',
@@ -313,15 +323,12 @@ export function normalizeSpecialty(specialistType: string): string {
     'Physical Medicine & Rehabilitation': 'Orthopedics',
     'Sports Medicine': 'Orthopedics',
     'Podiatry': 'Orthopedics',
-    'Podiatrist': 'Orthopedics',
     'Maxillofacial & Oral Surgery': 'ENT',
     'Radiology': 'General Medicine',
     'Nuclear Medicine': 'General Medicine',
     'Preventive & Public Health': 'General Medicine',
     'Geriatrics': 'Internal Medicine',
     // Additional mappings for remaining specialties
-    'Podiatrist': 'Orthopedics',
-    'Physical Medicine & Rehabilitation': 'Orthopedics',
     'Physiatrist': 'Orthopedics',
     'Rehabilitation Medicine': 'Orthopedics',
     'Pain Medicine & Palliative Care': 'Neurology',
@@ -333,8 +340,6 @@ export function normalizeSpecialty(specialistType: string): string {
     'Cosmetic Dermatology': 'Dermatology',
     'Clinical Genetics': 'Genetics',
     // Plastic Surgery
-    'Plastic & Reconstructive Surgery': 'Dermatology',
-    'Plastic Surgeon': 'Dermatology',
     'Reconstructive Surgery': 'Dermatology',
     // Additional surgery specialties
     'Surgical Gastroenterology': 'Gastroenterology',

@@ -83,7 +83,7 @@ export async function generateConditionContent(
   }
 
   const normalizedSpecialty = normalizeSpecialty(condition.specialistType);
-  const specialty = await getSpecialtyTemplate(normalizedSpecialty);
+  const specialty = await getSpecialtyTemplate(normalizedSpecialty, language);
 
   if (!specialty) {
     throw new Error(`No template found for specialty: ${condition.specialistType} (normalized: ${normalizedSpecialty})`);

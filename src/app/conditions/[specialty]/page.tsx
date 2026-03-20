@@ -7,6 +7,44 @@ import { headers } from 'next/headers';
 
 type PageParams = Promise<{ specialty: string }>;
 
+type ConditionRow = { id: number; commonName: string; slug: string; description: string | null; icdCode: string | null };
+
+/**
+ * Deduplicate near-identical conditions that differ only by laterality,
+ * specificity, or ICD sub-codes (e.g., left/right/bilateral/unspecified variants).
+ * Keeps the most general or first version of each condition family.
+ */
+function deduplicateConditions(conditions: ConditionRow[]): ConditionRow[] {
+    const seen = new Map<string, ConditionRow>();
+
+    for (const c of conditions) {
+        // Normalize the name: strip laterality, specificity markers, and ICD suffixes
+        const baseKey = c.commonName
+            .toLowerCase()
+            // Remove laterality
+            .replace(/\b(left|right|bilateral|unspecified|unsp)\b/gi, '')
+            // Remove position markers
+            .replace(/\b(proximal|distal|prox|dist)\b/gi, '')
+            // Remove limb side markers
+            .replace(/\b(of r |of l |, bi|, l |, r )\b/gi, ' ')
+            // Remove "upper/lower extremity" variations
+            .replace(/\b(upper|lower|up|low)\s*(extremity|extrm|extrem)\b/gi, 'extremity')
+            // Remove vein-specific markers when there are generic versions
+            .replace(/\b(femoral|popliteal|tibial|iliac|axillary|subclavian|jugular)\s*(vein)?\b/gi, '')
+            // Clean up whitespace and punctuation
+            .replace(/[,()]/g, ' ')
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+
+        if (!seen.has(baseKey)) {
+            seen.set(baseKey, c);
+        }
+    }
+
+    // Sort by commonName and return
+    return [...seen.values()].sort((a, b) => a.commonName.localeCompare(b.commonName));
+}
+
 // Specialty descriptions for SEO
 const SPECIALTY_INFO: Record<string, { description: string; specialist: string; bodySystem: string }> = {
     cardiology: { description: 'heart and cardiovascular system disorders including heart disease, arrhythmias, and vascular conditions', specialist: 'Cardiologist', bodySystem: 'Heart & Blood Vessels' },
@@ -89,7 +127,7 @@ export default async function SpecialtyConditionsPage({ params }: { params: Page
     const city = hdrs.get('x-aihealz-city');
 
     // We do a loose matching based on the specialty name to fetch corresponding conditions
-    const conditions = await prisma.medicalCondition.findMany({
+    const rawConditions = await prisma.medicalCondition.findMany({
         where: {
             isActive: true,
             specialistType: {
@@ -101,9 +139,13 @@ export default async function SpecialtyConditionsPage({ params }: { params: Page
         orderBy: { commonName: 'asc' },
     });
 
-    if (conditions.length === 0) {
+    if (rawConditions.length === 0) {
         notFound();
     }
+
+    // Deduplicate near-identical conditions (left/right/bilateral/unspecified variants)
+    // Keep the most "general" version of each condition family
+    const conditions = deduplicateConditions(rawConditions);
 
     // Get specialty info
     const info = SPECIALTY_INFO[specKey];
@@ -162,14 +204,14 @@ export default async function SpecialtyConditionsPage({ params }: { params: Page
 
     return (
         <>
-            <Script id="breadcrumb-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-            <Script id="itemlist-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
-            <Script id="specialty-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(specialtySchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(specialtySchema) }} />
 
-            <main className="min-h-screen bg-[#050B14] text-slate-300 pt-32 pb-16 relative overflow-hidden">
+            <div className="min-h-screen bg-[#050B14] text-slate-300 pt-32 pb-16 relative overflow-hidden">
                 {/* Background Effects */}
-                <div className="absolute top-0 inset-x-0 h-[600px] bg-gradient-to-b from-teal-900/20 via-[#050B14]/80 to-[#050B14] pointer-events-none z-0" />
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute top-0 inset-x-0 h-[600px] bg-gradient-to-b from-teal-900/20 via-[#050B14]/80 to-[#050B14] pointer-events-none z-0"></div>
+                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-[100px] pointer-events-none"></div>
 
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
 
@@ -346,7 +388,7 @@ export default async function SpecialtyConditionsPage({ params }: { params: Page
                         </Link>
                     </div>
                 </div>
-            </main>
+            </div>
         </>
     );
 }

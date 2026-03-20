@@ -12,6 +12,8 @@ import type { GeoChain } from '@/lib/geo-resolver';
  * 1. Static Global Data (Golden Record) — Hard medical facts
  * 2. Local Context Data — Regional insights, localized descriptions
  * 3. Provider Data — Top 2 Free + Top 13 Premium doctors for this location
+ *
+ * OPTIMIZED: All independent queries run in parallel via Promise.all
  */
 
 export interface PageData {
@@ -186,258 +188,145 @@ interface DoctorCard {
     isPrimarySpecialist: boolean;
 }
 
+// ─── In-Memory Page Cache (avoids DB entirely on repeat visits) ───
+const PAGE_CACHE = new Map<string, { data: PageData; expires: number }>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 /**
  * Main stitching function — resolves all data for a condition page.
- *
- * @param lang      - Language code (e.g. 'hi')
- * @param condSlug  - Condition slug (e.g. 'back-pain')
- * @param geoSlugs  - Geography path (e.g. ['india', 'delhi', 'saket'])
+ * OPTIMIZED: Parallel queries + in-memory cache.
  */
 export async function stitchPageData(
     lang: string,
     condSlug: string,
     geoSlugs: string[]
 ): Promise<PageData | null> {
-    // ─── 1. Resolve Golden Record ──────────────────────
-    const condition = await prisma.medicalCondition.findUnique({
-        where: { slug: condSlug, isActive: true },
-        select: {
-            id: true, slug: true, scientificName: true, commonName: true,
-            description: true, symptoms: true, treatments: true, faqs: true,
-            specialistType: true, severityLevel: true, icdCode: true, bodySystem: true,
-        },
-    });
+    // ─── Check in-memory cache first ─────────────────
+    const cacheKey = `${lang}:${condSlug}:${geoSlugs.join(':')}`;
+    const cached = PAGE_CACHE.get(cacheKey);
+    if (cached && cached.expires > Date.now()) {
+        return cached.data;
+    }
+
+    // ─── Phase 1: Condition + GeoChain (must resolve first) ──
+    const [condition, geoChain] = await Promise.all([
+        prisma.medicalCondition.findUnique({
+            where: { slug: condSlug, isActive: true },
+            select: {
+                id: true, slug: true, scientificName: true, commonName: true,
+                description: true, symptoms: true, treatments: true, faqs: true,
+                specialistType: true, severityLevel: true, icdCode: true, bodySystem: true,
+            },
+        }),
+        resolveGeoChain(geoSlugs),
+    ]);
 
     if (!condition) return null;
 
-    // ─── 2. Resolve Geography Chain ────────────────────
-    const geoChain = await resolveGeoChain(geoSlugs);
     const deepestGeo = getDeepestGeo(geoChain);
+    const { SLUG_TO_CODE } = await import('./countries');
+    const countryCode = (SLUG_TO_CODE[geoChain.country?.slug || ''] || geoChain.country?.slug || 'IN').toLowerCase();
 
-    // ─── 3. Resolve Localized Content (with fallback) ─
-    const { localContent, isFallbackContent } = await resolveLocalContent(
-        condition.id, lang, deepestGeo?.id ?? null, geoChain
-    );
+    // ─── Phase 2: All independent queries in parallel ────────
+    const [
+        { localContent, isFallbackContent },
+        pageContent,
+        costRaw,
+        mediaAsset,
+        doctors,
+        reviewer,
+    ] = await Promise.all([
+        resolveLocalContent(condition.id, lang, deepestGeo?.id ?? null, geoChain),
+        resolvePageContent(condition.id, lang),
+        resolveTreatmentCost(condSlug, countryCode, geoChain.city?.slug ?? null),
+        prisma.mediaAsset.findFirst({
+            where: {
+                conditionSlug: condSlug,
+                entityType: 'condition',
+                assetType: 'render',
+                isActive: true
+            },
+            orderBy: { createdAt: 'desc' }
+        }),
+        fetchDoctorsForPage(condition.id, deepestGeo?.id ?? null, geoChain),
+        fetchReviewer(condition.id, deepestGeo?.id ?? null, geoChain),
+    ]);
 
-    // ─── 3.5 Resolve Automated Content from ConditionPageContent ──────
-    // Content is stored per condition+language (medical facts are location-independent)
-    // Location-specific data (doctors, hospitals) is fetched dynamically
+    // ─── Build automatedContent from pageContent ─────────────
     let automatedContent: PageData['automatedContent'] = null;
-
-    // Try to find content in requested language first
-    let pageContent = await prisma.conditionPageContent.findFirst({
-        where: {
-            conditionId: condition.id,
-            languageCode: lang,
-            status: 'published'
-        }
-    });
-
-    // Fallback to English if no content in requested language
-    if (!pageContent && lang !== 'en') {
-        pageContent = await prisma.conditionPageContent.findFirst({
-            where: {
-                conditionId: condition.id,
-                languageCode: 'en',
-                status: 'published'
-            }
-        });
-    }
-
-    // If no published content, try draft content (for development)
-    if (!pageContent) {
-        pageContent = await prisma.conditionPageContent.findFirst({
-            where: {
-                conditionId: condition.id,
-                languageCode: lang
-            }
-        });
-
-        // Fallback to English draft
-        if (!pageContent && lang !== 'en') {
-            pageContent = await prisma.conditionPageContent.findFirst({
-                where: {
-                    conditionId: condition.id,
-                    languageCode: 'en'
-                }
-            });
-        }
-    }
-
     if (pageContent) {
         automatedContent = {
-            // Hero Section
             h1Title: pageContent.h1Title,
             heroOverview: pageContent.heroOverview,
             keyStats: pageContent.keyStats as PageData['automatedContent'] extends { keyStats: infer T } ? T : null,
-
-            // Section 1: Overview
             definition: pageContent.definition,
             typesClassification: pageContent.typesClassification as Array<{ type: string; description: string }> | null,
-
-            // Section 2: Symptoms
             primarySymptoms: pageContent.primarySymptoms as string[] | null,
             earlyWarningSigns: pageContent.earlyWarningSigns as string[] | null,
             emergencySigns: pageContent.emergencySigns as string[] | null,
-
-            // Section 3: Causes & Risk Factors
             causes: pageContent.causes as Array<{ cause: string; description: string }> | null,
             riskFactors: pageContent.riskFactors as Array<{ factor: string; category: string; description: string }> | null,
             affectedDemographics: pageContent.affectedDemographics as string[] | null,
-
-            // Section 4: Diagnosis
             diagnosisOverview: pageContent.diagnosisOverview,
             diagnosticTests: pageContent.diagnosticTests as Array<{ test: string; purpose: string; whatToExpect?: string }> | null,
-
-            // Section 5: Treatments
             treatmentOverview: pageContent.treatmentOverview,
             medicalTreatments: pageContent.medicalTreatments as Array<{ name: string; description: string; effectiveness?: string }> | null,
             surgicalOptions: pageContent.surgicalOptions as Array<{ name: string; description: string; successRate?: string }> | null,
             alternativeTreatments: pageContent.alternativeTreatments as Array<{ name: string; description: string }> | null,
             linkedTreatmentSlugs: pageContent.linkedTreatmentSlugs as string[] | null,
-
-            // Section 6: Doctors
             specialistType: pageContent.specialistType,
             whySeeSpecialist: pageContent.whySeeSpecialist,
             doctorSelectionGuide: pageContent.doctorSelectionGuide,
-
-            // Section 7: Hospitals
             hospitalCriteria: pageContent.hospitalCriteria as string[] | null,
             keyFacilities: pageContent.keyFacilities as string[] | null,
-
-            // Section 8: Costs
             costBreakdown: pageContent.costBreakdown as Array<{ treatment: string; minCost: number; maxCost: number; currency: string }> | null,
             insuranceGuide: pageContent.insuranceGuide,
             financialAssistance: pageContent.financialAssistance,
-
-            // Section 9: Prevention & Lifestyle
             preventionStrategies: pageContent.preventionStrategies as string[] | null,
             lifestyleModifications: pageContent.lifestyleModifications as string[] | null,
             dietRecommendations: pageContent.dietRecommendations as { recommended: string[]; avoid: string[] } | null,
             exerciseGuidelines: pageContent.exerciseGuidelines,
-
-            // Section 10: Living With
             dailyManagement: pageContent.dailyManagement as string[] | null,
             prognosis: pageContent.prognosis,
             recoveryTimeline: pageContent.recoveryTimeline,
             complications: pageContent.complications as string[] | null,
             supportResources: pageContent.supportResources as Array<{ name: string; url?: string; description?: string }> | null,
-
-            // Section 11: Related Conditions
             confusedWithConditions: pageContent.confusedWithConditions as Array<{ slug: string; name: string; keyDifference: string }> | null,
             coOccurringConditions: pageContent.coOccurringConditions as Array<{ slug: string; name: string }> | null,
             relatedConditions: pageContent.relatedConditions as Array<{ slug: string; name: string; relevance?: string }> | null,
-
-            // Section 12: FAQs
             faqs: pageContent.faqs as Array<{ question: string; answer: string; schemaEligible?: boolean }> | null,
-
-            // Simple Names & Regional Tags
             simpleName: pageContent.simpleName,
             regionalNames: pageContent.regionalNames as Array<{ name: string; region: string; language: string }> | null,
             searchTags: pageContent.searchTags as string[] | null,
             symptomKeywords: pageContent.symptomKeywords as string[] | null,
-
-            // SEO Meta
             metaTitle: pageContent.metaTitle,
             metaDescription: pageContent.metaDescription,
             keywords: pageContent.keywords as string[] | null,
-
-            // EEAT Signals
             sources: pageContent.sources as Array<{ title: string; url?: string; accessedDate?: string }> | null,
             lastReviewed: pageContent.lastReviewed,
-
-            // Schema Markup
             schemaMedicalCondition: pageContent.schemaMedicalCondition,
             schemaFaqPage: pageContent.schemaFaqPage,
-
-            // Quality
             qualityScore: pageContent.qualityScore ? Number(pageContent.qualityScore) : null,
             wordCount: pageContent.wordCount,
         };
     }
 
-    // ─── 3.6 Resolve Treatment Costs (Phase 9) ────────
-    let treatmentCost: {
-        min: number;
-        max: number;
-        avg: number;
-        currency: string;
-        treatmentName: string;
-    } | null = null;
-
-    // Map country slug to country code
-    // Use unified country config
-    const { SLUG_TO_CODE } = await import('./countries');
-    const countryCode = (SLUG_TO_CODE[geoChain.country?.slug || ''] || geoChain.country?.slug || 'IN').toLowerCase();
-
-    // Try city-level first, then country-level
-    let costRaw: Awaited<ReturnType<typeof prisma.treatmentCost.findFirst>> = null;
-    if (geoChain.city?.slug) {
-        costRaw = await prisma.treatmentCost.findFirst({
-            where: {
-                conditionSlug: condSlug,
-                countryCode,
-                citySlug: geoChain.city.slug,
-            }
-        });
-    }
-
-    // Fallback to country-level (citySlug is null)
-    if (!costRaw) {
-        costRaw = await prisma.treatmentCost.findFirst({
-            where: {
-                conditionSlug: condSlug,
-                countryCode,
-                citySlug: null,
-            }
-        });
-    }
-
-    // Final fallback: any cost for this condition in this country
-    if (!costRaw) {
-        costRaw = await prisma.treatmentCost.findFirst({
-            where: {
-                conditionSlug: condSlug,
-                countryCode,
-            }
-        });
-    }
-
+    // ─── Build treatment cost ────────────────────────────────
+    let treatmentCost: PageData['treatmentCost'] = null;
     if (costRaw) {
         treatmentCost = {
             min: Number(costRaw.minCost),
             max: Number(costRaw.maxCost),
             avg: Number(costRaw.avgCost),
             currency: costRaw.currency,
-            treatmentName: costRaw.treatmentName
+            treatmentName: costRaw.treatmentName,
         };
     }
 
-    // ─── 3.7 Resolve Feature Image (Phase 9) ──────────
-    let featureImage: string | null = null;
-    const mediaAsset = await prisma.mediaAsset.findFirst({
-        where: {
-            conditionSlug: condSlug,
-            entityType: 'condition',
-            assetType: 'render',
-            isActive: true
-        },
-        orderBy: { createdAt: 'desc' }
-    });
-    if (mediaAsset) {
-        featureImage = mediaAsset.cdnUrl || mediaAsset.sourceUrl || null;
-    }
-
-    // ─── 4. Determine available languages ─────────────
     const availableLanguages = deepestGeo?.supportedLanguages || ['en'];
+    const featureImage = mediaAsset ? (mediaAsset.cdnUrl || mediaAsset.sourceUrl || null) : null;
 
-    // ─── 5. Fetch Provider Data (Top 2 Free + Top 13 Premium)
-    const doctors = await fetchDoctorsForPage(condition.id, deepestGeo?.id ?? null, geoChain);
-
-    // ─── 6. Fetch E-E-A-T Reviewer ────────────────────
-    const reviewer = await fetchReviewer(condition.id, deepestGeo?.id ?? null, geoChain);
-
-    return {
+    const result: PageData = {
         condition: {
             ...condition,
             symptoms: (condition.symptoms as string[]) || [],
@@ -448,23 +337,77 @@ export async function stitchPageData(
         automatedContent,
         treatmentCost,
         featureImage,
-        doctors,
-        reviewer,
         geoChain,
         language: lang,
         availableLanguages,
-        isFallbackContent,
+        isFallbackContent: !pageContent,
+        doctors,
+        reviewer
     };
+
+    // ─── Store in cache ──────────────────────────────────────
+    PAGE_CACHE.set(cacheKey, { data: result, expires: Date.now() + CACHE_TTL });
+
+    // Evict stale entries periodically (keep cache under 500 entries)
+    if (PAGE_CACHE.size > 500) {
+        const now = Date.now();
+        for (const [key, val] of PAGE_CACHE) {
+            if (val.expires < now) PAGE_CACHE.delete(key);
+        }
+    }
+
+    return result;
 }
 
 /**
- * Resolve localized content with a fallback chain:
- * 1. Exact match: condition + language + geography
- * 2. City-level: condition + language + city (if current is locality)
- * 3. State-level: condition + language + state
- * 4. Country-level: condition + language + country
- * 5. Global: condition + language + null geography
- * 6. English fallback: repeat 1-5 with 'en'
+ * Resolve page content with language fallback.
+ * Single query with OR conditions instead of 4 sequential queries.
+ */
+async function resolvePageContent(conditionId: number, lang: string) {
+    // Fetch all candidates in one query (both languages, both statuses)
+    const candidates = await prisma.conditionPageContent.findMany({
+        where: {
+            conditionId,
+            languageCode: { in: lang === 'en' ? ['en'] : [lang, 'en'] },
+        },
+        orderBy: { updatedAt: 'desc' },
+    });
+
+    // Priority: requested lang + published > en + published > requested lang + any > en + any
+    return (
+        candidates.find(c => c.languageCode === lang && c.status === 'published') ||
+        (lang !== 'en' ? candidates.find(c => c.languageCode === 'en' && c.status === 'published') : null) ||
+        candidates.find(c => c.languageCode === lang) ||
+        (lang !== 'en' ? candidates.find(c => c.languageCode === 'en') : null) ||
+        null
+    );
+}
+
+/**
+ * Resolve treatment cost with city → country → any fallback.
+ * Single query with OR conditions instead of 3 sequential queries.
+ */
+async function resolveTreatmentCost(condSlug: string, countryCode: string, citySlug: string | null) {
+    const candidates = await prisma.treatmentCost.findMany({
+        where: {
+            conditionSlug: condSlug,
+            countryCode,
+        },
+        take: 10,
+    });
+
+    // Priority: exact city > country-level (null city) > any
+    return (
+        (citySlug ? candidates.find(c => c.citySlug === citySlug) : null) ||
+        candidates.find(c => c.citySlug === null) ||
+        candidates[0] ||
+        null
+    );
+}
+
+/**
+ * Resolve localized content with a fallback chain.
+ * Uses IN query + in-memory filtering instead of N sequential queries.
  */
 async function resolveLocalContent(
     conditionId: number,
@@ -476,9 +419,10 @@ async function resolveLocalContent(
         title: true, description: true, localizedAdvice: true,
         localFactors: true, consultationTips: true, metaTitle: true,
         metaDescription: true, status: true, languageCode: true,
+        geographyId: true,
     };
 
-    // Build fallback geo IDs: deepest → ... → country → null
+    // Build all possible geo IDs for fallback
     const geoFallbackIds: (number | null)[] = [];
     if (geoId) {
         const ancestors = await getAncestorIds(geoId);
@@ -486,58 +430,48 @@ async function resolveLocalContent(
     }
     geoFallbackIds.push(null); // global fallback
 
-    // Try each geography level
-    for (const fallbackGeoId of geoFallbackIds) {
-        const content = await prisma.localizedContent.findFirst({
-            where: {
-                conditionId,
-                languageCode: lang,
-                geographyId: fallbackGeoId,
-                status: 'published',
-            },
-            select,
-            orderBy: { updatedAt: 'desc' },
-        });
-
-        if (content) {
-            return {
-                localContent: content,
-                isFallbackContent: fallbackGeoId !== geoId,
-            };
-        }
-    }
-
-    // Ultimate fallback: any published English content for this condition
-    const enContent = await prisma.localizedContent.findFirst({
+    // Fetch ALL candidates for this condition in both languages at once
+    const langCodes = lang === 'en' ? ['en'] : [lang, 'en'];
+    const nonNullGeoIds = geoFallbackIds.filter((id): id is number => id !== null);
+    const candidates = await prisma.localizedContent.findMany({
         where: {
             conditionId,
-            languageCode: 'en',
+            languageCode: { in: langCodes },
+            OR: [
+                ...(nonNullGeoIds.length > 0 ? [{ geographyId: { in: nonNullGeoIds } }] : []),
+                { geographyId: null },
+            ],
             status: 'published',
         },
         select,
         orderBy: { updatedAt: 'desc' },
     });
 
-    return {
-        localContent: enContent,
-        isFallbackContent: true,
-    };
+    // Priority: requested lang at deepest geo → ... → requested lang at null → en at deepest → ... → en at null
+    for (const targetLang of [lang, ...(lang !== 'en' ? ['en'] : [])]) {
+        for (const fallbackGeoId of geoFallbackIds) {
+            const match = candidates.find(c => c.languageCode === targetLang && c.geographyId === fallbackGeoId);
+            if (match) {
+                return {
+                    localContent: match,
+                    isFallbackContent: targetLang !== lang || fallbackGeoId !== geoId,
+                };
+            }
+        }
+    }
+
+    return { localContent: null, isFallbackContent: true };
 }
 
 /**
- * Fetch doctors for a condition page:
- * - Top 13 Premium doctors (revenue)
- * - Top 2 Free doctors (to show value of upgrading)
- * - Sorted by: subscription_tier DESC, rating DESC, review_count DESC
- *
- * Includes geo fallback: if < 2 doctors at locality, broaden to city, etc.
+ * Fetch doctors for a condition page.
+ * Single query covering all geo levels.
  */
 async function fetchDoctorsForPage(
     conditionId: number,
     geoId: number | null,
     geoChain: GeoChain
 ): Promise<PageData['doctors']> {
-    // Build geo search scope: locality → city → state → country
     const geoIds: number[] = [];
     if (geoChain.locality) geoIds.push(geoChain.locality.id);
     if (geoChain.city) geoIds.push(geoChain.city.id);
@@ -561,11 +495,11 @@ async function fetchDoctorsForPage(
             },
         },
         orderBy: [
-            { subscriptionTier: 'desc' }, // enterprise > premium > free
+            { subscriptionTier: 'desc' },
             { rating: 'desc' },
             { reviewCount: 'desc' },
         ],
-        take: 20, // Fetch more than needed, then split
+        take: 20,
     });
 
     const premium: DoctorCard[] = [];
@@ -601,46 +535,53 @@ async function fetchDoctorsForPage(
 
 /**
  * Fetch the E-E-A-T reviewer for a condition page.
- * Fallback: exact geo → city → state → country → any reviewer for condition.
+ * Single query with IN clause instead of N sequential queries.
  */
 async function fetchReviewer(
     conditionId: number,
     geoId: number | null,
     geoChain: GeoChain
 ): Promise<PageData['reviewer']> {
-    const geoFallbackIds: (number | null | undefined)[] = [];
+    const geoFallbackIds: (number | null)[] = [];
     if (geoId) geoFallbackIds.push(geoId);
     if (geoChain.city) geoFallbackIds.push(geoChain.city.id);
     if (geoChain.state) geoFallbackIds.push(geoChain.state.id);
     if (geoChain.country) geoFallbackIds.push(geoChain.country.id);
     geoFallbackIds.push(null);
 
-    for (const fallbackGeoId of geoFallbackIds) {
-        const reviewer = await prisma.conditionReviewer.findFirst({
-            where: {
-                conditionId,
-                geographyId: fallbackGeoId,
-                isPrimary: true,
-            },
-            include: {
-                doctor: {
-                    select: {
-                        name: true, slug: true, licenseNumber: true,
-                        licensingBody: true, qualifications: true,
-                    },
+    // Single query: fetch all candidate reviewers
+    const nonNullReviewerGeoIds = geoFallbackIds.filter((id): id is number => id !== null);
+    const candidates = await prisma.conditionReviewer.findMany({
+        where: {
+            conditionId,
+            OR: [
+                ...(nonNullReviewerGeoIds.length > 0 ? [{ geographyId: { in: nonNullReviewerGeoIds } }] : []),
+                { geographyId: null },
+            ],
+            isPrimary: true,
+        },
+        include: {
+            doctor: {
+                select: {
+                    name: true, slug: true, licenseNumber: true,
+                    licensingBody: true, qualifications: true,
                 },
             },
-            orderBy: { reviewDate: 'desc' },
-        });
+        },
+        orderBy: { reviewDate: 'desc' },
+    });
 
-        if (reviewer) {
+    // Find closest geo match
+    for (const fallbackGeoId of geoFallbackIds) {
+        const match = candidates.find(c => c.geographyId === fallbackGeoId);
+        if (match) {
             return {
-                name: reviewer.doctor.name,
-                slug: reviewer.doctor.slug,
-                licenseNumber: reviewer.doctor.licenseNumber,
-                licensingBody: reviewer.doctor.licensingBody,
-                qualifications: reviewer.doctor.qualifications,
-                reviewDate: reviewer.reviewDate,
+                name: match.doctor.name,
+                slug: match.doctor.slug,
+                licenseNumber: match.doctor.licenseNumber,
+                licensingBody: match.doctor.licensingBody,
+                qualifications: match.doctor.qualifications,
+                reviewDate: match.reviewDate,
             };
         }
     }

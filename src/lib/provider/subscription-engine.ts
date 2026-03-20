@@ -254,5 +254,5 @@ async function getStripe() {
 
     // Dynamic import to avoid loading Stripe if not needed
     const Stripe = (await import('stripe')).default;
-    return new Stripe(key, { apiVersion: '2026-01-28.clover' });
+    return new Stripe(key, { apiVersion: '2026-02-25.clover' });
 }
