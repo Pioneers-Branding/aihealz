@@ -143,8 +143,7 @@ export default async function SpecialtyConditionsPage({ params }: { params: Page
         notFound();
     }
 
-    // Deduplicate near-identical conditions (left/right/bilateral/unspecified variants)
-    // Keep the most "general" version of each condition family
+    // Deduplicate any remaining near-identical conditions at display time
     const conditions = deduplicateConditions(rawConditions);
 
     // Get specialty info
