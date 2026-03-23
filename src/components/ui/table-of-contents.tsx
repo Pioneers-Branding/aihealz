@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 interface TocItem {
     id: string;
     label: string;
-    icon: string;
+    icon?: string;
 }
 
 export function TableOfContents({ items }: { items: TocItem[] }) {
@@ -45,7 +45,6 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
                                     : 'text-slate-500 hover:text-slate-300 hover:bg-white/5'
                             }`}
                         >
-                            <span className="text-base">{item.icon}</span>
                             {item.label}
                         </a>
                     </li>

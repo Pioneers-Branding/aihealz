@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-    apiVersion: '2023-10-16' as Stripe.LatestApiVersion,
-});
+function getStripe() {
+    if (!process.env.STRIPE_SECRET_KEY) {
+        throw new Error('STRIPE_SECRET_KEY is not set');
+    }
+    return new Stripe(process.env.STRIPE_SECRET_KEY, {
+        apiVersion: '2023-10-16' as Stripe.LatestApiVersion,
+    });
+}
 
 export async function GET(req: NextRequest) {
     const sessionId = req.nextUrl.searchParams.get('session_id');
@@ -13,7 +18,7 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        const session = await getStripe().checkout.sessions.retrieve(sessionId);
 
         if (session.payment_status === 'paid') {
             return NextResponse.json({

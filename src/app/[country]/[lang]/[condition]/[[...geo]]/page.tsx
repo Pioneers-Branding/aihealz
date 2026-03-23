@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { AvatarWithFallback } from '@/components/ui/image-with-fallback';
 import { FaqAccordion } from '@/components/ui/faq-accordion';
 import { TableOfContents } from '@/components/ui/table-of-contents';
+import { getAllSectionImages } from '@/lib/section-images';
 
 // Deduplicate stitchPageData calls within the same request
 // (generateMetadata + page component both call this)
@@ -284,13 +285,14 @@ export default async function ConditionPage({ params }: PageProps) {
     const t = await getCachedTranslations(lang);
     const urlPath = `/${country}/${lang}/${condition}${geo ? '/' + geo.join('/') : ''}`;
     const allDoctors = [...data.doctors.premium, ...data.doctors.free];
+    const sectionImages = getAllSectionImages(data.condition.specialistType);
 
     // Schema - use pre-generated or generate dynamically
     // Map automated FAQs to schema format
-    const faqsForSchema = data.automatedContent?.faqs?.map(faq => ({
+    const faqsForSchema = (data.automatedContent?.faqs?.map(faq => ({
         question: faq.question,
         answer: faq.answer
-    })) || [];
+    })) || []).slice(0, 5);
 
     // Use pre-generated schema or generate dynamically
     let schemas: string;
@@ -340,20 +342,20 @@ export default async function ConditionPage({ params }: PageProps) {
     const locationName = deepestGeo?.name || 'your area';
 
     // Build TOC items dynamically based on available content
-    const tocItems: { id: string; label: string; icon: string }[] = [];
-    if (definitionText) tocItems.push({ id: 'overview', label: 'Overview', icon: '📋' });
-    if (data.condition.treatments?.length) tocItems.push({ id: 'treatments', label: 'Treatments', icon: '💊' });
+    const tocItems: { id: string; label: string }[] = [];
+    if (definitionText) tocItems.push({ id: 'overview', label: 'Overview' });
+    if (data.condition.treatments?.length) tocItems.push({ id: 'treatments', label: 'Treatments' });
     if (data.automatedContent?.primarySymptoms?.length || data.condition.symptoms?.length)
-        tocItems.push({ id: 'symptoms', label: 'Symptoms', icon: '🔍' });
+        tocItems.push({ id: 'symptoms', label: 'Symptoms' });
     if (data.automatedContent?.diagnosisOverview || data.automatedContent?.prognosis)
-        tocItems.push({ id: 'diagnosis', label: 'Diagnosis', icon: '🩺' });
+        tocItems.push({ id: 'diagnosis', label: 'Diagnosis' });
     if (data.automatedContent?.preventionStrategies?.length)
-        tocItems.push({ id: 'lifestyle', label: 'Lifestyle', icon: '🌿' });
+        tocItems.push({ id: 'lifestyle', label: 'Lifestyle' });
     if (data.automatedContent?.complications?.length || data.automatedContent?.whySeeSpecialist)
-        tocItems.push({ id: 'complications', label: 'Complications', icon: '⚠️' });
+        tocItems.push({ id: 'complications', label: 'Complications' });
     if (data.automatedContent?.faqs?.length || (data.condition.faqs && Array.isArray(data.condition.faqs) && data.condition.faqs.length > 0))
-        tocItems.push({ id: 'faqs', label: 'FAQs', icon: '❓' });
-    tocItems.push({ id: 'local-doctors', label: 'Find Doctors', icon: '👨‍⚕️' });
+        tocItems.push({ id: 'faqs', label: 'FAQs' });
+    tocItems.push({ id: 'local-doctors', label: 'Find Doctors' });
 
     // Collect all FAQs for the accordion
     const allFaqs: { question: string; answer: string }[] = [
@@ -392,139 +394,127 @@ export default async function ConditionPage({ params }: PageProps) {
                 </div>
 
                 {/* ══════════════════════════════════════════════
-                    HERO SECTION
+                    HERO SECTION — Full Background Image
                 ══════════════════════════════════════════════ */}
-                <section className="relative z-10">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-                        {/* Left: Text Content */}
-                        <div className={data.featureImage ? "lg:col-span-8" : "lg:col-span-12"}>
-                            {/* Badges Row */}
-                            <div className="flex flex-wrap items-center gap-2 mb-5">
-                                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-semibold uppercase tracking-wider">
-                                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                                    {data.condition.specialistType}
+                <section className="relative z-10 overflow-hidden">
+                    {/* Background Image */}
+                    {data.featureImage && (
+                        <div className="absolute inset-0 z-0">
+                            <img
+                                src={data.featureImage}
+                                alt=""
+                                className="w-full h-full object-cover"
+                            />
+                            {/* Dark overlay for text readability */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#050B14] via-[#050B14]/90 to-[#050B14]/60" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#050B14] via-[#050B14]/40 to-transparent" />
+                        </div>
+                    )}
+
+                    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+                        {/* Badges Row */}
+                        <div className="flex flex-wrap items-center gap-2 mb-4">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-400 text-xs font-semibold uppercase tracking-wider backdrop-blur-sm">
+                                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                                {data.condition.specialistType}
+                            </span>
+                            {data.condition.severityLevel && (
+                                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider backdrop-blur-sm ${
+                                    data.condition.severityLevel === 'critical' ? 'bg-red-500/15 border border-red-500/30 text-red-400' :
+                                    data.condition.severityLevel === 'severe' ? 'bg-orange-500/15 border border-orange-500/30 text-orange-400' :
+                                    data.condition.severityLevel === 'moderate' ? 'bg-yellow-500/15 border border-yellow-500/30 text-yellow-400' :
+                                    'bg-green-500/15 border border-green-500/30 text-green-400'
+                                }`}>
+                                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                                    {data.condition.severityLevel}
                                 </span>
-                                {data.condition.severityLevel && (
-                                    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider ${
-                                        data.condition.severityLevel === 'critical' ? 'bg-red-500/10 border border-red-500/20 text-red-400' :
-                                        data.condition.severityLevel === 'severe' ? 'bg-orange-500/10 border border-orange-500/20 text-orange-400' :
-                                        data.condition.severityLevel === 'moderate' ? 'bg-yellow-500/10 border border-yellow-500/20 text-yellow-400' :
-                                        'bg-green-500/10 border border-green-500/20 text-green-400'
-                                    }`}>
-                                        <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                                        {data.condition.severityLevel}
-                                    </span>
-                                )}
-                                {data.condition.icdCode && (
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold tracking-wider">
-                                        ICD-10: {data.condition.icdCode}
-                                    </span>
+                            )}
+                            {data.condition.icdCode && (
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-400 text-xs font-semibold tracking-wider backdrop-blur-sm">
+                                    ICD-10: {data.condition.icdCode}
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Title */}
+                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-[1.15] tracking-tight mb-4 max-w-3xl">
+                            <span className="text-white drop-shadow-lg">
+                                {data.condition.commonName}
+                            </span>
+                        </h1>
+
+                        {/* Simple Name & Regional Tags */}
+                        {data.automatedContent?.simpleName && data.automatedContent.simpleName !== data.condition.commonName && (
+                            <div className="mb-5">
+                                <p className="text-lg text-teal-400/90 font-medium">
+                                    {data.automatedContent.simpleName}
+                                </p>
+                                {data.automatedContent?.regionalNames && data.automatedContent.regionalNames.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mt-2.5">
+                                        {data.automatedContent.regionalNames.map((regional, idx) => (
+                                            <span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/60 border border-white/10 text-sm text-slate-400 backdrop-blur-sm">
+                                                <span className="text-slate-500 text-xs">{regional.region}:</span>
+                                                <span>{regional.name}</span>
+                                            </span>
+                                        ))}
+                                    </div>
                                 )}
                             </div>
+                        )}
 
-                            {/* Title */}
-                            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-tight mb-5">
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
-                                    {data.automatedContent?.h1Title ||
-                                        `${data.condition.commonName} Treatment in ${locationName}`}
-                                </span>
-                            </h1>
+                        {/* Hero Overview */}
+                        {heroOverviewText && (
+                            <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-6 max-w-2xl drop-shadow-sm">
+                                {heroOverviewText.split('. ').slice(0, 3).join('. ')}.
+                            </p>
+                        )}
 
-                            {/* Simple Name & Regional Tags */}
-                            {data.automatedContent?.simpleName && data.automatedContent.simpleName !== data.condition.commonName && (
-                                <div className="mb-5">
-                                    <p className="text-lg text-teal-400/90 font-medium">
-                                        {data.automatedContent.simpleName}
-                                    </p>
-                                    {data.automatedContent?.regionalNames && data.automatedContent.regionalNames.length > 0 && (
-                                        <div className="flex flex-wrap gap-2 mt-2.5">
-                                            {data.automatedContent.regionalNames.map((regional, idx) => (
-                                                <span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/60 border border-white/5 text-sm text-slate-400">
-                                                    <span className="text-slate-500 text-xs">{regional.region}:</span>
-                                                    <span>{regional.name}</span>
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-
-                            {/* Hero Overview */}
-                            {heroOverviewText && (
-                                <p className="text-slate-400 text-lg leading-relaxed mb-8 max-w-xl">
-                                    {heroOverviewText.split('. ').slice(0, 2).join('. ')}.
-                                </p>
-                            )}
-
-                            {/* Quick Stats Bar */}
-                            <div className="flex flex-wrap gap-3 mb-8">
-                                {data.condition.icdCode && (
-                                    <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/5">
-                                        <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                                            <svg className="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" /></svg>
-                                        </div>
-                                        <div>
-                                            <div className="text-[10px] text-slate-500 uppercase tracking-wider font-medium">ICD Code</div>
-                                            <div className="text-sm font-bold text-white">{data.condition.icdCode}</div>
-                                        </div>
-                                    </div>
-                                )}
-                                {allDoctors.length > 0 && (
-                                    <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/5">
-                                        <div className="w-8 h-8 rounded-lg bg-teal-500/10 flex items-center justify-center">
-                                            <svg className="w-4 h-4 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                                        </div>
-                                        <div>
-                                            <div className="text-[10px] text-slate-500 uppercase tracking-wider font-medium">Specialists</div>
-                                            <div className="text-sm font-bold text-white">{allDoctors.length} Available</div>
-                                        </div>
-                                    </div>
-                                )}
-                                <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-800/60 border border-white/5">
-                                    <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center">
-                                        <svg className="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        {/* Quick Stats Bar */}
+                        <div className="flex flex-wrap gap-3 mb-6">
+                            {data.condition.icdCode && (
+                                <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-900/70 border border-white/10 backdrop-blur-sm">
+                                    <div className="w-8 h-8 rounded-lg bg-purple-500/15 flex items-center justify-center">
+                                        <svg className="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" /></svg>
                                     </div>
                                     <div>
-                                        <div className="text-[10px] text-slate-500 uppercase tracking-wider font-medium">Reviewed By</div>
-                                        <div className="text-sm font-bold text-white">{data.reviewer?.name || 'Medical Board'}</div>
+                                        <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">ICD Code</div>
+                                        <div className="text-sm font-bold text-white">{data.condition.icdCode}</div>
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* CTA Buttons */}
-                            <div className="flex flex-wrap items-center gap-3">
-                                <a href="#local-doctors" className="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-400 hover:to-teal-300 text-slate-900 font-bold rounded-xl shadow-lg shadow-teal-500/25 transition-all hover:shadow-teal-500/40 hover:-translate-y-0.5 active:translate-y-0">
-                                    Find a Specialist
-                                    <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                                </a>
-                                <a href="#symptoms" className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/5 hover:bg-white/10 text-slate-300 font-semibold rounded-xl border border-white/10 hover:border-white/20 transition-all">
-                                    <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                                    View Symptoms
-                                </a>
+                            )}
+                            {allDoctors.length > 0 && (
+                                <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-900/70 border border-white/10 backdrop-blur-sm">
+                                    <div className="w-8 h-8 rounded-lg bg-teal-500/15 flex items-center justify-center">
+                                        <svg className="w-4 h-4 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                    </div>
+                                    <div>
+                                        <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Specialists</div>
+                                        <div className="text-sm font-bold text-white">{allDoctors.length} Available</div>
+                                    </div>
+                                </div>
+                            )}
+                            <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-900/70 border border-white/10 backdrop-blur-sm">
+                                <div className="w-8 h-8 rounded-lg bg-green-500/15 flex items-center justify-center">
+                                    <svg className="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                                </div>
+                                <div>
+                                    <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Reviewed By</div>
+                                    <div className="text-sm font-bold text-white">{data.reviewer?.name || 'Medical Board'}</div>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Right: Feature Image */}
-                        {data.featureImage && (
-                            <div className="lg:col-span-4 relative group">
-                                <div className="absolute -inset-1 bg-gradient-to-r from-teal-500/20 to-blue-500/20 rounded-[2rem] blur-xl opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
-                                <div className="relative rounded-2xl overflow-hidden aspect-[4/3] border border-white/10 bg-slate-900">
-                                    <img
-                                        src={data.featureImage}
-                                        alt={`Medical illustration of ${data.condition.commonName}`}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#050B14]/60 via-transparent to-transparent" />
-                                    <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                        <ScannerLine className="absolute inset-0 w-full h-full" />
-                                    </div>
-                                    <div className="absolute bottom-4 left-4 px-3 py-1.5 bg-black/50 backdrop-blur-md text-xs text-slate-300 rounded-lg border border-white/10 flex items-center gap-2">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
-                                        AI-Enhanced Illustration
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+                        {/* CTA Buttons */}
+                        <div className="flex flex-wrap items-center gap-3">
+                            <a href="#local-doctors" className="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-400 hover:to-teal-300 text-slate-900 font-bold rounded-xl shadow-lg shadow-teal-500/25 transition-all hover:shadow-teal-500/40 hover:-translate-y-0.5 active:translate-y-0">
+                                Find a Specialist
+                                <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </a>
+                            <a href="#symptoms" className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl border border-white/20 hover:border-white/30 transition-all backdrop-blur-sm">
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                                View Symptoms
+                            </a>
+                        </div>
                     </div>
                 </section>
 
@@ -539,20 +529,45 @@ export default async function ConditionPage({ params }: PageProps) {
                         {/* ─── OVERVIEW ─── */}
                         {definitionText && (
                             <section id="overview" className="scroll-mt-24">
-                                <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-xl rounded-2xl border border-white/[0.06] p-8 relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-teal-400 to-teal-600 rounded-full" />
-                                    <h2 className="text-2xl font-bold mb-5 text-white flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center shrink-0">
-                                            <svg className="w-5 h-5 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-xl rounded-2xl border border-white/[0.06] relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-teal-400 to-teal-600 rounded-full z-10" />
+
+                                    {/* Top Image Banner */}
+                                    <div className="relative h-44 md:h-52 overflow-hidden rounded-t-2xl">
+                                        <img
+                                            src={sectionImages.symptoms}
+                                            alt={`${cleanConditionName} overview`}
+                                            className="w-full h-full object-cover"
+                                            loading="lazy"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
+                                        <div className="absolute bottom-5 left-8 z-10">
+                                            <h2 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center shrink-0 backdrop-blur-sm">
+                                                    <svg className="w-5 h-5 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                </div>
+                                                What is {cleanConditionName}?
+                                            </h2>
                                         </div>
-                                        What is {cleanConditionName}?
-                                    </h2>
-                                    <p className="text-slate-300 leading-relaxed text-[17px] pl-[52px]">
-                                        {definitionText.split('. ').slice(0, 3).join('. ')}.
-                                    </p>
-                                    <div className="mt-5 ml-[52px] inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-500/[0.06] border border-teal-500/10 text-sm text-teal-400/80">
-                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                                        Specialist: {data.condition.specialistType}
+                                    </div>
+
+                                    {/* Text Content Below Image */}
+                                    <div className="p-6 md:p-8">
+                                        <p className="text-slate-300 leading-relaxed text-[17px]">
+                                            {definitionText.split('. ').slice(0, 4).join('. ')}.
+                                        </p>
+                                        <div className="mt-5 flex flex-wrap gap-3">
+                                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-500/[0.06] border border-teal-500/10 text-sm text-teal-400/80">
+                                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                                                Specialist: {data.condition.specialistType}
+                                            </div>
+                                            {data.condition.bodySystem && (
+                                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/[0.06] border border-blue-500/10 text-sm text-blue-400/80">
+                                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                                                    {data.condition.bodySystem}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </section>
@@ -704,6 +719,17 @@ export default async function ConditionPage({ params }: PageProps) {
                         )}
 
 
+                        {/* ─── Inline Image Banner 1: After Symptoms ─── */}
+                        <div className="relative rounded-2xl overflow-hidden h-48 md:h-56">
+                            <img src={sectionImages.diagnosis} alt={`Diagnosis for ${cleanConditionName}`} className="w-full h-full object-cover" loading="lazy" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#050B14]/85 via-[#050B14]/60 to-[#050B14]/30" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#050B14]/60 to-transparent" />
+                            <div className="absolute bottom-6 left-6 z-10">
+                                <p className="text-white text-lg md:text-xl font-bold">Diagnosis & Treatment</p>
+                                <p className="text-slate-300 text-sm mt-1">Understanding {cleanConditionName} for better outcomes</p>
+                            </div>
+                        </div>
+
                         {/* ─── DIAGNOSIS & PROGNOSIS ─── */}
                         {((data.automatedContent?.diagnosisOverview) || (data.automatedContent?.prognosis)) && (
                             <section id="diagnosis" className="scroll-mt-24">
@@ -837,6 +863,17 @@ export default async function ConditionPage({ params }: PageProps) {
                             )}
                         </div>
 
+                        {/* ─── Inline Image Banner 2: Before Specialist Section ─── */}
+                        <div className="relative rounded-2xl overflow-hidden h-48 md:h-56">
+                            <img src={sectionImages.specialist} alt={`${data.condition.specialistType} specialist`} className="w-full h-full object-cover" loading="lazy" />
+                            <div className="absolute inset-0 bg-gradient-to-l from-[#050B14]/85 via-[#050B14]/60 to-[#050B14]/30" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#050B14]/60 to-transparent" />
+                            <div className="absolute bottom-6 right-6 z-10 text-right">
+                                <p className="text-white text-lg md:text-xl font-bold">Expert {data.condition.specialistType} Care</p>
+                                <p className="text-slate-300 text-sm mt-1">Find the right specialist for your treatment</p>
+                            </div>
+                        </div>
+
                         {/* Why See a Specialist */}
                         {data.automatedContent?.whySeeSpecialist && (
                             <div className="bg-gradient-to-br from-teal-500/10 to-slate-900/60 p-6 rounded-2xl border border-teal-500/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -915,6 +952,20 @@ export default async function ConditionPage({ params }: PageProps) {
                             </section>
                         )}
 
+                        {/* ─── Inline Image Banner 3: Before FAQs ─── */}
+                        {allFaqs.length > 0 && (
+                            <div className="relative rounded-2xl overflow-hidden h-40 md:h-48">
+                                <img src={sectionImages.faq} alt={`FAQs about ${cleanConditionName}`} className="w-full h-full object-cover object-center" loading="lazy" />
+                                <div className="absolute inset-0 bg-[#050B14]/65" />
+                                <div className="absolute inset-0 flex items-center justify-center z-10">
+                                    <div className="text-center">
+                                        <p className="text-white text-lg md:text-xl font-bold">Frequently Asked Questions</p>
+                                        <p className="text-slate-300 text-sm mt-1">Answers to common questions about {cleanConditionName}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                         {/* ─── FAQs ─── */}
                         {allFaqs.length > 0 && (
                             <section id="faqs" className="scroll-mt-24">
@@ -924,7 +975,7 @@ export default async function ConditionPage({ params }: PageProps) {
                                     </div>
                                     Frequently Asked Questions
                                 </h2>
-                                <FaqAccordion faqs={allFaqs} />
+                                <FaqAccordion faqs={allFaqs.slice(0, 5)} />
                             </section>
                         )}
                     </div>
@@ -1001,6 +1052,22 @@ export default async function ConditionPage({ params }: PageProps) {
                         </div>
                         </div>{/* end sticky wrapper */}
                     </aside>
+                </div>
+
+                {/* ─── Inline Image Banner: Before Doctors Section ─── */}
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="relative rounded-2xl overflow-hidden h-52 md:h-64">
+                        <img src={sectionImages.specialist} alt={`Find ${data.condition.specialistType} specialists`} className="w-full h-full object-cover" loading="lazy" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#050B14]/90 via-[#050B14]/60 to-[#050B14]/30" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050B14]/70 to-transparent" />
+                        <div className="absolute bottom-6 left-6 md:left-8 z-10 max-w-lg">
+                            <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-2">Find Your Specialist</div>
+                            <p className="text-white text-xl md:text-2xl font-bold leading-snug">
+                                Connect with top {pluralizeSpecialist(data.condition.specialistType)} for {cleanConditionName}
+                            </p>
+                            <p className="text-slate-300 text-sm mt-2">Board-certified specialists with proven expertise in your condition</p>
+                        </div>
+                    </div>
                 </div>
 
                 {/* ══════════════════════════════════════════════
