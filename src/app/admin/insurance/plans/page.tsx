@@ -101,7 +101,7 @@ export default async function InsurancePlansPage() {
                 </div>
             ) : (
                 <div className="space-y-6">
-                    {Object.entries(groupedPlans).map(([name, group]) => (
+                    {Object.entries(groupedPlans).map(([name, group]: [string, any]) => (
                         <div key={name} className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                             <div className="bg-slate-50 px-6 py-3 border-b border-slate-200 flex items-center justify-between">
                                 <div className="flex items-center gap-3">

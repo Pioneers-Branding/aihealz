@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { verifyAdminAuth } from '@/lib/admin-auth';
-import { AdStatus } from '@prisma/client';
+
+// Local type until AdCampaign/AdStatus are added to Prisma schema
+type AdStatus = 'draft' | 'pending_review' | 'active' | 'paused' | 'cancelled' | 'completed';
 
 /**
  * GET /api/admin/advertising/campaigns

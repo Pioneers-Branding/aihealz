@@ -1,0 +1,25 @@
+
+> aihealz@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Experiments (use with caution):
+  ┬╖ optimizePackageImports
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 12.3s
+  Running TypeScript ...
+Failed to compile.
+
+./src/app/api/admin/advertising/campaigns/route.ts:4:10
+Type error: Module '"@prisma/client"' has no exported member 'AdStatus'.
+
+  2 | import prisma from '@/lib/db';
+  3 | import { verifyAdminAuth } from '@/lib/admin-auth';
+> 4 | import { AdStatus } from '@prisma/client';
+    |          ^
+  5 |
+  6 | /**
+  7 |  * GET /api/admin/advertising/campaigns
+Next.js build worker exited with code: 1 and signal: null

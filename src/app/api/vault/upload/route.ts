@@ -133,8 +133,3 @@ export async function POST(request: NextRequest) {
     }
 }
 
-export const config = {
-    api: {
-        bodyParser: false, // Required for file uploads
-    },
-};

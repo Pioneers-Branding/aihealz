@@ -85,7 +85,7 @@ export default async function PricingAdminPage() {
                 </div>
             ) : (
                 <div className="space-y-6">
-                    {Object.entries(groupedPricing).map(([placement, rules]) => (
+                    {Object.entries(groupedPricing).map(([placement, rules]: [string, typeof pricing]) => (
                         <div key={placement} className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                             <div className="bg-slate-50 px-6 py-3 border-b border-slate-200 flex items-center justify-between">
                                 <h3 className="font-semibold text-slate-900">{placementLabels[placement] || placement}</h3>
