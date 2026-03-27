@@ -169,6 +169,8 @@ export interface PageData {
     language: string;
     availableLanguages: string[];
     isFallbackContent: boolean;
+    needsTranslation?: boolean;
+    conditionId?: number;
 }
 
 interface DoctorCard {
@@ -341,6 +343,8 @@ export async function stitchPageData(
         language: lang,
         availableLanguages,
         isFallbackContent: !pageContent,
+        needsTranslation: lang !== 'en' && (!pageContent || pageContent.languageCode === 'en'),
+        conditionId: condition.id,
         doctors,
         reviewer
     };

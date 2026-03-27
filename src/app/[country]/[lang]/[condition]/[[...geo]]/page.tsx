@@ -12,6 +12,7 @@ import { AvatarWithFallback } from '@/components/ui/image-with-fallback';
 import { FaqAccordion } from '@/components/ui/faq-accordion';
 import { TableOfContents } from '@/components/ui/table-of-contents';
 import { getAllSectionImages } from '@/lib/section-images';
+import { TranslateTrigger } from '@/components/translate-trigger';
 
 // Deduplicate stitchPageData calls within the same request
 // (generateMetadata + page component both call this)
@@ -343,19 +344,19 @@ export default async function ConditionPage({ params }: PageProps) {
 
     // Build TOC items dynamically based on available content
     const tocItems: { id: string; label: string }[] = [];
-    if (definitionText) tocItems.push({ id: 'overview', label: 'Overview' });
-    if (data.condition.treatments?.length) tocItems.push({ id: 'treatments', label: 'Treatments' });
+    if (definitionText) tocItems.push({ id: 'overview', label: t['cond.overview'] || 'Overview' });
+    if (data.condition.treatments?.length) tocItems.push({ id: 'treatments', label: t['cond.treatments'] || 'Treatments' });
     if (data.automatedContent?.primarySymptoms?.length || data.condition.symptoms?.length)
-        tocItems.push({ id: 'symptoms', label: 'Symptoms' });
+        tocItems.push({ id: 'symptoms', label: t['cond.symptoms'] || 'Symptoms' });
     if (data.automatedContent?.diagnosisOverview || data.automatedContent?.prognosis)
-        tocItems.push({ id: 'diagnosis', label: 'Diagnosis' });
+        tocItems.push({ id: 'diagnosis', label: t['cond.diagnosis'] || 'Diagnosis' });
     if (data.automatedContent?.preventionStrategies?.length)
-        tocItems.push({ id: 'lifestyle', label: 'Lifestyle' });
+        tocItems.push({ id: 'lifestyle', label: t['cond.lifestyle'] || 'Lifestyle' });
     if (data.automatedContent?.complications?.length || data.automatedContent?.whySeeSpecialist)
-        tocItems.push({ id: 'complications', label: 'Complications' });
+        tocItems.push({ id: 'complications', label: t['cond.complications'] || 'Complications' });
     if (data.automatedContent?.faqs?.length || (data.condition.faqs && Array.isArray(data.condition.faqs) && data.condition.faqs.length > 0))
-        tocItems.push({ id: 'faqs', label: 'FAQs' });
-    tocItems.push({ id: 'local-doctors', label: 'Find Doctors' });
+        tocItems.push({ id: 'faqs', label: t['cond.faqs'] || 'FAQs' });
+    tocItems.push({ id: 'local-doctors', label: t['cond.findDoctors'] || 'Find Doctors' });
 
     // Collect all FAQs for the accordion
     const allFaqs: { question: string; answer: string }[] = [
@@ -373,6 +374,10 @@ export default async function ConditionPage({ params }: PageProps) {
                 <link key={tag.hreflang} rel="alternate" hrefLang={tag.hreflang} href={tag.href} />
             ))}
             <ThemeScript />
+            {/* Trigger background translation if serving English fallback for non-English user */}
+            {data.needsTranslation && data.conditionId && (
+                <TranslateTrigger conditionId={data.conditionId} targetLang={lang} />
+            )}
 
             <main className="condition-page min-h-screen bg-[#050B14] text-slate-300 relative overflow-hidden">
                 {/* ── Ambient Background ── */}
@@ -385,7 +390,7 @@ export default async function ConditionPage({ params }: PageProps) {
                 {/* ── Breadcrumbs ── */}
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2 relative z-10">
                     <nav className="text-sm text-slate-500 flex flex-wrap gap-1.5 items-center">
-                        <Link href="/" className="hover:text-teal-400 transition-colors">Home</Link>
+                        <Link href="/" className="hover:text-teal-400 transition-colors">{t['cond.home'] || 'Home'}</Link>
                         <svg className="w-3.5 h-3.5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                         <Link href={`/${country}/${lang}`} className="hover:text-teal-400 transition-colors">{t['nav.conditions'] || 'Conditions'}</Link>
                         <svg className="w-3.5 h-3.5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
@@ -477,7 +482,7 @@ export default async function ConditionPage({ params }: PageProps) {
                                         <svg className="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" /></svg>
                                     </div>
                                     <div>
-                                        <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">ICD Code</div>
+                                        <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">{t['cond.icdCode'] || 'ICD Code'}</div>
                                         <div className="text-sm font-bold text-white">{data.condition.icdCode}</div>
                                     </div>
                                 </div>
@@ -488,7 +493,7 @@ export default async function ConditionPage({ params }: PageProps) {
                                         <svg className="w-4 h-4 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                     </div>
                                     <div>
-                                        <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Specialists</div>
+                                        <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">{t['cond.specialists'] || 'Specialists'}</div>
                                         <div className="text-sm font-bold text-white">{allDoctors.length} Available</div>
                                     </div>
                                 </div>
@@ -498,8 +503,8 @@ export default async function ConditionPage({ params }: PageProps) {
                                     <svg className="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                                 </div>
                                 <div>
-                                    <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Reviewed By</div>
-                                    <div className="text-sm font-bold text-white">{data.reviewer?.name || 'Medical Board'}</div>
+                                    <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">{t['cond.reviewedBy'] || 'Reviewed By'}</div>
+                                    <div className="text-sm font-bold text-white">{data.reviewer?.name || t['cond.medicalBoard'] || 'Medical Board'}</div>
                                 </div>
                             </div>
                         </div>
@@ -507,12 +512,12 @@ export default async function ConditionPage({ params }: PageProps) {
                         {/* CTA Buttons */}
                         <div className="flex flex-wrap items-center gap-3">
                             <a href="#local-doctors" className="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-400 hover:to-teal-300 text-slate-900 font-bold rounded-xl shadow-lg shadow-teal-500/25 transition-all hover:shadow-teal-500/40 hover:-translate-y-0.5 active:translate-y-0">
-                                Find a Specialist
+                                {t['cond.findSpecialist'] || 'Find a Specialist'}
                                 <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                             </a>
                             <a href="#symptoms" className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl border border-white/20 hover:border-white/30 transition-all backdrop-blur-sm">
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                                View Symptoms
+                                {t['cond.viewSymptoms'] || 'View Symptoms'}
                             </a>
                         </div>
                     </div>
@@ -725,7 +730,7 @@ export default async function ConditionPage({ params }: PageProps) {
                             <div className="absolute inset-0 bg-gradient-to-r from-[#050B14]/85 via-[#050B14]/60 to-[#050B14]/30" />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#050B14]/60 to-transparent" />
                             <div className="absolute bottom-6 left-6 z-10">
-                                <p className="text-white text-lg md:text-xl font-bold">Diagnosis & Treatment</p>
+                                <p className="text-white text-lg md:text-xl font-bold">{t['cond.diagnosisAndTreatment'] || 'Diagnosis & Treatment'}</p>
                                 <p className="text-slate-300 text-sm mt-1">Understanding {cleanConditionName} for better outcomes</p>
                             </div>
                         </div>
@@ -751,7 +756,7 @@ export default async function ConditionPage({ params }: PageProps) {
                                         )}
                                         {data.automatedContent?.diagnosticTests && data.automatedContent.diagnosticTests.length > 0 && (
                                             <div className="space-y-2 pt-3 border-t border-white/5">
-                                                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Key Tests</h4>
+                                                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">{t['cond.keyTests'] || 'Key Tests'}</h4>
                                                 {data.automatedContent.diagnosticTests.slice(0, 3).map((test, i) => (
                                                     <div key={i} className="flex items-start gap-3 p-3 bg-slate-800/40 rounded-lg">
                                                         <span className="w-6 h-6 rounded-md bg-cyan-500/10 flex items-center justify-center text-cyan-400 font-bold text-xs shrink-0">{i + 1}</span>
@@ -767,7 +772,7 @@ export default async function ConditionPage({ params }: PageProps) {
 
                                     {/* Prognosis */}
                                     <div className="bg-gradient-to-br from-emerald-500/[0.06] to-slate-900/40 p-6 rounded-2xl border border-emerald-500/15 h-fit">
-                                        <h3 className="text-sm font-bold text-emerald-400 mb-4 uppercase tracking-wider">Prognosis & Outlook</h3>
+                                        <h3 className="text-sm font-bold text-emerald-400 mb-4 uppercase tracking-wider">{t['cond.prognosisOutlook'] || 'Prognosis & Outlook'}</h3>
                                         {data.automatedContent?.prognosis ? (
                                             <blockquote className="text-slate-300 leading-relaxed text-sm border-l-2 border-emerald-500/30 pl-4">
                                                 {data.automatedContent.prognosis.split('. ').slice(0, 3).join('. ')}.
@@ -780,88 +785,97 @@ export default async function ConditionPage({ params }: PageProps) {
                             </section>
                         )}
 
-                        {/* ─── LIFESTYLE & PREVENTION + COMPLICATIONS (Side by Side) ─── */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                            {/* Left: Prevention & Lifestyle */}
-                            {(data.automatedContent?.preventionStrategies && data.automatedContent.preventionStrategies.length > 0) && (
-                                <section id="lifestyle" className="scroll-mt-24">
-                                    <h2 className="text-2xl font-bold mb-5 text-white flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0">
-                                            <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                                        </div>
-                                        Prevention & Lifestyle
-                                    </h2>
-                                    <div className="space-y-2.5 mb-5">
+                        {/* ─── PREVENTION & LIFESTYLE (Content + Image) ─── */}
+                        {(data.automatedContent?.preventionStrategies && data.automatedContent.preventionStrategies.length > 0) && (
+                            <section id="lifestyle" className="scroll-mt-24">
+                                <h2 className="text-xl font-bold mb-4 text-white flex items-center gap-2.5">
+                                    <div className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0">
+                                        <svg className="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                                    </div>
+                                    Prevention & Lifestyle
+                                </h2>
+                                <div className="grid grid-cols-1 md:grid-cols-5 gap-5 items-stretch">
+                                    <div className="md:col-span-3 space-y-1.5">
                                         {data.automatedContent.preventionStrategies.map((tip, i) => (
-                                            <div key={i} className="flex items-center gap-3 p-3.5 bg-slate-900/40 rounded-xl border border-white/[0.06] hover:border-green-500/20 transition-colors">
-                                                <div className="w-7 h-7 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
-                                                    <svg className="w-3.5 h-3.5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                            <div key={i} className="flex items-center gap-2.5 p-2.5 bg-slate-900/40 rounded-lg border border-white/[0.06] hover:border-green-500/20 transition-colors">
+                                                <div className="w-6 h-6 rounded-md bg-green-500/10 flex items-center justify-center shrink-0">
+                                                    <svg className="w-3 h-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                                                 </div>
-                                                <span className="text-slate-200 text-sm font-medium">{tip}</span>
+                                                <span className="text-slate-200 text-xs font-medium leading-snug">{tip}</span>
                                             </div>
                                         ))}
+
+                                        {/* Diet Recommendations */}
+                                        {(data.automatedContent.dietRecommendations?.recommended?.length || data.automatedContent.dietRecommendations?.avoid?.length) && (
+                                            <div className="space-y-3 pt-2">
+                                                {data.automatedContent.dietRecommendations?.recommended && data.automatedContent.dietRecommendations.recommended.length > 0 && (
+                                                    <div className="p-3 rounded-lg bg-green-500/[0.04] border border-green-500/15">
+                                                        <h4 className="text-[10px] font-bold text-green-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                                                            Recommended Foods
+                                                        </h4>
+                                                        <ul className="space-y-1.5">
+                                                            {data.automatedContent.dietRecommendations.recommended.slice(0, 4).map((food, i) => (
+                                                                <li key={i} className="flex items-center gap-2 text-slate-300 text-xs">
+                                                                    <span className="w-1 h-1 rounded-full bg-green-400" />
+                                                                    {food}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                                {data.automatedContent.dietRecommendations?.avoid && data.automatedContent.dietRecommendations.avoid.length > 0 && (
+                                                    <div className="p-3 rounded-lg bg-red-500/[0.04] border border-red-500/15">
+                                                        <h4 className="text-[10px] font-bold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                                                            Foods to Avoid
+                                                        </h4>
+                                                        <ul className="space-y-1.5">
+                                                            {data.automatedContent.dietRecommendations.avoid.slice(0, 4).map((food, i) => (
+                                                                <li key={i} className="flex items-center gap-2 text-slate-400 text-xs">
+                                                                    <span className="w-1 h-1 rounded-full bg-red-400" />
+                                                                    <span className="line-through decoration-red-500/40">{food}</span>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
+                                    <div className="md:col-span-2 relative rounded-2xl overflow-hidden min-h-[200px]">
+                                        <img src={sectionImages.lifestyle} alt="Healthy lifestyle and prevention" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#050B14]/70 to-transparent" />
+                                    </div>
+                                </div>
+                            </section>
+                        )}
 
-                                    {/* Diet Recommendations */}
-                                    {(data.automatedContent.dietRecommendations?.recommended?.length || data.automatedContent.dietRecommendations?.avoid?.length) && (
-                                        <div className="space-y-4">
-                                            {data.automatedContent.dietRecommendations?.recommended && data.automatedContent.dietRecommendations.recommended.length > 0 && (
-                                                <div className="p-4 rounded-xl bg-green-500/[0.04] border border-green-500/15">
-                                                    <h4 className="text-xs font-bold text-green-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                                                        Recommended Foods
-                                                    </h4>
-                                                    <ul className="space-y-2">
-                                                        {data.automatedContent.dietRecommendations.recommended.slice(0, 4).map((food, i) => (
-                                                            <li key={i} className="flex items-center gap-2 text-slate-300 text-sm">
-                                                                <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                                                                {food}
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            )}
-                                            {data.automatedContent.dietRecommendations?.avoid && data.automatedContent.dietRecommendations.avoid.length > 0 && (
-                                                <div className="p-4 rounded-xl bg-red-500/[0.04] border border-red-500/15">
-                                                    <h4 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
-                                                        Foods to Avoid
-                                                    </h4>
-                                                    <ul className="space-y-2">
-                                                        {data.automatedContent.dietRecommendations.avoid.slice(0, 4).map((food, i) => (
-                                                            <li key={i} className="flex items-center gap-2 text-slate-400 text-sm">
-                                                                <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                                                                <span className="line-through decoration-red-500/40">{food}</span>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-                                </section>
-                            )}
-
-                            {/* Right: Complications */}
-                            {data.automatedContent?.complications && data.automatedContent.complications.length > 0 && (
-                                <section id="complications" className="scroll-mt-24">
-                                    <h2 className="text-2xl font-bold mb-5 text-white flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
-                                            <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                                        </div>
-                                        Complications
-                                    </h2>
-                                    <div className="space-y-2.5">
+                        {/* ─── COMPLICATIONS (Content + Image) ─── */}
+                        {data.automatedContent?.complications && data.automatedContent.complications.length > 0 && (
+                            <section id="complications" className="scroll-mt-24">
+                                <h2 className="text-xl font-bold mb-4 text-white flex items-center gap-2.5">
+                                    <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                                        <svg className="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                    </div>
+                                    Complications
+                                </h2>
+                                <div className="grid grid-cols-1 md:grid-cols-5 gap-5 items-stretch">
+                                    <div className="md:col-span-2 relative rounded-2xl overflow-hidden min-h-[200px] order-2 md:order-1">
+                                        <img src={sectionImages.complications} alt="Understanding complications" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#050B14]/70 to-transparent" />
+                                    </div>
+                                    <div className="md:col-span-3 order-1 md:order-2 space-y-1.5">
                                         {data.automatedContent.complications.map((comp, i) => (
-                                            <div key={i} className="flex items-start gap-3 p-3.5 bg-slate-900/40 rounded-xl border border-white/[0.06]">
-                                                <span className="text-amber-400 font-bold text-sm mt-0.5 shrink-0">{i + 1}.</span>
-                                                <span className="text-slate-300 text-sm leading-relaxed">{comp}</span>
+                                            <div key={i} className="flex items-start gap-2.5 p-2.5 bg-slate-900/40 rounded-lg border border-white/[0.06]">
+                                                <span className="text-amber-400 font-bold text-xs mt-0.5 shrink-0">{i + 1}.</span>
+                                                <span className="text-slate-300 text-xs leading-relaxed">{comp}</span>
                                             </div>
                                         ))}
                                     </div>
-                                </section>
-                            )}
-                        </div>
+                                </div>
+                            </section>
+                        )}
 
                         {/* ─── Inline Image Banner 2: Before Specialist Section ─── */}
                         <div className="relative rounded-2xl overflow-hidden h-48 md:h-56">
@@ -870,7 +884,7 @@ export default async function ConditionPage({ params }: PageProps) {
                             <div className="absolute inset-0 bg-gradient-to-t from-[#050B14]/60 to-transparent" />
                             <div className="absolute bottom-6 right-6 z-10 text-right">
                                 <p className="text-white text-lg md:text-xl font-bold">Expert {data.condition.specialistType} Care</p>
-                                <p className="text-slate-300 text-sm mt-1">Find the right specialist for your treatment</p>
+                                <p className="text-slate-300 text-sm mt-1">{t['cond.findSpecialistFor'] || 'Find the right specialist for your treatment'}</p>
                             </div>
                         </div>
 
@@ -886,7 +900,7 @@ export default async function ConditionPage({ params }: PageProps) {
                                     </p>
                                 </div>
                                 <a href="#local-doctors" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-teal-500/20 shrink-0">
-                                    Find Specialists
+                                    {t['cond.findSpecialists'] || 'Find Specialists'}
                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                                 </a>
                             </div>
@@ -895,12 +909,19 @@ export default async function ConditionPage({ params }: PageProps) {
                         {/* Hospital Criteria */}
                         {(data.automatedContent?.hospitalCriteria && data.automatedContent.hospitalCriteria.length > 0) && (
                             <section className="scroll-mt-24">
-                                <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-                                        <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                {/* Hospital Image Banner */}
+                                <div className="relative rounded-2xl overflow-hidden mb-6">
+                                    <img src={sectionImages.hospital} alt={`Best hospitals for ${cleanConditionName}`} className="w-full h-48 md:h-56 object-cover object-center" loading="lazy" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#050B14] via-[#050B14]/70 to-transparent" />
+                                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                                        <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center shrink-0 backdrop-blur-sm">
+                                                <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                            </div>
+                                            {t['cond.choosingHospital'] || 'Choosing the Right Hospital'}
+                                        </h2>
                                     </div>
-                                    Choosing the Right Hospital
-                                </h2>
+                                </div>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     {data.automatedContent.hospitalCriteria.map((criterion, i) => (
                                         <div key={i} className="flex items-center gap-3 p-3.5 bg-slate-900/40 rounded-xl border border-white/[0.06]">
@@ -911,7 +932,7 @@ export default async function ConditionPage({ params }: PageProps) {
                                 </div>
                                 {data.automatedContent.keyFacilities && data.automatedContent.keyFacilities.length > 0 && (
                                     <div className="mt-5">
-                                        <h3 className="text-sm font-bold text-purple-400 mb-3 uppercase tracking-wider">Essential Facilities</h3>
+                                        <h3 className="text-sm font-bold text-purple-400 mb-3 uppercase tracking-wider">{t['cond.essentialFacilities'] || 'Essential Facilities'}</h3>
                                         <div className="flex flex-wrap gap-2">
                                             {data.automatedContent.keyFacilities.map((facility, i) => (
                                                 <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/60 border border-white/5 text-sm text-slate-300">
@@ -925,14 +946,14 @@ export default async function ConditionPage({ params }: PageProps) {
                             </section>
                         )}
 
-                        {/* Related Conditions */}
+                        {/* {t['cond.relatedConditions'] || 'Related Conditions'} */}
                         {data.automatedContent?.relatedConditions && data.automatedContent.relatedConditions.length > 0 && (
                             <section>
                                 <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
                                         <svg className="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
                                     </div>
-                                    Related Conditions
+                                    {t['cond.relatedConditions'] || 'Related Conditions'}
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     {data.automatedContent.relatedConditions.map((related, i) => (
@@ -959,7 +980,7 @@ export default async function ConditionPage({ params }: PageProps) {
                                 <div className="absolute inset-0 bg-[#050B14]/65" />
                                 <div className="absolute inset-0 flex items-center justify-center z-10">
                                     <div className="text-center">
-                                        <p className="text-white text-lg md:text-xl font-bold">Frequently Asked Questions</p>
+                                        <p className="text-white text-lg md:text-xl font-bold">{t['cond.frequentlyAsked'] || 'Frequently Asked Questions'}</p>
                                         <p className="text-slate-300 text-sm mt-1">Answers to common questions about {cleanConditionName}</p>
                                     </div>
                                 </div>
@@ -1001,11 +1022,11 @@ export default async function ConditionPage({ params }: PageProps) {
                                 </h3>
                                 <div className="space-y-4 relative z-10">
                                     <div>
-                                        <div className="text-xs text-slate-500 mb-1">Procedure</div>
+                                        <div className="text-xs text-slate-500 mb-1">{t['cond.procedure'] || 'Procedure'}</div>
                                         <div className="text-sm font-medium text-white line-clamp-2">{data.treatmentCost.treatmentName}</div>
                                     </div>
                                     <div className="p-4 rounded-xl bg-slate-800/50 border border-white/5">
-                                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Average Cost</div>
+                                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{t['cond.averageCost'] || 'Average Cost'}</div>
                                         <div className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">
                                             {data.treatmentCost.currency} {data.treatmentCost.avg.toLocaleString()}
                                         </div>
@@ -1061,11 +1082,11 @@ export default async function ConditionPage({ params }: PageProps) {
                         <div className="absolute inset-0 bg-gradient-to-r from-[#050B14]/90 via-[#050B14]/60 to-[#050B14]/30" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050B14]/70 to-transparent" />
                         <div className="absolute bottom-6 left-6 md:left-8 z-10 max-w-lg">
-                            <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-2">Find Your Specialist</div>
+                            <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-2">{t['cond.findYourSpecialist'] || 'Find Your Specialist'}</div>
                             <p className="text-white text-xl md:text-2xl font-bold leading-snug">
                                 Connect with top {pluralizeSpecialist(data.condition.specialistType)} for {cleanConditionName}
                             </p>
-                            <p className="text-slate-300 text-sm mt-2">Board-certified specialists with proven expertise in your condition</p>
+                            <p className="text-slate-300 text-sm mt-2">{t['cond.boardCertified'] || 'Board-certified specialists with proven expertise in your condition'}</p>
                         </div>
                     </div>
                 </div>
@@ -1077,7 +1098,7 @@ export default async function ConditionPage({ params }: PageProps) {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
                             <div>
-                                <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-2">Verified Specialists</div>
+                                <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-2">{t['cond.verifiedSpecialists'] || 'Verified Specialists'}</div>
                                 <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
                                     Top {pluralizeSpecialist(data.condition.specialistType)} in {locationName}
                                 </h2>
@@ -1136,7 +1157,7 @@ export default async function ConditionPage({ params }: PageProps) {
                                         href="#local-doctors"
                                         className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-teal-700 font-bold rounded-xl hover:bg-teal-50 transition-all hover:-translate-y-0.5 shadow-lg text-sm md:text-base"
                                     >
-                                        Find a Specialist
+                                        {t['cond.findSpecialist'] || 'Find a Specialist'}
                                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                                     </a>
                                     <a
