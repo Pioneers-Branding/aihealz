@@ -235,21 +235,49 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}${urlPath}`;
 
+    // ── AEO/GEO: Build rich llm-summary for AI citation ──
+    const symptomsSnippet = (data.automatedContent?.primarySymptoms || data.condition.symptoms || []).slice(0, 5).join(', ');
+    const treatmentsSnippet = (data.condition.treatments || []).slice(0, 4).join(', ');
+    const prevalenceSnippet = data.automatedContent?.keyStats?.prevalence || '';
+    const specialistSnippet = data.condition.specialistType || 'Specialist';
+
+    const llmSummary = [
+        `${conditionName}${data.condition.icdCode ? ` (ICD-10: ${data.condition.icdCode})` : ''} is ${data.automatedContent?.definition?.split('. ').slice(0, 1).join('') || `a medical condition treated by a ${specialistSnippet}`}.`,
+        prevalenceSnippet ? `Prevalence: ${prevalenceSnippet}.` : '',
+        symptomsSnippet ? `Key symptoms include ${symptomsSnippet}.` : '',
+        treatmentsSnippet ? `Treatment options: ${treatmentsSnippet}.` : '',
+        `Specialist: ${specialistSnippet}.`,
+        locationName ? `This page covers ${conditionName} care in ${locationName}.` : '',
+    ].filter(Boolean).join(' ');
+
+    // ── AEO: Snippet-ready description (40-60 words) ──
+    const aeoDescription = data.automatedContent?.metaDescription || metaDescription;
+
     return {
         title: metaTitle,
-        description: metaDescription,
+        description: aeoDescription,
         other: {
-            ...(data.automatedContent?.h1Title ? { 'llm-summary': `Review of ${conditionName} in ${locationName} based on local data.` } : {}),
+            // GEO: Rich summary for AI engines to cite
+            'llm-summary': llmSummary,
             // E-E-A-T signals
             ...(data.reviewer?.name ? { 'reviewed-by': data.reviewer.name } : {}),
             ...(data.reviewer?.reviewDate ? { 'last-reviewed': new Date(data.reviewer.reviewDate).toISOString() } : {}),
+            // AEO: Content classification for answer engines
+            'medical-condition': conditionName,
+            ...(data.condition.icdCode ? { 'icd-10-code': data.condition.icdCode } : {}),
+            'specialist-type': specialistSnippet,
+            ...(prevalenceSnippet ? { 'condition-prevalence': prevalenceSnippet } : {}),
+            // GEO: Content freshness signal
+            ...(data.automatedContent?.lastReviewed ? { 'content-last-verified': new Date(data.automatedContent.lastReviewed).toISOString() } : {}),
+            // GEO: Source count for trust signal
+            ...(data.automatedContent?.sources?.length ? { 'citation-count': String(data.automatedContent.sources.length) } : {}),
         },
         openGraph: {
             title: metaTitle,
-            description: metaDescription,
+            description: aeoDescription,
             url: canonicalUrl,
             siteName: 'aihealz',
-            type: 'article', // More specific for medical content
+            type: 'article',
             locale: lang,
             images: data.featureImage ? [{
                 url: data.featureImage,
@@ -262,7 +290,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             canonical: canonicalUrl,
             languages: Object.fromEntries(hreflangTags.map(tag => [tag.hreflang, tag.href])),
         },
-        robots: { index: true, follow: true },
+        robots: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' as const, 'max-video-preview': -1 },
     };
 }
 
@@ -295,10 +323,10 @@ export default async function ConditionPage({ params }: PageProps) {
         answer: faq.answer
     })) || []).slice(0, 5);
 
-    // Use pre-generated schema or generate dynamically
+    // Use pre-generated schema or generate dynamically (AEO/GEO-enriched)
     let schemas: string;
     if (data.automatedContent?.schemaMedicalCondition && data.automatedContent?.schemaFaqPage) {
-        // Use pre-generated schema data
+        // Use pre-generated schema data + append breadcrumb + speakable
         const allSchemas = [
             data.automatedContent.schemaMedicalCondition,
             data.automatedContent.schemaFaqPage,
@@ -306,7 +334,7 @@ export default async function ConditionPage({ params }: PageProps) {
         ];
         schemas = JSON.stringify(allSchemas);
     } else {
-        // Generate schema dynamically
+        // Generate schema dynamically with AEO/GEO enrichment
         schemas = generatePageSchemas(
             {
                 scientificName: data.condition.scientificName,
@@ -334,6 +362,14 @@ export default async function ConditionPage({ params }: PageProps) {
             {
                 faqs: faqsForSchema.length > 0 ? faqsForSchema : undefined,
                 featureImage: data.featureImage || undefined,
+                // AEO/GEO enrichment
+                prevalence: data.automatedContent?.keyStats?.prevalence || undefined,
+                demographics: data.automatedContent?.keyStats?.demographics || undefined,
+                causes: data.automatedContent?.causes || undefined,
+                riskFactors: data.automatedContent?.riskFactors || undefined,
+                diagnosticTests: data.automatedContent?.diagnosticTests || undefined,
+                prognosis: data.automatedContent?.prognosis || undefined,
+                sources: data.automatedContent?.sources || undefined,
             }
         );
     }
@@ -348,6 +384,8 @@ export default async function ConditionPage({ params }: PageProps) {
     if (data.condition.treatments?.length) tocItems.push({ id: 'treatments', label: t['cond.treatments'] || 'Treatments' });
     if (data.automatedContent?.primarySymptoms?.length || data.condition.symptoms?.length)
         tocItems.push({ id: 'symptoms', label: t['cond.symptoms'] || 'Symptoms' });
+    if (data.automatedContent?.causes?.length || data.automatedContent?.riskFactors?.length)
+        tocItems.push({ id: 'causes', label: 'Causes & Risk Factors' });
     if (data.automatedContent?.diagnosisOverview || data.automatedContent?.prognosis)
         tocItems.push({ id: 'diagnosis', label: t['cond.diagnosis'] || 'Diagnosis' });
     if (data.automatedContent?.preventionStrategies?.length)
@@ -356,6 +394,8 @@ export default async function ConditionPage({ params }: PageProps) {
         tocItems.push({ id: 'complications', label: t['cond.complications'] || 'Complications' });
     if (data.automatedContent?.faqs?.length || (data.condition.faqs && Array.isArray(data.condition.faqs) && data.condition.faqs.length > 0))
         tocItems.push({ id: 'faqs', label: t['cond.faqs'] || 'FAQs' });
+    if (data.automatedContent?.sources?.length)
+        tocItems.push({ id: 'sources', label: 'Sources' });
     tocItems.push({ id: 'local-doctors', label: t['cond.findDoctors'] || 'Find Doctors' });
 
     // Collect all FAQs for the accordion
@@ -441,8 +481,8 @@ export default async function ConditionPage({ params }: PageProps) {
                             )}
                         </div>
 
-                        {/* Title */}
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-[1.15] tracking-tight mb-4 max-w-3xl">
+                        {/* Title (AEO: data-speakable for voice search) */}
+                        <h1 data-speakable="title" className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-[1.15] tracking-tight mb-4 max-w-3xl">
                             <span className="text-white drop-shadow-lg">
                                 {data.condition.commonName}
                             </span>
@@ -531,9 +571,11 @@ export default async function ConditionPage({ params }: PageProps) {
                     {/* ── Main Content (Left 8 cols) ── */}
                     <div className="lg:col-span-8 space-y-6">
 
-                        {/* ─── OVERVIEW ─── */}
+                        {/* ─── OVERVIEW (AEO: data-speakable for voice, itemscope for AI) ─── */}
                         {definitionText && (
-                            <section id="overview" className="scroll-mt-24">
+                            <section id="overview" className="scroll-mt-24" itemScope itemType="https://schema.org/MedicalCondition">
+                                <meta itemProp="name" content={cleanConditionName} />
+                                {data.condition.icdCode && <meta itemProp="code" content={data.condition.icdCode} />}
                                 <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-xl rounded-2xl border border-white/[0.06] relative overflow-hidden">
                                     <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-teal-400 to-teal-600 rounded-full z-10" />
 
@@ -558,9 +600,57 @@ export default async function ConditionPage({ params }: PageProps) {
 
                                     {/* Text Content Below Image */}
                                     <div className="p-6 md:p-8">
-                                        <p className="text-slate-300 leading-relaxed text-[17px]">
+                                        {/* AEO: Concise snippet-ready definition (first 2 sentences for featured snippet) */}
+                                        <p data-speakable="definition" itemProp="description" className="text-slate-300 leading-relaxed text-[17px]">
                                             {definitionText.split('. ').slice(0, 4).join('. ')}.
                                         </p>
+
+                                        {/* AEO/GEO: Key Facts Box — structured for AI extraction */}
+                                        {data.automatedContent?.keyStats && (
+                                            <div data-speakable="key-facts" className="mt-5 p-4 rounded-xl bg-slate-800/50 border border-teal-500/10" role="region" aria-label="Key facts">
+                                                <h3 className="text-xs font-bold text-teal-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                                                    Key Facts
+                                                </h3>
+                                                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                                                    {data.automatedContent.keyStats.prevalence && (
+                                                        <div className="flex items-baseline gap-2">
+                                                            <dt className="text-slate-500 shrink-0">Prevalence:</dt>
+                                                            <dd className="text-slate-200 font-medium" itemProp="epidemiology">{data.automatedContent.keyStats.prevalence}</dd>
+                                                        </div>
+                                                    )}
+                                                    {data.automatedContent.keyStats.demographics && (
+                                                        <div className="flex items-baseline gap-2">
+                                                            <dt className="text-slate-500 shrink-0">Demographics:</dt>
+                                                            <dd className="text-slate-200 font-medium">{data.automatedContent.keyStats.demographics}</dd>
+                                                        </div>
+                                                    )}
+                                                    {data.automatedContent.keyStats.avgAge && (
+                                                        <div className="flex items-baseline gap-2">
+                                                            <dt className="text-slate-500 shrink-0">Avg. Age:</dt>
+                                                            <dd className="text-slate-200 font-medium">{data.automatedContent.keyStats.avgAge}</dd>
+                                                        </div>
+                                                    )}
+                                                    {data.automatedContent.keyStats.globalCases && (
+                                                        <div className="flex items-baseline gap-2">
+                                                            <dt className="text-slate-500 shrink-0">Global Cases:</dt>
+                                                            <dd className="text-slate-200 font-medium">{data.automatedContent.keyStats.globalCases}</dd>
+                                                        </div>
+                                                    )}
+                                                    <div className="flex items-baseline gap-2">
+                                                        <dt className="text-slate-500 shrink-0">Specialist:</dt>
+                                                        <dd className="text-slate-200 font-medium">{data.condition.specialistType}</dd>
+                                                    </div>
+                                                    {data.condition.icdCode && (
+                                                        <div className="flex items-baseline gap-2">
+                                                            <dt className="text-slate-500 shrink-0">ICD-10:</dt>
+                                                            <dd className="text-slate-200 font-medium font-mono text-xs">{data.condition.icdCode}</dd>
+                                                        </div>
+                                                    )}
+                                                </dl>
+                                            </div>
+                                        )}
+
                                         <div className="mt-5 flex flex-wrap gap-3">
                                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-500/[0.06] border border-teal-500/10 text-sm text-teal-400/80">
                                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
@@ -661,7 +751,7 @@ export default async function ConditionPage({ params }: PageProps) {
                             </div>
                         )}
 
-                        {/* ─── SYMPTOMS ─── */}
+                        {/* ─── SYMPTOMS (AEO: data-speakable, semantic list for featured snippets) ─── */}
                         {((data.automatedContent?.primarySymptoms && data.automatedContent.primarySymptoms.length > 0) ||
                           (data.condition.symptoms && data.condition.symptoms.length > 0)) && (
                         <section id="symptoms" className="scroll-mt-24">
@@ -669,11 +759,15 @@ export default async function ConditionPage({ params }: PageProps) {
                                 <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
                                     <svg className="w-5 h-5 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                 </div>
-                                Key Symptoms
+                                Key Symptoms of {cleanConditionName}
                             </h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {/* AEO: Hidden semantic summary for snippet extraction */}
+                            <p data-speakable="symptoms" className="sr-only">
+                                The key symptoms of {cleanConditionName} are: {(data.automatedContent?.primarySymptoms || data.condition.symptoms || []).slice(0, 7).join(', ')}.
+                            </p>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3" role="list" aria-label={`Symptoms of ${cleanConditionName}`}>
                                 {(data.automatedContent?.primarySymptoms || data.condition.symptoms || []).map((symptom, i) => (
-                                    <div key={i} className="flex items-center gap-4 p-4 bg-slate-900/40 rounded-xl border border-white/[0.06] hover:border-orange-500/20 transition-colors group">
+                                    <div key={i} role="listitem" className="flex items-center gap-4 p-4 bg-slate-900/40 rounded-xl border border-white/[0.06] hover:border-orange-500/20 transition-colors group">
                                         <div className="w-9 h-9 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0 group-hover:bg-orange-500/20 transition-colors">
                                             <span className="text-orange-400 font-bold text-sm">{i + 1}</span>
                                         </div>
@@ -987,7 +1081,7 @@ export default async function ConditionPage({ params }: PageProps) {
                             </div>
                         )}
 
-                        {/* ─── FAQs ─── */}
+                        {/* ─── FAQs (AEO: data-speakable answers for voice search) ─── */}
                         {allFaqs.length > 0 && (
                             <section id="faqs" className="scroll-mt-24">
                                 <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-3">
@@ -996,7 +1090,98 @@ export default async function ConditionPage({ params }: PageProps) {
                                     </div>
                                     Frequently Asked Questions
                                 </h2>
-                                <FaqAccordion faqs={allFaqs.slice(0, 5)} />
+                                <div data-speakable="answer">
+                                    <FaqAccordion faqs={allFaqs.slice(0, 5)} />
+                                </div>
+                            </section>
+                        )}
+
+                        {/* ─── CAUSES & RISK FACTORS (AEO: structured for AI extraction) ─── */}
+                        {((data.automatedContent?.causes && data.automatedContent.causes.length > 0) ||
+                          (data.automatedContent?.riskFactors && data.automatedContent.riskFactors.length > 0)) && (
+                            <section id="causes" className="scroll-mt-24">
+                                <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center shrink-0">
+                                        <svg className="w-5 h-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                    </div>
+                                    Causes & Risk Factors
+                                </h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    {data.automatedContent?.causes && data.automatedContent.causes.length > 0 && (
+                                        <div className="bg-slate-900/40 p-6 rounded-2xl border border-white/[0.06]">
+                                            <h3 className="text-sm font-bold text-rose-400 mb-4 uppercase tracking-wider flex items-center gap-2">
+                                                <span className="w-2 h-2 rounded-full bg-rose-400" />
+                                                Known Causes
+                                            </h3>
+                                            <dl className="space-y-3">
+                                                {data.automatedContent.causes.slice(0, 5).map((c, i) => (
+                                                    <div key={i}>
+                                                        <dt className="text-white font-semibold text-sm">{c.cause}</dt>
+                                                        <dd className="text-slate-400 text-xs mt-0.5 leading-relaxed">{c.description}</dd>
+                                                    </div>
+                                                ))}
+                                            </dl>
+                                        </div>
+                                    )}
+                                    {data.automatedContent?.riskFactors && data.automatedContent.riskFactors.length > 0 && (
+                                        <div className="bg-slate-900/40 p-6 rounded-2xl border border-white/[0.06]">
+                                            <h3 className="text-sm font-bold text-amber-400 mb-4 uppercase tracking-wider flex items-center gap-2">
+                                                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                                                Risk Factors
+                                            </h3>
+                                            <dl className="space-y-3">
+                                                {data.automatedContent.riskFactors.slice(0, 5).map((rf, i) => (
+                                                    <div key={i}>
+                                                        <dt className="text-white font-semibold text-sm flex items-center gap-2">
+                                                            {rf.factor}
+                                                            <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400/70 border border-amber-500/15">{rf.category}</span>
+                                                        </dt>
+                                                        <dd className="text-slate-400 text-xs mt-0.5 leading-relaxed">{rf.description}</dd>
+                                                    </div>
+                                                ))}
+                                            </dl>
+                                        </div>
+                                    )}
+                                </div>
+                            </section>
+                        )}
+
+                        {/* ─── SOURCES & REFERENCES (GEO: citation block for AI trust) ─── */}
+                        {data.automatedContent?.sources && data.automatedContent.sources.length > 0 && (
+                            <section id="sources" className="scroll-mt-24">
+                                <h2 className="text-lg font-bold mb-4 text-white flex items-center gap-2.5">
+                                    <div className="w-8 h-8 rounded-lg bg-slate-700/50 border border-white/10 flex items-center justify-center shrink-0">
+                                        <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                                    </div>
+                                    Sources & References
+                                </h2>
+                                <div className="bg-slate-900/30 p-5 rounded-xl border border-white/[0.04]">
+                                    <ol className="space-y-2 list-decimal list-inside">
+                                        {data.automatedContent.sources.map((src, i) => (
+                                            <li key={i} className="text-sm text-slate-400 leading-relaxed">
+                                                {src.url ? (
+                                                    <a href={src.url} target="_blank" rel="noopener noreferrer nofollow" className="text-teal-400/70 hover:text-teal-400 transition-colors underline underline-offset-2 decoration-teal-500/30">
+                                                        {src.title}
+                                                    </a>
+                                                ) : (
+                                                    <span>{src.title}</span>
+                                                )}
+                                                {src.accessedDate && (
+                                                    <span className="text-slate-600 text-xs ml-1.5">Accessed {src.accessedDate}</span>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ol>
+                                    {data.reviewer && (
+                                        <div className="mt-4 pt-3 border-t border-white/5 flex items-center gap-2 text-xs text-slate-500">
+                                            <svg className="w-3.5 h-3.5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                                            Medically reviewed by {data.reviewer.name}
+                                            {data.reviewer.reviewDate && (
+                                                <span>on {new Date(data.reviewer.reviewDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
                             </section>
                         )}
                     </div>

@@ -240,9 +240,19 @@ export function generateHowToSchema(
     };
 }
 
-// ─── Medical Condition Schema (standalone) ─────────────────
+// ─── Medical Condition Schema (standalone, AEO/GEO-enriched) ─
 
-export function generateMedicalConditionSchema(condition: ConditionData): object {
+export function generateMedicalConditionSchema(
+    condition: ConditionData,
+    extras?: {
+        prevalence?: string;
+        demographics?: string;
+        causes?: Array<{ cause: string; description: string }>;
+        riskFactors?: Array<{ factor: string; category: string; description: string }>;
+        diagnosticTests?: Array<{ test: string; purpose: string }>;
+        prognosis?: string;
+    }
+): object {
     return {
         '@context': 'https://schema.org',
         '@type': 'MedicalCondition',
@@ -255,6 +265,7 @@ export function generateMedicalConditionSchema(condition: ConditionData): object
                 codeValue: condition.icdCode,
                 codingSystem: 'ICD-10',
             },
+            sameAs: `https://icd.who.int/browse10/2019/en#/${condition.icdCode}`,
         }),
         signOrSymptom: condition.symptoms.map(s => ({
             '@type': 'MedicalSignOrSymptom',
@@ -268,6 +279,37 @@ export function generateMedicalConditionSchema(condition: ConditionData): object
             '@type': 'MedicalSpecialty',
             name: condition.specialistType,
         },
+        // AEO: Epidemiology for AI answer extraction
+        ...(extras?.prevalence && {
+            epidemiology: extras.prevalence,
+        }),
+        // AEO: Risk factors as structured data
+        ...(extras?.riskFactors && extras.riskFactors.length > 0 && {
+            riskFactor: extras.riskFactors.map(rf => ({
+                '@type': 'MedicalRiskFactor',
+                name: rf.factor,
+                description: rf.description,
+            })),
+        }),
+        // AEO: Causes
+        ...(extras?.causes && extras.causes.length > 0 && {
+            cause: extras.causes.map(c => ({
+                '@type': 'MedicalCause',
+                name: c.cause,
+            })),
+        }),
+        // AEO: Diagnostic tests
+        ...(extras?.diagnosticTests && extras.diagnosticTests.length > 0 && {
+            typicalTest: extras.diagnosticTests.map(dt => ({
+                '@type': 'MedicalTest',
+                name: dt.test,
+                usedToDiagnose: { '@type': 'MedicalCondition', name: condition.commonName },
+            })),
+        }),
+        // AEO: Prognosis for voice/AI answers
+        ...(extras?.prognosis && {
+            expectedPrognosis: extras.prognosis,
+        }),
     };
 }
 
@@ -376,6 +418,14 @@ export function generatePageSchemas(
         treatmentSteps?: { name: string; text: string }[];
         estimatedCost?: { currency: string; value: number };
         featureImage?: string;
+        // AEO/GEO enrichment data
+        prevalence?: string;
+        demographics?: string;
+        causes?: Array<{ cause: string; description: string }>;
+        riskFactors?: Array<{ factor: string; category: string; description: string }>;
+        diagnosticTests?: Array<{ test: string; purpose: string; whatToExpect?: string }>;
+        prognosis?: string;
+        sources?: Array<{ title: string; url?: string; accessedDate?: string }>;
     }
 ): string {
     const deepestGeo = geoChain.locality || geoChain.city || geoChain.state || geoChain.country;
@@ -385,8 +435,15 @@ export function generatePageSchemas(
         // Core medical web page
         generateMedicalWebPageSchema(condition, reviewer, geoChain, lang, urlPath),
 
-        // Standalone medical condition (helps AI understand)
-        generateMedicalConditionSchema(condition),
+        // Standalone medical condition (AEO/GEO-enriched with epidemiology, risk factors, causes)
+        generateMedicalConditionSchema(condition, {
+            prevalence: options?.prevalence,
+            demographics: options?.demographics,
+            causes: options?.causes,
+            riskFactors: options?.riskFactors,
+            diagnosticTests: options?.diagnosticTests,
+            prognosis: options?.prognosis,
+        }),
 
         // Breadcrumbs for navigation
         generateBreadcrumbSchema(lang, condition.commonName, condition.commonName.toLowerCase().replace(/\s+/g, '-'), geoChain),
@@ -394,12 +451,13 @@ export function generatePageSchemas(
         // Top doctors
         ...doctors.slice(0, 3).map(generatePhysicianSchema),
 
-        // Speakable content for voice assistants
+        // Speakable content for voice assistants (AEO)
         generateSpeakableSchema(urlPath, [
             'h1',
-            '.ai-opinion',
-            '.condition-description',
-            '.treatment-summary',
+            '[data-speakable="definition"]',
+            '[data-speakable="key-facts"]',
+            '[data-speakable="symptoms"]',
+            '[data-speakable="answer"]',
         ]),
     ];
 
@@ -425,13 +483,22 @@ export function generatePageSchemas(
 
     schemas.push(generateFAQSchema(options?.faqs || defaultFaqs));
 
-    // Treatment guide if available
+    // Auto-generate HowTo from diagnostic tests if no explicit steps provided (AEO)
     if (options?.treatmentSteps && options.treatmentSteps.length > 0) {
         schemas.push(generateHowToSchema(
             `How to manage ${condition.commonName}`,
             `Step-by-step guide for ${condition.commonName} treatment`,
             options.treatmentSteps,
             options.estimatedCost
+        ));
+    } else if (options?.diagnosticTests && options.diagnosticTests.length > 0) {
+        schemas.push(generateHowToSchema(
+            `How ${condition.commonName} is diagnosed`,
+            `Diagnostic process for ${condition.commonName} by a ${condition.specialistType}`,
+            options.diagnosticTests.slice(0, 6).map(dt => ({
+                name: dt.test,
+                text: dt.purpose + (dt.whatToExpect ? `. ${dt.whatToExpect}` : ''),
+            })),
         ));
     }
 
@@ -442,6 +509,21 @@ export function generatePageSchemas(
             `Medical illustration of ${condition.commonName}`,
             'AIHealz Medical Illustrations'
         ));
+    }
+
+    // GEO: Citation source schema for AI engines
+    if (options?.sources && options.sources.length > 0) {
+        schemas.push({
+            '@context': 'https://schema.org',
+            '@type': 'MedicalWebPage',
+            '@id': `${SITE_URL}${urlPath}#citations`,
+            citation: options.sources.map(src => ({
+                '@type': 'CreativeWork',
+                name: src.title,
+                ...(src.url && { url: src.url }),
+                ...(src.accessedDate && { dateAccessed: src.accessedDate }),
+            })),
+        });
     }
 
     return JSON.stringify(schemas);
