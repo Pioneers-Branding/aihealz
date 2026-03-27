@@ -15,9 +15,16 @@ const URLS_PER_SITEMAP = parseInt(process.env.SITEMAP_URLS_PER_FILE || '45000', 
  * Each sub-sitemap stays under the 50,000 URL / 50MB limit.
  */
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(): Promise<Response> {
     // Count total URLs
-    const totalUrls = await prisma.sitemapEntry.count();
+    let totalUrls = 0;
+    try {
+        totalUrls = await prisma.sitemapEntry.count();
+    } catch {
+        // DB unavailable, return minimal sitemap index
+    }
     const totalSitemaps = Math.max(1, Math.ceil(totalUrls / URLS_PER_SITEMAP));
 
     // Generate sitemap index - using /sitemap/{index} route format

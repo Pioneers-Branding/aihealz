@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { selectAd, generateSessionHash } from '@/lib/ads/ad-server';
-import { AdPlacement } from '@prisma/client';
+import { AdPlacement } from '@/lib/ads/ad-types';
 import { checkRateLimit, getClientIdentifier, rateLimitHeaders } from '@/lib/rate-limit';
 
 // Ad serve rate limit: allow frequent requests for page loads

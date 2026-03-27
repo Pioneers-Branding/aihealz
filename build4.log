@@ -1,0 +1,28 @@
+
+> aihealz@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Experiments (use with caution):
+  ┬╖ optimizePackageImports
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 12.0s
+  Running TypeScript ...
+Failed to compile.
+
+./src/app/api/admin/advertising/campaigns/route.ts:28:13
+Type error: Type '{ advertiserId?: number | undefined; status?: AdStatus | undefined; }' is not assignable to type 'AdCampaignWhereInput'.
+  Types of property 'status' are incompatible.
+    Type 'AdStatus | undefined' is not assignable to type 'AdStatus | EnumAdStatusFilter<"AdCampaign"> | undefined'.
+      Type '"cancelled"' is not assignable to type 'AdStatus | EnumAdStatusFilter<"AdCampaign"> | undefined'.
+
+  26 |
+  27 |         const campaigns = await prisma.adCampaign.findMany({
+> 28 |             where: {
+     |             ^
+  29 |                 ...(status && { status: status as AdStatus }),
+  30 |                 ...(advertiserId && { advertiserId: parseInt(advertiserId) }),
+  31 |             },
+Next.js build worker exited with code: 1 and signal: null

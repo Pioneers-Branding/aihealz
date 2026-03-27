@@ -1,5 +1,5 @@
 import prisma from '@/lib/db';
-import { AdPlacement } from '@prisma/client';
+import { AdPlacement } from '@/lib/ads/ad-types';
 
 export interface ImpressionData {
     campaignId: number;

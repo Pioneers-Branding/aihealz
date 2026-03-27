@@ -41,33 +41,37 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  // Get popular tests
-  const tests = await prisma.diagnosticTest.findMany({
-    where: { isActive: true },
-    select: { slug: true },
-    orderBy: { searchVolume: 'desc' },
-    take: 20,
-  });
+  try {
+    // Get popular tests
+    const tests = await prisma.diagnosticTest.findMany({
+      where: { isActive: true },
+      select: { slug: true },
+      orderBy: { searchVolume: 'desc' },
+      take: 20,
+    });
 
-  // Get major cities
-  const cities = await prisma.geography.findMany({
-    where: {
-      level: 'city',
-      isActive: true,
-    },
-    select: { slug: true },
-    take: 50,
-  });
+    // Get major cities
+    const cities = await prisma.geography.findMany({
+      where: {
+        level: 'city',
+        isActive: true,
+      },
+      select: { slug: true },
+      take: 50,
+    });
 
-  // Generate combinations
-  const params: { slug: string; city: string }[] = [];
-  for (const test of tests) {
-    for (const city of cities) {
-      params.push({ slug: test.slug, city: city.slug });
+    // Generate combinations
+    const params: { slug: string; city: string }[] = [];
+    for (const test of tests) {
+      for (const city of cities) {
+        params.push({ slug: test.slug, city: city.slug });
+      }
     }
-  }
 
-  return params.slice(0, 200); // Limit for initial build
+    return params.slice(0, 200); // Limit for initial build
+  } catch {
+    return [];
+  }
 }
 
 export default async function TestCityPage({ params }: PageProps) {

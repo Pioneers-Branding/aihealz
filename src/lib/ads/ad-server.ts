@@ -1,13 +1,5 @@
 import prisma from '@/lib/db';
-
-// Local types until AdCampaign/AdStatus are added to Prisma schema
-type AdPlacement =
-    | 'condition_sidebar' | 'condition_inline' | 'homepage_hero'
-    | 'homepage_featured' | 'search_results_top' | 'search_results_inline'
-    | 'doctor_profile_sidebar' | 'treatment_page_sidebar'
-    | 'global_header_banner' | 'global_footer_banner';
-
-const AdStatus = { active: 'active' } as const;
+import { AdPlacement, AdStatus } from '@/lib/ads/ad-types';
 
 export interface AdToServe {
     campaignId: number;
@@ -55,7 +47,7 @@ export async function selectAd(params: AdSelectionParams): Promise<AdToServe | n
             where: {
                 placement,
                 campaign: {
-                    status: AdStatus.active as string,
+                    status: AdStatus.active,
                     startDate: { lte: new Date() },
                     OR: [
                         { endDate: null },

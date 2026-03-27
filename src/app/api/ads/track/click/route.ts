@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { trackClick } from '@/lib/ads/ad-tracker';
-import { AdPlacement } from '@prisma/client';
+import { AdPlacement } from '@/lib/ads/ad-types';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitHeaders } from '@/lib/rate-limit';
 import { z } from 'zod';
 

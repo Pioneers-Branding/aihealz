@@ -30,12 +30,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const providers = await prisma.diagnosticProvider.findMany({
-    where: { isActive: true },
-    select: { slug: true },
-    take: 50,
-  });
-  return providers.map((p) => ({ slug: p.slug }));
+  try {
+    const providers = await prisma.diagnosticProvider.findMany({
+      where: { isActive: true },
+      select: { slug: true },
+      take: 50,
+    });
+    return providers.map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
 }
 
 const formatPrice = (price: number) => `₹${price.toLocaleString('en-IN')}`;

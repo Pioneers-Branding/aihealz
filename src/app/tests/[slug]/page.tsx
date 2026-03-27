@@ -33,12 +33,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const tests = await prisma.diagnosticTest.findMany({
-    where: { isActive: true },
-    select: { slug: true },
-    take: 100,
-  });
-  return tests.map((test) => ({ slug: test.slug }));
+  try {
+    const tests = await prisma.diagnosticTest.findMany({
+      where: { isActive: true },
+      select: { slug: true },
+      take: 100,
+    });
+    return tests.map((test) => ({ slug: test.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function TestDetailPage({ params }: PageProps) {

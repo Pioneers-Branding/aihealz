@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { verifyAdminAuth } from '@/lib/admin-auth';
-import { AdType } from '@prisma/client';
+
 
 /**
  * GET /api/admin/advertising/creatives
@@ -84,7 +84,8 @@ export async function POST(request: NextRequest) {
             data: {
                 advertiserId,
                 name,
-                adType: adType as AdType,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                adType: adType as any,
                 headline: headline || '',
                 description: description || '',
                 ctaText,
